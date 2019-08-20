@@ -1,0 +1,3 @@
+displayName = Athos's Class Overhaul
+author = Athos E. Akaiger
+version = 0.1.5.1

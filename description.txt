@@ -1,0 +1,32 @@
+A change to how Terraria handles classes.
+
+
+Changelogs
+0.1.5.1
+Mages? Wizards? Where?
+I found out that the previous changes do magic armor didn't do the job... so I exchanged crit chance for raw damage.
+-Removed critical strike chance bonuses from magic armor(including the ones from last patch) and added its previous values to magic damage.
+-Above patch also affects Spectre chest, Nebula chest, Ancient Cobalt Armor and Jungle sets.
+-All vanilla magic weapons(after this mod's changes) got +10 damage.
+-4% reduced magic critical strike chance from every magic weapon in the game.
+-Increased The Bee's Knees's damage to 31.
+
+0.1.5
+The Ranged Mana update!
+-Space Gun, Laser Rifle, Leaf Blower, Heat Ray, Laser Machine Gun, Charged Blaster Cannon and Razorpine are now Ranged weapons(They still cost mana).
+-Space Gun and Laser Rifle mana costs were reduced by 1 each.
+-Razorpine mana cost reduced to 10.
+-5 new prefixes exclusive to ranged damage mana weapons!
+-Meteorite set's magic damage bonus reduced to 4% to each piece.
+-Meteorite set now has a 5% ranged damage bonus to each piece.
+-All hardmode magic head armor(except old one's army sets) got buffed by 3% on damage or critical strike chance existing buffs.
+-Spectre Mask got a 5% damage buff instead.
+
+0.1
+As of now, I'm trying to go for the basics, by editing vanilla stuff. This initial release is for Summon class changes.
+-The Bee's Knees, Book of Skulls, Bee Gun, Wasp Gun, Spectre Staff and Bat Sceptre are now Summoning weapons and benefit from summon bonuses.
+-The Bee's Knees mana cost reduced to 5.
+-Spectre Staff base damage reduced to 68.
+-Spectre Armor now only reduces 25% magic damage and it gives 5% reduced mana cost.
+-New Recipe for Slime Staff.
+-New Magic weapon Staff of Fireball.
