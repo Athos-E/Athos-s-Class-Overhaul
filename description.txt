@@ -2,7 +2,7 @@ A change to how Terraria handles classes.
 
 
 Changelogs
-0.1.5.1
+0.1.6
 Mages? Wizards? Where?
 I found out that the previous changes do magic armor didn't do the job... so I exchanged crit chance for raw damage.
 -Removed critical strike chance bonuses from magic armor(including the ones from last patch) and added its previous values to magic damage.
