@@ -17,10 +17,10 @@ namespace ClassOverhaul.Items
             item.mana = 7;
             item.UseSound = SoundID.Item73;
             item.useStyle = 5;
-            item.damage = 85;
+            item.damage = 95;
             item.useAnimation = 28;
             item.autoReuse = true;
-            item.crit = 4;
+            item.crit = 0;
             item.useTime = 30;
             item.width = 26;
             item.height = 23;

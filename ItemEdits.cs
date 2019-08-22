@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria.Utilities;
 
 namespace ClassOverhaul
 {
@@ -11,87 +12,54 @@ namespace ClassOverhaul
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
-            if (item.type == ItemID.BeesKnees)
+            if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun ^ item.type == ItemID.WaspGun
+                ^ item.type == ItemID.SpectreStaff ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls)
             {
                 item.ranged = false;
+                item.magic = false;
                 item.summon = true;
+            }
+            if (item.type == ItemID.BeesKnees)
+            {
                 item.autoReuse = true;
                 item.useAmmo = 0;
                 item.damage = 31;
                 item.mana = 5;
             }
-            if (item.type == ItemID.BeeGun)
-            {
-                item.magic = false;
-                item.summon = true;
-            }
-            if (item.type == ItemID.WaspGun)
-            {
-                item.magic = false;
-                item.summon = true;
-            }
             if (item.type == ItemID.SpectreStaff)
             {
-                item.magic = false;
-                item.summon = true;
                 item.damage = 68;
             }
-            if (item.type == ItemID.BatScepter)
-            {
-                item.magic = false;
-                item.summon = true;
-            }
-            if (item.type == ItemID.BookofSkulls)
-            {
-                item.magic = false;
-                item.summon = true;
-            }
-            if (item.type == ItemID.SpaceGun)
+            if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
+                ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
+                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine
+                ^ item.type == ItemID.ToxicFlask)
             {
                 item.magic = false;
                 item.ranged = true;
                 item.autoReuse = true;
+            }
+            if (item.type == ItemID.SpaceGun)
+            {
                 item.mana = 6;
             }
             if (item.type == ItemID.LaserRifle)
             {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
                 item.mana = 7;
-            }
-            if (item.type == ItemID.LeafBlower)
-            {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
-            }
-            if (item.type == ItemID.HeatRay)
-            {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
-            }
-            if (item.type == ItemID.LaserMachinegun)
-            {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
             }
             if (item.type == ItemID.ChargedBlasterCannon)
             {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
                 item.mana = 10;
             }
-            if (item.type == ItemID.Razorpine)
+            if (item.type == ItemID.ToxicFlask)
             {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
+                item.mana = 0;
+                item.uniqueStack = false;
+                item.consumable = true;
+                item.value = 5000;
+                item.maxStack = 99;
             }
-            if (item.magic == true)
+            if (item.magic == true && item.type > 0 && item.type < 3930)
             {
                 item.damage += 10;
                 item.crit -= 4;
@@ -99,6 +67,50 @@ namespace ClassOverhaul
             if (item.type == ItemID.MeteorStaff)
             {
                 item.damage = 75;
+            }
+            if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
+                ^ item.type == ItemID.IceBoomerang ^ item.type == ItemID.FruitcakeChakram
+                ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
+                ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
+                ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
+                ^ item.type == ItemID.PaladinsHammer ^ item.type == ItemID.ShadowFlameKnife
+                ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
+                ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
+                ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
+                ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife)
+            {
+                item.melee = false;
+                item.thrown = true;
+            }
+            if (item.type == ItemID.WoodYoyo ^ item.type == ItemID.CorruptYoyo
+                ^ item.type == ItemID.CrimsonYoyo ^ item.type == ItemID.JungleYoyo
+                ^ item.type == ItemID.Code1 ^ item.type == ItemID.Valor
+                ^ item.type == ItemID.Cascade ^ item.type == ItemID.FormatC
+                ^ item.type == ItemID.Gradient ^ item.type == ItemID.Chik
+                ^ item.type == ItemID.HelFire ^ item.type == ItemID.Amarok
+                ^ item.type == ItemID.Code2 ^ item.type == ItemID.Yelets
+                ^ item.type == ItemID.RedsYoyo ^ item.type == ItemID.ValkyrieYoyo
+                ^ item.type == ItemID.Kraken ^ item.type == ItemID.TheEyeOfCthulhu
+                ^ item.type == ItemID.Terrarian)
+            {
+                item.melee = false;
+                item.thrown = true;
+                item.damage -= 10;
+            }
+            if (item.thrown == true && item.type > 0 && item.type < 3930)
+            {
+                item.damage += 10;
+                item.crit = 0;
+            }
+        }
+        public override int ChoosePrefix(Item item, UnifiedRandom rand)
+        {
+            if (item.type != ItemID.ToxicFlask)
+            {
+                return base.ChoosePrefix(item, rand);
+            } else
+            {
+                return 0;
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
