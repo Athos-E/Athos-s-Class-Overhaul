@@ -12,8 +12,10 @@ namespace ClassOverhaul
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
-            if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun ^ item.type == ItemID.WaspGun
-                ^ item.type == ItemID.SpectreStaff ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls)
+            if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
+                ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
+                ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
+                ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun)
             {
                 item.ranged = false;
                 item.magic = false;
@@ -23,8 +25,20 @@ namespace ClassOverhaul
             {
                 item.autoReuse = true;
                 item.useAmmo = 0;
-                item.damage = 31;
-                item.mana = 5;
+                item.damage += 5;
+                item.mana = 6;
+            }
+            if (item.type == ItemID.HellwingBow)
+            {
+                item.autoReuse = true;
+                item.useAmmo = 0;
+                item.damage += 5;
+                item.mana = 4;
+            }
+            if (item.type == ItemID.PiranhaGun)
+            {
+                item.useAmmo = 0;
+                item.mana = 8;
             }
             if (item.type == ItemID.SpectreStaff)
             {
@@ -32,8 +46,7 @@ namespace ClassOverhaul
             }
             if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
                 ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
-                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine
-                ^ item.type == ItemID.ToxicFlask)
+                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine)
             {
                 item.magic = false;
                 item.ranged = true;
@@ -51,10 +64,23 @@ namespace ClassOverhaul
             {
                 item.mana = 10;
             }
+            if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
+                ^ item.type == ItemID.IceBoomerang ^ item.type == ItemID.FruitcakeChakram
+                ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
+                ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
+                ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
+                ^ item.type == ItemID.ShadowFlameKnife ^ item.type == ItemID.ToxicFlask
+                ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
+                ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
+                ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
+                ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife)
+            {
+                item.melee = false;
+                item.thrown = true;
+            }
             if (item.type == ItemID.ToxicFlask)
             {
                 item.mana = 0;
-                item.uniqueStack = false;
                 item.consumable = true;
                 item.value = 5000;
                 item.maxStack = 99;
@@ -64,25 +90,7 @@ namespace ClassOverhaul
                 item.damage += 10;
                 item.crit -= 4;
             }
-            if (item.type == ItemID.MeteorStaff)
-            {
-                item.damage = 75;
-            }
-            if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
-                ^ item.type == ItemID.IceBoomerang ^ item.type == ItemID.FruitcakeChakram
-                ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
-                ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
-                ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
-                ^ item.type == ItemID.PaladinsHammer ^ item.type == ItemID.ShadowFlameKnife
-                ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
-                ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
-                ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
-                ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife)
-            {
-                item.melee = false;
-                item.thrown = true;
-            }
-            if (item.type == ItemID.WoodYoyo ^ item.type == ItemID.CorruptYoyo
+            if (item.type == ItemID.WoodYoyo ^ item.type == ItemID.Rally ^ item.type == ItemID.CorruptYoyo
                 ^ item.type == ItemID.CrimsonYoyo ^ item.type == ItemID.JungleYoyo
                 ^ item.type == ItemID.Code1 ^ item.type == ItemID.Valor
                 ^ item.type == ItemID.Cascade ^ item.type == ItemID.FormatC
@@ -102,15 +110,19 @@ namespace ClassOverhaul
                 item.damage += 10;
                 item.crit = 0;
             }
+            if (item.type == ItemID.MeteorStaff)
+            {
+                item.damage = 75;
+            }
         }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
-            if (item.type != ItemID.ToxicFlask)
-            {
-                return base.ChoosePrefix(item, rand);
-            } else
+            if (item.type == ItemID.ToxicFlask)
             {
                 return 0;
+            } else
+            {
+                return base.ChoosePrefix(item, rand);
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

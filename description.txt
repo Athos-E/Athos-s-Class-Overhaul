@@ -1,11 +1,17 @@
 A change to how Terraria handles classes.
 
 Changelogs
+2.1
+-Hellwing Bow and Piranha Gun are now summon damage items.
+-Increased Hellwing Bow's base damage to 25
+-Paladin's Hammer is no longer a thrown weapon(reversed to melee weapon).
+-Cleaner code and fixes.
+
 0.2.0
 So... Throws?
 -Wooden Boomerang, Ice Boomerang, Enchanted Boomerang, Flamarang, Bananarang, Fruitcake Chakram, Thorn Chakram, Flying Knife, Light Disc, Toxic Flask, Possessed Hatchet, Paladin's Hammer, Shadowflame Knife, Vampire Knives, Scourge of The Corruptor, Daybreak, Anchor, Chain Knife, Chain Gillotines, KO Cannon, Golem Fist and all vanillla Yoyos are now thrown damage weapons.
 -Toxic Flask is also consumable & craftable(post plantera).
--Above items and vanilla thrown damage items got buffed by 10 damage and removed their base crit chance entirely(set to 0), except for Yoyos.
+-Above items and vanilla thrown damage items got buffed by 10 damage(except for Yoyos) and removed their base crit chance entirely(set to 0).
 
 0.1.6
 Mages? Wizards? Where?

@@ -16,7 +16,9 @@ namespace ClassOverhaul
                 projectile.arrow = false;
             }
             if (projectile.type == ProjectileID.SpectreWrath ^ projectile.type == ProjectileID.Skull 
-                ^ projectile.type == ProjectileID.Bat ^ projectile.type == ProjectileID.Wasp ^ projectile.type == ProjectileID.Bee)
+                ^ projectile.type == ProjectileID.Bat ^ projectile.type == ProjectileID.Wasp 
+                ^ projectile.type == ProjectileID.Bee ^ projectile.type == ProjectileID.Hellwing
+                ^ projectile.type == ProjectileID.MechanicalPiranha)
             {
                 projectile.magic = false;
                 projectile.ranged = false;
@@ -34,7 +36,7 @@ namespace ClassOverhaul
             if (projectile.type == ProjectileID.WoodenBoomerang ^ projectile.type == ProjectileID.EnchantedBoomerang
                 ^ projectile.type == ProjectileID.IceBoomerang ^ projectile.type == ProjectileID.FruitcakeChakram ^ projectile.type == ProjectileID.ThornChakram
                 ^ projectile.type == ProjectileID.Flamarang ^ projectile.type == ProjectileID.FlyingKnife ^ projectile.type == ProjectileID.LightDisc
-                ^ projectile.type == ProjectileID.Bananarang ^ projectile.type == ProjectileID.PossessedHatchet ^ projectile.type == ProjectileID.PaladinsHammerFriendly
+                ^ projectile.type == ProjectileID.Bananarang ^ projectile.type == ProjectileID.PossessedHatchet
                 ^ projectile.type == ProjectileID.ShadowFlameKnife ^ projectile.type == ProjectileID.EatersBite ^ projectile.type == ProjectileID.TinyEater
                 ^ projectile.type == ProjectileID.Daybreak ^ projectile.type == ProjectileID.Anchor ^ projectile.type == ProjectileID.ChainGuillotine 
                 ^ projectile.type == ProjectileID.BoxingGlove ^ projectile.type == ProjectileID.GolemFist ^ projectile.type == ProjectileID.WoodYoyo
