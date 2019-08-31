@@ -1,7 +1,13 @@
 A change to how Terraria handles classes.
 
 Changelogs
-2.1
+0.2.2
+-Magic weapons get a bonus damage based on item rarity and half of the mana cost.
+-New pre-hardmode summoning armor: Gellyfish Armor.
+-Pink, Green and Blue Jellyfishes are now catcheable through Bug Net.
+-Updated mod description and homepage.
+
+0.2.1
 -Hellwing Bow and Piranha Gun are now summon damage items.
 -Increased Hellwing Bow's base damage to 25
 -Paladin's Hammer is no longer a thrown weapon(reversed to melee weapon).

@@ -76,6 +76,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife)
             {
                 item.melee = false;
+                item.magic = false;
                 item.thrown = true;
             }
             if (item.type == ItemID.ToxicFlask)
@@ -87,7 +88,7 @@ namespace ClassOverhaul
             }
             if (item.magic == true && item.type > 0 && item.type < 3930)
             {
-                item.damage += 10;
+                item.damage += (10 + (item.mana / 2) + item.rare);
                 item.crit -= 4;
             }
             if (item.type == ItemID.WoodYoyo ^ item.type == ItemID.Rally ^ item.type == ItemID.CorruptYoyo
