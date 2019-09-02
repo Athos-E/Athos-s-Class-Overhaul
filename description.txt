@@ -1,6 +1,12 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.2.3
+-Thrown weapons get weapon imbuements, magma stone and frostburn effects.
+-Swapped thrown weapons and magic weapons crits patches.(Throwns now get -4% crit chance and magic got crit chance set to 0)
+-Removed thrown weapons 10 damage buff.
+-Magic items that had crit chance higher than 4% on vanilla(or 0 with this mod) got a damage buff based on the removed crit chance.
+
 0.2.2
 -Magic weapons get a bonus damage based on item rarity and half of the mana cost.
 -New pre-hardmode summoning armor: Gellyfish Armor.

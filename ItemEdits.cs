@@ -73,7 +73,17 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
                 ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
-                ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife)
+                ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife
+                ^ item.type == ItemID.WoodYoyo ^ item.type == ItemID.Rally ^ item.type == ItemID.CorruptYoyo
+                ^ item.type == ItemID.CrimsonYoyo ^ item.type == ItemID.JungleYoyo
+                ^ item.type == ItemID.Code1 ^ item.type == ItemID.Valor
+                ^ item.type == ItemID.Cascade ^ item.type == ItemID.FormatC
+                ^ item.type == ItemID.Gradient ^ item.type == ItemID.Chik
+                ^ item.type == ItemID.HelFire ^ item.type == ItemID.Amarok
+                ^ item.type == ItemID.Code2 ^ item.type == ItemID.Yelets
+                ^ item.type == ItemID.RedsYoyo ^ item.type == ItemID.ValkyrieYoyo
+                ^ item.type == ItemID.Kraken ^ item.type == ItemID.TheEyeOfCthulhu
+                ^ item.type == ItemID.Terrarian)
             {
                 item.melee = false;
                 item.magic = false;
@@ -89,27 +99,21 @@ namespace ClassOverhaul
             if (item.magic == true && item.type > 0 && item.type < 3930)
             {
                 item.damage += (10 + (item.mana / 2) + item.rare);
-                item.crit -= 4;
-            }
-            if (item.type == ItemID.WoodYoyo ^ item.type == ItemID.Rally ^ item.type == ItemID.CorruptYoyo
-                ^ item.type == ItemID.CrimsonYoyo ^ item.type == ItemID.JungleYoyo
-                ^ item.type == ItemID.Code1 ^ item.type == ItemID.Valor
-                ^ item.type == ItemID.Cascade ^ item.type == ItemID.FormatC
-                ^ item.type == ItemID.Gradient ^ item.type == ItemID.Chik
-                ^ item.type == ItemID.HelFire ^ item.type == ItemID.Amarok
-                ^ item.type == ItemID.Code2 ^ item.type == ItemID.Yelets
-                ^ item.type == ItemID.RedsYoyo ^ item.type == ItemID.ValkyrieYoyo
-                ^ item.type == ItemID.Kraken ^ item.type == ItemID.TheEyeOfCthulhu
-                ^ item.type == ItemID.Terrarian)
-            {
-                item.melee = false;
-                item.thrown = true;
-                item.damage -= 10;
+                if (item.crit > 4)
+                {
+                    item.damage += item.crit - 4;
+                }
+                item.crit = 0;
             }
             if (item.thrown == true && item.type > 0 && item.type < 3930)
             {
-                item.damage += 10;
-                item.crit = 0;
+                if (item.crit >= 4)
+                {
+                    item.crit -= 4;
+                } else
+                {
+                    item.crit = 0;
+                }
             }
             if (item.type == ItemID.MeteorStaff)
             {
