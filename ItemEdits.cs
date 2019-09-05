@@ -9,9 +9,29 @@ namespace ClassOverhaul
 {
     public class ItemEdits : GlobalItem
     {
+        public override bool InstancePerEntity => true;
+        public override bool CloneNewInstances => true;
+        public bool knightItem = false;
+        public bool rogueItem = false;
+        public bool rangedItem = false;
+        public bool magicItem = false;
+        public bool summonerItem = false;
+        public bool chemistItem = false;
+        public bool preHardmode = false;
+        public bool chemical = false;
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (modItem.chemical == true)
+            {
+                item.thrown = false;
+                item.melee = false;
+                item.magic = false;
+                item.ranged = false;
+                item.summon = false;
+                item.crit = 0;
+            }
             if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
                 ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
                 ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
@@ -69,7 +89,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
                 ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
                 ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
-                ^ item.type == ItemID.ShadowFlameKnife ^ item.type == ItemID.ToxicFlask
+                ^ item.type == ItemID.ShadowFlameKnife
                 ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
                 ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
@@ -91,8 +111,11 @@ namespace ClassOverhaul
             }
             if (item.type == ItemID.ToxicFlask)
             {
-                item.mana = 0;
+                item.magic = false;
+                modItem.chemical = true;
                 item.consumable = true;
+                item.crit = 0;
+                item.mana = 0;
                 item.value = 5000;
                 item.maxStack = 99;
             }
@@ -119,6 +142,115 @@ namespace ClassOverhaul
             {
                 item.damage = 75;
             }
+            if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
+                ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
+                ^ item.type == ItemID.AncientArmorPants ^ item.type == ItemID.AncientArmorShirt
+                ^ item.type == ItemID.TikiMask ^ item.type == ItemID.TikiPants
+                ^ item.type == ItemID.TikiShirt ^ item.type == ItemID.SpookyHelmet
+                ^ item.type == ItemID.SpookyBreastplate ^ item.type == ItemID.SpookyLeggings
+                ^ item.type == ItemID.StardustBreastplate ^ item.type == ItemID.StardustHelmet
+                ^ item.type == ItemID.StardustLeggings ^ item.type == ItemID.ApprenticeHat
+                ^ item.type == ItemID.ApprenticeRobe ^ item.type == ItemID.ApprenticeTrousers
+                ^ item.type == ItemID.SquireGreatHelm ^ item.type == ItemID.SquirePlating
+                ^ item.type == ItemID.SquireGreaves ^ item.type == ItemID.HuntressWig
+                ^ item.type == ItemID.HuntressJerkin ^ item.type == ItemID.HuntressPants
+                ^ item.type == ItemID.MonkBrows ^ item.type == ItemID.MonkShirt
+                ^ item.type == ItemID.MonkPants ^ item.type == ItemID.ApprenticeAltHead
+                ^ item.type == ItemID.ApprenticeAltPants ^ item.type == ItemID.ApprenticeAltShirt
+                ^ item.type == ItemID.HuntressAltHead ^ item.type == ItemID.HuntressAltPants
+                ^ item.type == ItemID.HuntressAltShirt ^ item.type == ItemID.MonkAltHead
+                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
+                ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
+                ^ item.type == ItemID.SquireAltShirt
+                )
+            {
+                modItem.summonerItem = true;
+            }
+            if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask // Knight sets
+                ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
+                ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
+                ^ item.type == ItemID.FrostHelmet ^ item.type == ItemID.FrostBreastplate
+                ^ item.type == ItemID.FrostLeggings ^ item.type == ItemID.HallowedMask
+                ^ item.type == ItemID.ChlorophyteMask ^ item.type == ItemID.TurtleHelmet
+                ^ item.type == ItemID.TurtleScaleMail ^ item.type == ItemID.TurtleLeggings
+                ^ item.type == ItemID.BeetleHelmet ^ item.type == ItemID.BeetleLeggings
+                ^ item.type == ItemID.BeetleScaleMail ^ item.type == ItemID.BeetleShell
+                ^ item.type == ItemID.SolarFlareHelmet ^ item.type == ItemID.SolarFlareBreastplate
+                ^ item.type == ItemID.SolarFlareLeggings ^ item.type == ItemID.MonkBrows 
+                ^ item.type == ItemID.MonkShirt ^ item.type == ItemID.MonkPants
+                ^ item.type == ItemID.SquireGreatHelm ^ item.type == ItemID.SquirePlating
+                ^ item.type == ItemID.SquireGreaves ^ item.type == ItemID.MonkAltHead
+                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
+                ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
+                ^ item.type == ItemID.SquireAltShirt
+                )
+            {
+                modItem.knightItem = true;
+            }
+            if (item.type == ItemID.CobaltMask ^ item.type == ItemID.PalladiumHelmet // Ranger sets
+                ^ item.type == ItemID.MythrilHat ^ item.type == ItemID.OrichalcumHelmet
+                ^ item.type == ItemID.AdamantiteMask ^ item.type == ItemID.TitaniumHelmet
+                ^ item.type == ItemID.FrostHelmet ^ item.type == ItemID.FrostBreastplate
+                ^ item.type == ItemID.FrostLeggings ^ item.type == ItemID.HallowedHelmet
+                ^ item.type == ItemID.ChlorophyteHelmet ^ item.type == ItemID.ShroomiteBreastplate
+                ^ item.type == ItemID.ShroomiteHeadgear ^ item.type == ItemID.ShroomiteHelmet
+                ^ item.type == ItemID.ShroomiteMask ^ item.type == ItemID.ShroomiteLeggings
+                ^ item.type == ItemID.VortexBreastplate ^ item.type == ItemID.VortexHelmet
+                ^ item.type == ItemID.VortexLeggings ^ item.type == ItemID.HuntressWig
+                ^ item.type == ItemID.HuntressJerkin ^ item.type == ItemID.HuntressPants
+                ^ item.type == ItemID.HuntressAltHead ^ item.type == ItemID.HuntressAltPants
+                ^ item.type == ItemID.HuntressAltShirt
+                )
+            {
+                modItem.rangedItem = true;
+            }
+            if (item.type == ItemID.CobaltHat ^ item.type == ItemID.PalladiumHeadgear // Mage sets
+                ^ item.type == ItemID.MythrilHood ^ item.type == ItemID.OrichalcumHeadgear
+                ^ item.type == ItemID.AdamantiteHeadgear ^ item.type == ItemID.TitaniumHeadgear
+                ^ item.type == ItemID.AncientBattleArmorHat ^ item.type == ItemID.AncientBattleArmorShirt
+                ^ item.type == ItemID.AncientBattleArmorPants ^ item.type == ItemID.HallowedHeadgear
+                ^ item.type == ItemID.ChlorophyteHeadgear ^ item.type == ItemID.SpectreHood
+                ^ item.type == ItemID.SpectreMask ^ item.type == ItemID.SpectreRobe
+                ^ item.type == ItemID.SpectrePants ^ item.type == ItemID.NebulaBreastplate
+                ^ item.type == ItemID.NebulaHelmet ^ item.type == ItemID.NebulaLeggings
+                ^ item.type == ItemID.ApprenticeHat ^ item.type == ItemID.ApprenticeRobe
+                ^ item.type == ItemID.ApprenticeTrousers ^ item.type == ItemID.ApprenticeAltHead
+                ^ item.type == ItemID.ApprenticeAltPants ^ item.type == ItemID.ApprenticeAltShirt
+                )
+            {
+                modItem.magicItem = true;
+            }
+            if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask // Rogue sets
+                ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
+                ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
+                ^ item.type == ItemID.FrostHelmet ^ item.type == ItemID.FrostBreastplate
+                ^ item.type == ItemID.FrostLeggings ^ item.type == ItemID.HallowedMask
+                ^ item.type == ItemID.ChlorophyteMask)
+            {
+                modItem.rogueItem = true;
+            }
+            if (item.type == ItemID.CobaltBreastplate ^ item.type == ItemID.CobaltLeggings
+                ^ item.type == ItemID.PalladiumBreastplate ^ item.type == ItemID.PalladiumLeggings
+                ^ item.type == ItemID.MythrilChainmail ^ item.type == ItemID.MythrilGreaves
+                ^ item.type == ItemID.OrichalcumBreastplate ^ item.type == ItemID.OrichalcumLeggings
+                ^ item.type == ItemID.AdamantiteBreastplate ^ item.type == ItemID.AdamantiteLeggings
+                ^ item.type == ItemID.TitaniumBreastplate ^ item.type == ItemID.TitaniumLeggings
+                ^ item.type == ItemID.HallowedPlateMail ^ item.type == ItemID.HallowedGreaves
+                ^ item.type == ItemID.ChlorophytePlateMail ^ item.type == ItemID.ChlorophyteGreaves
+                )
+            {
+                modItem.knightItem = true;
+                modItem.rogueItem = true;
+                modItem.rangedItem = true;
+                modItem.magicItem = true;
+                modItem.summonerItem = true;
+                modItem.chemistItem = true;
+            }
+
+            if (item.rare < 4 ^ item.type == ItemID.SlimeStaff ^ item.type == ItemID.FlaskofPoison
+                ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
+                ^ item.type == ItemID.GoldenBugNet)
+                { modItem.preHardmode = true; } else { modItem.preHardmode = false; }
         }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
@@ -132,6 +264,16 @@ namespace ClassOverhaul
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (modItem.chemical == true)
+            {
+                var tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
+                if (tt != null)
+                {
+                    string[] split = tt.text.Split(' ');
+                    tt.text = split.First() + " thrown chemical damage";
+                }
+            }
             if (item.type == ItemID.SpectreHood)
             {
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
@@ -333,7 +475,7 @@ namespace ClassOverhaul
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
                 if (line != null)
                 {
-                    line.text = "+60 maximum mana\n15% reduced mana usage\n+20% increased magic damage";
+                    line.text = "+60 maximum mana\n15% reduced mana usage\n20% increased magic damage";
                 }
             }
             if (item.type == ItemID.NebulaBreastplate)
@@ -357,6 +499,33 @@ namespace ClassOverhaul
         }
         public override void UpdateEquip(Item item, Player player)
         {
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modPlayer.CanEquip(item, player) == false)
+            {
+                int num5 = (item.vanity && !item.accessory) ? 10 : 0;
+                item.favorited = false;
+                if (item.headSlot != -1)
+                {
+                    player.GetItem(Main.myPlayer, player.armor[num5].Clone());
+                    player.armor[num5].ResetStats(0);
+                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Recipe.FindRecipes();
+                }
+                else if (item.bodySlot != -1)
+                {
+                    player.GetItem(Main.myPlayer, player.armor[num5 + 1].Clone());
+                    player.armor[num5 + 1].ResetStats(0);
+                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Recipe.FindRecipes();
+                }
+                else if (item.legSlot != -1)
+                {
+                    player.GetItem(Main.myPlayer, player.armor[num5 + 2].Clone());
+                    player.armor[num5 + 2].ResetStats(0);
+                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Recipe.FindRecipes();
+                }
+            }
             if (item.type == ItemID.SpectreHood)
             {
                 player.magicDamage += 0.15f; // -25% mDamage
@@ -474,6 +643,82 @@ namespace ClassOverhaul
             {
                 player.magicCrit -= 25;
                 player.magicDamage += 21; // 23% mDamage (46% with full set)
+            }
+        }
+        public override string IsArmorSet(Item head, Item body, Item legs)
+        {
+            if (head.type == ItemID.ApprenticeHat ^ body.type == ItemID.ApprenticeRobe ^ legs.type == ItemID.ApprenticeTrousers)
+                { return "Apprentice"; }
+            if (head.type == ItemID.ApprenticeAltHead ^ legs.type == ItemID.ApprenticeAltPants ^ body.type == ItemID.ApprenticeAltShirt)
+                { return "DarkArtist"; }
+            if (head.type == ItemID.HuntressWig ^ legs.type == ItemID.HuntressPants ^ body.type == ItemID.HuntressJerkin)
+                { return "Huntress"; }
+            if (head.type == ItemID.HuntressAltHead ^ legs.type == ItemID.HuntressAltPants ^ body.type == ItemID.HuntressAltShirt)
+                { return "RedRiding"; }
+            if (head.type == ItemID.SquireGreatHelm ^ legs.type == ItemID.SquireGreaves ^ body.type == ItemID.SquirePlating)
+                { return "Squire"; }
+            if (head.type == ItemID.SquireAltHead ^ legs.type == ItemID.SquireAltPants ^ body.type == ItemID.SquireAltShirt)
+                { return "ValhallaKnight"; }
+            if (head.type == ItemID.MonkBrows ^ legs.type == ItemID.MonkPants ^ body.type == ItemID.MonkShirt)
+                { return "Monk"; }
+            if (head.type == ItemID.MonkAltHead ^ legs.type == ItemID.MonkAltPants ^ body.type == ItemID.MonkAltShirt)
+                { return "ShinobiInfiltrator"; }
+            return base.IsArmorSet(head, body, legs);
+        }
+        public override void UpdateArmorSet(Player player, string set)
+        {
+            base.UpdateArmorSet(player, set);
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if ((set == "Apprentice" ^ set == "DarkArtist") && (modPlayer.job == JobID.mage ^ modPlayer.job == JobID.summoner))
+            {
+                if (modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.mage; else modPlayer.armorJob = JobID.summoner;
+                player.setBonus += "\nAllows using items of other class";
+            }
+            if ((set == "Huntress" ^ set == "RedRiding") && (modPlayer.job == JobID.ranger ^ modPlayer.job == JobID.summoner))
+            {
+                if (modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.ranger; else modPlayer.armorJob = JobID.summoner;
+                player.setBonus += "\nAllows using items of other class";
+            }
+            if ((set == "Squire" ^ set == "Monk" ^ set == "ShinobiInfiltrator" ^ set == "ValhallaKnight") && (modPlayer.job == JobID.knight ^ modPlayer.job == JobID.summoner))
+            {
+                if (modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.knight; else modPlayer.armorJob = JobID.summoner;
+                player.setBonus += "\nAllows using items of other class";
+            }
+        }
+        public override bool CanUseItem(Item item, Player player)
+        {
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modPlayer.CanEquip(item, player))
+            {
+                return base.CanUseItem(item, player);
+            }
+            else
+            {
+                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+                if (item.melee == false && item.thrown == false && item.ranged == false && item.magic == false && item.summon == false && modItem.chemical == false) return true;
+                if (item.axe > 0 ^ item.pick > 0 ^ item.hammer > 0) return true; else return false;
+            }
+        }
+        public override void GetWeaponDamage(Item item, Player player, ref int damage)
+        {
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (modItem.chemical == true)
+            {
+                PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>(mod);
+                int originalDamage = damage;
+                float globalDamage = 1f;
+                damage = (int)(damage * (((player.thrownDamage - 1f) / 2) + modPlayer.chemicalDamage));
+                globalDamage = player.meleeDamage - 1;
+                if (player.magicDamage - 1 < globalDamage)
+                    globalDamage = player.magicDamage - 1;
+                if (player.rangedDamage - 1 < globalDamage)
+                    globalDamage = player.rangedDamage - 1;
+                if (player.minionDamage - 1 < globalDamage)
+                    globalDamage = player.minionDamage - 1;
+                if (player.thrownDamage - 1 < globalDamage)
+                    globalDamage = player.thrownDamage - 1;
+                if (globalDamage > 1)
+                    damage = damage + (int)(originalDamage * globalDamage);
             }
         }
     }

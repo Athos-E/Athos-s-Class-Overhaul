@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using ClassOverhaul.UI;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +22,17 @@ namespace ClassOverhaul
             {
                 npc.catchItem = ItemID.GreenJellyfish;
             }
+        }
+        public override bool CheckDead(NPC npc)
+        {
+            if (base.CheckDead(npc) && npc.type == NPCID.WallofFlesh)
+            {
+                PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+                modPlayer.defeatedWoF = true;
+                modPlayer.immune = true;
+                JobSelection.visible = true;
+            }
+            return base.CheckDead(npc);
         }
     }
 }

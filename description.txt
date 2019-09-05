@@ -1,6 +1,12 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.3.0
+-Toxic Flask is now not craftable by default.(It'll become craftable in the future under certain ingame circunstances -surprise-)
+-Job system implemented. Characters now have to choose a Job or Class once they beat Wall of Flesh for the first time, this will limit their equipment choices.
+-I've been working on Rogue job right now, but I have still to finish the sprites for the sets, for now it can equip all hardmode basic ore plus chlorophyte and hallowed head pieces. (no end game armor- yet)
+-Old One's army sets allows to use 2 types of weapons, in general it helps Summoner more than the other jobs, but it's still equipable by 2 different Jobs.
+
 0.2.3
 -Thrown weapons get weapon imbuements, magma stone and frostburn effects.
 -Swapped thrown weapons and magic weapons crits patches.(Throwns now get -4% crit chance and magic got crit chance set to 0)

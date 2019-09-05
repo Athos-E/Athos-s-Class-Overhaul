@@ -50,7 +50,7 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.GetModPlayer<PlayerEdits>().GellyfishBuff = true;
+            player.GetModPlayer<PlayerEdits>().gellyfishArmor = true;
             player.setBonus = "Deals " + ((int)((1 + (player.statDefense / 2)) * player.minionDamage)).ToString() + " minion damage upon getting hit, the damage is also upgraded by defense.";
         }
     }
