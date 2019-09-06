@@ -1,6 +1,15 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.3.1
+-Fixing UI glitch
+-Fixed bug on Old One's army sets.
+-New Rogue armor sets from tier 1 hardmode ores to chlorophyte tier.
+-Scourge of The Corruptor is now a summoning weapon with 12 base mana cost.
+-Beetle Scale Mail is now Rogue only, while Beetle Shell is Knight only.
+-Beetle Scale Mail has +43 melee crit chance, +26% melee speed, +25% thrown damage and 10% increased melee damage.
+-Melee speed now affects thrown items.
+
 0.3.0
 -Toxic Flask is now not craftable by default.(It'll become craftable in the future under certain ingame circunstances -surprise-)
 -Job system implemented. Characters now have to choose a Job or Class once they beat Wall of Flesh for the first time, this will limit their equipment choices.

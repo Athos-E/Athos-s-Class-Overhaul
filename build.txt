@@ -1,4 +1,4 @@
 displayName = Athos's Class Overhaul
 author = Athos E. Akaiger
 homepage = https://forums.terraria.org/index.php?threads/athoss-class-overhaul.82115/
-version = 0.3.0
+version = 0.3.1

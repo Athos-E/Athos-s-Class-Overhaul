@@ -20,7 +20,7 @@ namespace ClassOverhaul.UI
         public float oldScale;
         public override void OnInitialize()
         {
-            visible = true;
+            visible = false;
             panel = new JobSelectionPanel();
             panel.SetPadding(0);
             panel.Left.Set(410, 0);

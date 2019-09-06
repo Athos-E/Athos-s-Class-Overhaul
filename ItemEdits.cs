@@ -4,6 +4,7 @@ using Terraria.ID;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Utilities;
+using Terraria.ModLoader.IO;
 
 namespace ClassOverhaul
 {
@@ -35,9 +36,11 @@ namespace ClassOverhaul
             if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
                 ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
                 ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
-                ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun)
+                ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun
+                ^ item.type == ItemID.ScourgeoftheCorruptor)
             {
                 item.ranged = false;
+                item.melee = false;
                 item.magic = false;
                 item.summon = true;
             }
@@ -90,7 +93,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
                 ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
                 ^ item.type == ItemID.ShadowFlameKnife
-                ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.ScourgeoftheCorruptor
+                ^ item.type == ItemID.VampireKnives
                 ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
                 ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife
@@ -174,7 +177,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.ChlorophyteMask ^ item.type == ItemID.TurtleHelmet
                 ^ item.type == ItemID.TurtleScaleMail ^ item.type == ItemID.TurtleLeggings
                 ^ item.type == ItemID.BeetleHelmet ^ item.type == ItemID.BeetleLeggings
-                ^ item.type == ItemID.BeetleScaleMail ^ item.type == ItemID.BeetleShell
+                ^ item.type == ItemID.BeetleShell
                 ^ item.type == ItemID.SolarFlareHelmet ^ item.type == ItemID.SolarFlareBreastplate
                 ^ item.type == ItemID.SolarFlareLeggings ^ item.type == ItemID.MonkBrows 
                 ^ item.type == ItemID.MonkShirt ^ item.type == ItemID.MonkPants
@@ -225,7 +228,8 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
                 ^ item.type == ItemID.FrostHelmet ^ item.type == ItemID.FrostBreastplate
                 ^ item.type == ItemID.FrostLeggings ^ item.type == ItemID.HallowedMask
-                ^ item.type == ItemID.ChlorophyteMask)
+                ^ item.type == ItemID.ChlorophyteMask ^ item.type == ItemID.BeetleScaleMail
+                ^ item.type == ItemID.BeetleHelmet ^ item.type == ItemID.BeetleLeggings)
             {
                 modItem.rogueItem = true;
             }
@@ -251,6 +255,11 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
                 ^ item.type == ItemID.GoldenBugNet)
                 { modItem.preHardmode = true; } else { modItem.preHardmode = false; }
+
+            if (item.type == ItemID.ScourgeoftheCorruptor)
+            {
+                item.mana = 12;
+            }
         }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
@@ -496,6 +505,15 @@ namespace ClassOverhaul
                     line.text = "20% increased minion damage\n25% increased magic damage";
                 }
             }
+            if (item.type == ItemID.BeetleScaleMail)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "10% increased melee damage\n25% increased thrown damage\n43% increased melee critical strike chance\n26% increased melee speed";
+                }
+            }
         }
         public override void UpdateEquip(Item item, Player player)
         {
@@ -644,25 +662,34 @@ namespace ClassOverhaul
                 player.magicCrit -= 25;
                 player.magicDamage += 21; // 23% mDamage (46% with full set)
             }
+            if (item.type == ItemID.BeetleScaleMail)
+            {
+                player.meleeDamage += 0.02f;
+                player.meleeSpeed += 0.20f;
+                player.meleeCrit += 43;
+                player.thrownDamage += 0.25f;
+            }
         }
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
-            if (head.type == ItemID.ApprenticeHat ^ body.type == ItemID.ApprenticeRobe ^ legs.type == ItemID.ApprenticeTrousers)
+            if (head.type == ItemID.ApprenticeHat && body.type == ItemID.ApprenticeRobe && legs.type == ItemID.ApprenticeTrousers)
                 { return "Apprentice"; }
-            if (head.type == ItemID.ApprenticeAltHead ^ legs.type == ItemID.ApprenticeAltPants ^ body.type == ItemID.ApprenticeAltShirt)
+            if (head.type == ItemID.ApprenticeAltHead && legs.type == ItemID.ApprenticeAltPants && body.type == ItemID.ApprenticeAltShirt)
                 { return "DarkArtist"; }
-            if (head.type == ItemID.HuntressWig ^ legs.type == ItemID.HuntressPants ^ body.type == ItemID.HuntressJerkin)
+            if (head.type == ItemID.HuntressWig && legs.type == ItemID.HuntressPants && body.type == ItemID.HuntressJerkin)
                 { return "Huntress"; }
-            if (head.type == ItemID.HuntressAltHead ^ legs.type == ItemID.HuntressAltPants ^ body.type == ItemID.HuntressAltShirt)
+            if (head.type == ItemID.HuntressAltHead && legs.type == ItemID.HuntressAltPants && body.type == ItemID.HuntressAltShirt)
                 { return "RedRiding"; }
-            if (head.type == ItemID.SquireGreatHelm ^ legs.type == ItemID.SquireGreaves ^ body.type == ItemID.SquirePlating)
+            if (head.type == ItemID.SquireGreatHelm && legs.type == ItemID.SquireGreaves && body.type == ItemID.SquirePlating)
                 { return "Squire"; }
-            if (head.type == ItemID.SquireAltHead ^ legs.type == ItemID.SquireAltPants ^ body.type == ItemID.SquireAltShirt)
+            if (head.type == ItemID.SquireAltHead && legs.type == ItemID.SquireAltPants && body.type == ItemID.SquireAltShirt)
                 { return "ValhallaKnight"; }
-            if (head.type == ItemID.MonkBrows ^ legs.type == ItemID.MonkPants ^ body.type == ItemID.MonkShirt)
+            if (head.type == ItemID.MonkBrows && legs.type == ItemID.MonkPants && body.type == ItemID.MonkShirt)
                 { return "Monk"; }
-            if (head.type == ItemID.MonkAltHead ^ legs.type == ItemID.MonkAltPants ^ body.type == ItemID.MonkAltShirt)
+            if (head.type == ItemID.MonkAltHead && legs.type == ItemID.MonkAltPants && body.type == ItemID.MonkAltShirt)
                 { return "ShinobiInfiltrator"; }
+            if (head.type == ItemID.BeetleHelmet && body.type == ItemID.BeetleScaleMail && legs.type == ItemID.BeetleLeggings)
+                { return "BeetleScaleArmor"; }
             return base.IsArmorSet(head, body, legs);
         }
         public override void UpdateArmorSet(Player player, string set)
@@ -683,6 +710,11 @@ namespace ClassOverhaul
             {
                 if (modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.knight; else modPlayer.armorJob = JobID.summoner;
                 player.setBonus += "\nAllows using items of other class";
+            }
+            if (set == "BeetleScaleArmor")
+            {
+                player.thrownVelocity += 0.25f;
+                player.setBonus += "\n25% increased thrown velocity";
             }
         }
         public override bool CanUseItem(Item item, Player player)
@@ -720,6 +752,16 @@ namespace ClassOverhaul
                 if (globalDamage > 1)
                     damage = damage + (int)(originalDamage * globalDamage);
             }
+        }
+        public override float UseTimeMultiplier(Item item, Player player)
+        {
+            if (item.thrown == true)
+            {
+                float multiplier = 1f - (player.meleeSpeed - 1f);
+                if (multiplier < 0.01f) multiplier = 0.01f;
+                return multiplier;
+            }
+            return base.UseTimeMultiplier(item, player);
         }
     }
 }
