@@ -40,7 +40,7 @@ namespace ClassOverhaul
                 ^ projectile.type == ProjectileID.IceBoomerang ^ projectile.type == ProjectileID.FruitcakeChakram ^ projectile.type == ProjectileID.ThornChakram
                 ^ projectile.type == ProjectileID.Flamarang ^ projectile.type == ProjectileID.FlyingKnife ^ projectile.type == ProjectileID.LightDisc
                 ^ projectile.type == ProjectileID.Bananarang ^ projectile.type == ProjectileID.PossessedHatchet
-                ^ projectile.type == ProjectileID.ShadowFlameKnife
+                ^ projectile.type == ProjectileID.ShadowFlameKnife ^ projectile.type == ProjectileID.VampireKnife
                 ^ projectile.type == ProjectileID.Daybreak ^ projectile.type == ProjectileID.Anchor ^ projectile.type == ProjectileID.ChainGuillotine 
                 ^ projectile.type == ProjectileID.BoxingGlove ^ projectile.type == ProjectileID.GolemFist ^ projectile.type == ProjectileID.WoodYoyo
                 ^ projectile.type == ProjectileID.CorruptYoyo ^ projectile.type == ProjectileID.CrimsonYoyo ^ projectile.type == ProjectileID.JungleYoyo
@@ -192,6 +192,17 @@ namespace ClassOverhaul
                     expr_E123_cp_0.velocity.Y = expr_E123_cp_0.velocity.Y - 0.5f;
                 }
             }
+        }
+        public override bool? CanHitNPC(Projectile projectile, NPC target)
+        {
+            if (target.immune[projectile.owner] <= 0 && target.friendly == false) return true;
+            return base.CanHitNPC(projectile, target);
+        }
+        public override bool CanHitPvp(Projectile projectile, Player target)
+        {
+            if (target.immuneTime <= 0) return true;
+            return base.CanHitPvp(projectile, target);
+
         }
     }
 }

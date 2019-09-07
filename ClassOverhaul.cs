@@ -24,17 +24,6 @@ namespace ClassOverhaul
             recipe.AddIngredient(ItemID.Wood, 10);
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(ItemID.SlimeStaff);
-           // 
-           // recipe.AddRecipe();
-           // recipe = new ModRecipe(this);
-           // recipe.AddIngredient(ItemID.Bottle, 15);
-           // recipe.AddIngredient(ItemID.Deathweed);
-           // recipe.AddIngredient(ItemID.VialofVenom);
-           // recipe.AddIngredient(ItemID.Fireblossom);
-           // recipe.AddIngredient(ItemID.ExplosivePowder);
-           // recipe.AddTile(TileID.AlchemyTable);
-           // recipe.SetResult(ItemID.ToxicFlask, 15);
-           // recipe.AddRecipe();
         }
         public override void Load()
         {

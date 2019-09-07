@@ -15,12 +15,15 @@ namespace ClassOverhaul
         public int armorJob;
         public bool immune;
         public bool managedRecipes;
+        public bool rogueBonus;
         public override void ResetEffects()
         {
             base.ResetEffects();
             chemicalDamage = 1f;
             armorJob = 0;
+            rogueBonus = false;
             gellyfishArmor = false;
+            player.armorPenetration = 0;
         }
         public override TagCompound Save()
         {
@@ -30,7 +33,8 @@ namespace ClassOverhaul
                 {"job", job },
                 {"armorJob", armorJob },
                 {"defeatedWoF", defeatedWoF},
-                {"immune", immune }
+                {"immune", immune},
+                {"rogueBonus", rogueBonus }
             };
         }
         public override void Load(TagCompound tag)
@@ -38,8 +42,10 @@ namespace ClassOverhaul
             base.Load(tag);
             choseJob = tag.GetBool("choseJob");
             job = tag.GetInt("job");
+            armorJob = tag.GetInt("armorJob");
             defeatedWoF = tag.GetBool("defeatedWoF");
             immune = tag.GetBool("immune");
+            rogueBonus = tag.GetBool("rogueBonus");
         }
         public override void PostUpdate()
         {
@@ -85,6 +91,7 @@ namespace ClassOverhaul
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modItem.isBasic == true) return true;
             if (modItem.preHardmode == true)
             {
                 return true;
@@ -114,11 +121,11 @@ namespace ClassOverhaul
                         case JobID.ranger:
                             if (modPlayer.armorJob == JobID.summoner)
                             {
-                                if (modItem.rangedItem ^ item.ranged ^ item.summon) return true; else return false;
+                                if (modItem.rangerItem ^ item.ranged ^ item.summon) return true; else return false;
                             }
                             else
                             {
-                                if (modItem.rangedItem ^ item.ranged) return true; else return false;
+                                if (modItem.rangerItem ^ item.ranged) return true; else return false;
                             }
                         case JobID.mage:
                             if (modPlayer.armorJob == JobID.summoner)
@@ -139,7 +146,7 @@ namespace ClassOverhaul
                                 case JobID.rogue:
                                     if (modItem.summonerItem ^ item.summon ^ modItem.rogueItem ^ item.thrown) return true; else return false;
                                 case JobID.ranger:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.rangedItem ^ item.ranged) return true; else return false;
+                                    if (modItem.summonerItem ^ item.summon ^ modItem.rangerItem ^ item.ranged) return true; else return false;
                                 case JobID.mage:
                                     if (modItem.summonerItem ^ item.summon ^ modItem.magicItem ^ item.magic) return true; else return false;
                                 case JobID.chemist:
@@ -163,9 +170,13 @@ namespace ClassOverhaul
         }
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
-            if (immune == true)
+            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
+            if (immune == true) return false;
+            if (modNPC.atkCooldown > 0) return false;
+            else if (modNPC.atkCooldown == 0)
             {
-                return false;
+                if (npc.friendly == true) return false;
+                else return true;
             }
             return base.CanBeHitByNPC(npc, ref cooldownSlot);
         }
@@ -298,6 +309,58 @@ namespace ClassOverhaul
                 }
             }
             base.OnHitPvpWithProj(proj, target, damage, crit);
+        }
+        public override void OnHitByNPC(NPC npc, int damage, bool crit)
+        {
+            base.OnHitByNPC(npc, damage, crit);
+            if (player.longInvince == true)
+            {
+                player.immune = true;
+                player.immuneTime = 45;
+            }
+            else
+            {
+                player.immune = true;
+                player.immuneTime = 10;
+            }
+        }
+        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
+        {
+            base.OnHitByProjectile(proj, damage, crit);
+            if (player.longInvince == true)
+            {
+                player.immune = true;
+                player.immuneTime = 45;
+            }
+            else
+            {
+                player.immune = true;
+                player.immuneTime = 10;
+            }
+        }
+        public override void OnHitPvp(Item item, Player target, int damage, bool crit)
+        {
+            base.OnHitPvp(item, target, damage, crit);
+            if (target.longInvince == true)
+            {
+                target.immune = true;
+                target.immuneTime = 45;
+            }
+            else
+            {
+                target.immune = true;
+                target.immuneTime = 10;
+            }
+        }
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+        {
+            base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            target.immune[Main.myPlayer] = 5;
+        }
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
+            target.immune[Main.myPlayer] = 5;
         }
     }
 }

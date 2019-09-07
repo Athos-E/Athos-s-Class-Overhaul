@@ -11,7 +11,7 @@ namespace ClassOverhaul.Items.Armor
         {
             base.SetStaticDefaults();
             DisplayName.SetDefault("Adamantite Hood");
-            Tooltip.SetDefault("14% increased melee damage\n23% increased thrown damage\n6% increased melee speed\n37% increased melee critical strike chance\n6% increased move speed");
+            Tooltip.SetDefault("14% increased melee damage\n23% increased thrown damage\n20% increased melee speed\n37% increased melee critical strike chance\n6% increased move speed");
         }
         public override void SetDefaults()
         {

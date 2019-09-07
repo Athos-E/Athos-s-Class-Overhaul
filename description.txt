@@ -1,6 +1,19 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.4.0
+-Rogue can't shoot sword projectiles.
+-Rogue get armor penetration(melee only) based on weapon rarity.
+-Rogue can't use Knight exclusive sets anymore.
+-Rogue can't use Solar Eruption.
+-Monk/Shinobi infiltrator are now Rogue sets.
+-Player regular immune time without Cross Necklace is now 10 frames, 45 with cross necklace.
+-NPC regular immune time is now 5 frames.
+-NPCs now have a melee speed stat, which defines the cooldown for hiting players, the default is 30 frames(feels like vanilla right now). Will be edited on some NPCs in the future.
+-Buffed SOME hardmode thrown weapons by 20 damage.
+-Nerfed Daybreak and hardmode Yoyos by 15 damage.
+-Shields are Knight-only items.
+
 0.3.1
 -Fixing UI glitch
 -Fixed bug on Old One's army sets.
