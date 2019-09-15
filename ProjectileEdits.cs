@@ -10,21 +10,16 @@ namespace ClassOverhaul
         public override void SetDefaults(Projectile projectile)
         {
             base.SetDefaults(projectile);
-            if (projectile.type == ProjectileID.BeeArrow)
-            {
-                projectile.ranged = false;
-                projectile.minion = true;
-                projectile.arrow = false;
-            }
-            if (projectile.type == ProjectileID.SpectreWrath ^ projectile.type == ProjectileID.Skull 
-                ^ projectile.type == ProjectileID.Bat ^ projectile.type == ProjectileID.Wasp 
-                ^ projectile.type == ProjectileID.Bee ^ projectile.type == ProjectileID.Hellwing
-                ^ projectile.type == ProjectileID.MechanicalPiranha
+            ProjectileEdits modProjectile = projectile.GetGlobalProjectile<ProjectileEdits>();
+            if (projectile.type == ProjectileID.BeeArrow ^ projectile.type == ProjectileID.Hellwing
+                ^ projectile.type == ProjectileID.SpectreWrath ^ projectile.type == ProjectileID.Skull
+                ^ projectile.type == ProjectileID.Bat ^ projectile.type == ProjectileID.Wasp
+                ^ projectile.type == ProjectileID.Bee ^ projectile.type == ProjectileID.MechanicalPiranha
                 ^ projectile.type == ProjectileID.EatersBite ^ projectile.type == ProjectileID.TinyEater)
             {
-                projectile.magic = false;
-                projectile.melee = false;
                 projectile.ranged = false;
+                projectile.arrow = false;
+                projectile.magic = false;
                 projectile.minion = true;
             }
             if (projectile.type == ProjectileID.GreenLaser ^ projectile.type == ProjectileID.PurpleLaser

@@ -2,12 +2,15 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using System.Collections.Generic;
+using ClassOverhaul.Minions;
 
 namespace ClassOverhaul
 {
     class PlayerEdits : ModPlayer
     {
         public float chemicalDamage = 1f;
+        public float usedMinionSlots = 0f;
         public bool defeatedWoF = false;
         public bool choseJob = false;
         public bool gellyfishArmor;
@@ -67,6 +70,16 @@ namespace ClassOverhaul
                 {
                     modPlayer.managedRecipes = true;
                 }
+            }
+        }
+        public override void PreUpdateBuffs()
+        {
+            base.PreUpdateBuffs();
+            if (player.HasBuff(BuffID.PotionSickness))
+            {
+               int index = player.FindBuffIndex(BuffID.PotionSickness);
+               if (player.pStone && player.buffTime[index] > 900) player.buffTime[index] = 900;
+                else if(player.buffTime[index] > 1800) player.buffTime[index] = 1800;
             }
         }
         public override void PostUpdateBuffs()
@@ -361,6 +374,54 @@ namespace ClassOverhaul
         {
             base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
             target.immune[Main.myPlayer] = 5;
+        }
+
+        public override bool? CanHitNPC(Item item, NPC target)
+        {
+            NPCEdits modNPC = target.GetGlobalNPC<NPCEdits>();
+            if (modNPC.isMinion)
+            {
+                if (modNPC.owner == Main.myPlayer) return false;
+                if (Main.player[modNPC.owner].hostile == false) return false;
+            }
+            return base.CanHitNPC(item, target);
+        }
+
+        public override bool? CanHitNPCWithProj(Projectile proj, NPC target)
+        {
+            NPCEdits modNPC = target.GetGlobalNPC<NPCEdits>();
+            if (modNPC.isMinion)
+            {
+                if (modNPC.owner == Main.myPlayer) return false;
+                if (Main.player[modNPC.owner].hostile == false) return false;
+            }
+            return base.CanHitNPCWithProj(proj, target);
+        }
+
+        public override void PostItemCheck()
+        {
+            Item item = player.HeldItem;
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer)
+            {
+                int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
+                NPC minion = Main.npc[id];
+                NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
+                PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+                modMinion.owner = Main.myPlayer;
+                if (modPlayer.usedMinionSlots + modMinion.minionSlots > player.maxMinions)
+                {
+                    minion.active = false;
+                }
+                else
+                {
+                    modPlayer.usedMinionSlots += modMinion.minionSlots;
+                    player.numMinions++;
+                    modMinion.minionPos = player.numMinions;
+                    minion.damage = item.damage;
+                }
+            }
+            base.PostItemCheck();
         }
     }
 }

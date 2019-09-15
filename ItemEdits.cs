@@ -4,6 +4,8 @@ using Terraria.ID;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Utilities;
+using ClassOverhaul.Minions;
+using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul
 {
@@ -21,6 +23,9 @@ namespace ClassOverhaul
         public bool chemical = false;
         public bool extraTooltip = false;
         public bool isBasic = false;
+        public bool hasSummon = false;
+        public int summonNPC;
+        public int cooldown;
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
@@ -38,6 +43,12 @@ namespace ClassOverhaul
                 item.summon = false;
                 item.crit = 0;
             }
+            if (item.rare < 4 ^ item.type == ItemID.SlimeStaff ^ item.type == ItemID.FlaskofPoison
+                ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
+                ^ item.type == ItemID.GoldenBugNet)
+            { modItem.preHardmode = true; }
+            else { modItem.preHardmode = false; }
+            if (item.type == ItemID.EoCShield) { modItem.preHardmode = true; }
             if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
                 ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
                 ^ item.type == ItemID.AncientArmorPants ^ item.type == ItemID.AncientArmorShirt
@@ -159,49 +170,6 @@ namespace ClassOverhaul
                 item.magic = false;
                 item.summon = true;
             }
-            if (item.type == ItemID.BeesKnees)
-            {
-                item.autoReuse = true;
-                item.useAmmo = 0;
-                item.damage += 5;
-                item.mana = 6;
-            }
-            if (item.type == ItemID.HellwingBow)
-            {
-                item.autoReuse = true;
-                item.useAmmo = 0;
-                item.damage += 5;
-                item.mana = 4;
-            }
-            if (item.type == ItemID.PiranhaGun)
-            {
-                item.useAmmo = 0;
-                item.mana = 8;
-            }
-            if (item.type == ItemID.SpectreStaff)
-            {
-                item.damage = 68;
-            }
-            if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
-                ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
-                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine)
-            {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
-            }
-            if (item.type == ItemID.SpaceGun)
-            {
-                item.mana = 6;
-            }
-            if (item.type == ItemID.LaserRifle)
-            {
-                item.mana = 7;
-            }
-            if (item.type == ItemID.ChargedBlasterCannon)
-            {
-                item.mana = 10;
-            }
             if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
                 ^ item.type == ItemID.IceBoomerang ^ item.type == ItemID.FruitcakeChakram
                 ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
@@ -227,7 +195,15 @@ namespace ClassOverhaul
                 item.magic = false;
                 item.thrown = true;
             }
-            if (item.type == ItemID.LightDisc ^ item.type == ItemID.Bananarang 
+            if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
+                ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
+                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine)
+            {
+                item.magic = false;
+                item.ranged = true;
+                item.autoReuse = true;
+            }
+            if (item.type == ItemID.LightDisc ^ item.type == ItemID.Bananarang
                 ^ item.type == ItemID.PossessedHatchet ^ item.type == ItemID.ShadowFlameKnife
                 ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
@@ -245,6 +221,50 @@ namespace ClassOverhaul
                 )
             {
                 item.damage -= 15;
+            }
+            if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask
+                ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
+                ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
+                ^ item.type == ItemID.HallowedMask ^ item.type == ItemID.ChlorophyteMask
+                ^ item.type == ItemID.BeetleShell ^ item.type == ItemID.SolarFlareBreastplate
+                )
+            {
+                item.defense += 20;
+            }
+            if (item.type == ItemID.BeesKnees)
+            {
+                item.autoReuse = true;
+                item.useAmmo = 0;
+                item.damage += 5;
+                item.mana = 6;
+            }
+            if (item.type == ItemID.HellwingBow)
+            {
+                item.autoReuse = true;
+                item.useAmmo = 0;
+                item.damage += 5;
+                item.mana = 4;
+            }
+            if (item.type == ItemID.PiranhaGun)
+            {
+                item.useAmmo = 0;
+                item.mana = 8;
+            }
+            if (item.type == ItemID.SpectreStaff)
+            {
+                item.damage = 68;
+            }
+            if (item.type == ItemID.SpaceGun)
+            {
+                item.mana = 6;
+            }
+            if (item.type == ItemID.LaserRifle)
+            {
+                item.mana = 7;
+            }
+            if (item.type == ItemID.ChargedBlasterCannon)
+            {
+                item.mana = 10;
             }
             if (item.type == ItemID.ToxicFlask)
             {
@@ -279,23 +299,20 @@ namespace ClassOverhaul
             {
                 item.damage = 75;
             }
-            if (item.rare < 4 ^ item.type == ItemID.SlimeStaff ^ item.type == ItemID.FlaskofPoison
-                ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
-                ^ item.type == ItemID.GoldenBugNet)
-            { modItem.preHardmode = true; } else { modItem.preHardmode = false; }
             if (item.type == ItemID.ScourgeoftheCorruptor)
             {
                 item.mana = 12;
             }
-            if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask
-                ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
-                ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
-                ^ item.type == ItemID.HallowedMask ^ item.type == ItemID.ChlorophyteMask
-                ^ item.type == ItemID.BeetleShell ^ item.type == ItemID.SolarFlareBreastplate
-                )
+            if (item.type == ItemID.AnkhCharm)
             {
-                item.defense += 20;
+                item.accessory = false;
             }
+            //if (item.type == ItemID.ImpStaff)
+            //{
+            //    modItem.hasSummon = true;
+            //    item.shoot = 0;
+            //    modItem.summonNPC = mod.NPCType("Imp");
+            //}
         }
         public override void UpdateEquip(Item item, Player player)
         {
@@ -791,6 +808,11 @@ namespace ClassOverhaul
                     line.text = "20% increased minion damage\n40% increased melee critical strike chance\n35% increased move speed";
                 }
             }
+            if (item.type == ItemID.AnkhCharm)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+            }
         }
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
@@ -850,7 +872,6 @@ namespace ClassOverhaul
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (modPlayer.CanEquip(item, player))
             {
-                if (item.type == ItemID.SolarEruption && modPlayer.job == JobID.rogue) return false;
                 return base.CanUseItem(item, player);
             }
             else

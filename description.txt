@@ -1,6 +1,11 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.4.1
+-Shield of EoC is a pre-hardmode item, so it should be equipable by any class(same with Cobalt and Obsidian Shields).
+-Ankh Charm is now not equipable and is a Material(for Ankh Shield, which is Knight only).
+-Potion Sickness now lasts 30 seconds(15 with Philosopher's Stone).
+
 0.4.0
 -Rogue can't shoot sword projectiles.
 -Rogue get armor penetration(melee only) based on weapon rarity.

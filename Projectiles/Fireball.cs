@@ -36,6 +36,7 @@ namespace ClassOverhaul.Projectiles
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, mod.ProjectileType("FireballBlast"), (int)((double)projectile.damage * 0.65), projectile.knockBack, Main.myPlayer, 0f, 0f);
             }
         }
+
         public override void AI()
         {
             Color newColor5;

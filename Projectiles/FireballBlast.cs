@@ -13,9 +13,10 @@ namespace ClassOverhaul.Projectiles
         }
         public override void SetDefaults()
         {
+            projectile.aiStyle = 50;
+            aiType = ProjectileID.InfernoFriendlyBlast;
             projectile.width = 150;
             projectile.height = 150;
-            projectile.aiStyle = 50;
             projectile.friendly = true;
             projectile.alpha = 255;
             projectile.magic = true;
