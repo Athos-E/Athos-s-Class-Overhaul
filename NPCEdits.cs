@@ -1,10 +1,8 @@
 ﻿using ClassOverhaul.UI;
 using Terraria;
 using Terraria.ID;
-using Terraria.UI;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System;
 
 namespace ClassOverhaul
 {
@@ -16,6 +14,7 @@ namespace ClassOverhaul
         public int atkSpeed = 30;
         public int defaultAtkSpeed = 30;
         public bool isMinion;
+        public bool firstUpdate;
         public int owner = -1;
         public int minionNum;
         public int minionPos;
@@ -98,12 +97,10 @@ namespace ClassOverhaul
             if (modNPC.isMinion == true) return false;
             if (base.CheckDead(npc))
             {
-                if (npc.type == NPCID.WallofFlesh)
+                PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+                if (npc.type == NPCID.WallofFlesh && modPlayer.defeatedWoF == false)
                 {
-                    PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
                     modPlayer.defeatedWoF = true;
-                    modPlayer.immune = true;
-                    JobSelection.visible = true;
                 }
             }
             return base.CheckDead(npc);
@@ -121,6 +118,13 @@ namespace ClassOverhaul
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
             Player player = Main.player[modNPC.owner];
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (IfHoverNPC(npc))
+            {
+                if (Main.mouseRight && Main.npcChatRelease)
+                {
+                    npc.life = 0;
+                }
+            }
             if (player.dead)
             {
                 npc.life = 0;
@@ -166,24 +170,25 @@ namespace ClassOverhaul
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
 
-        public override bool? CanChat(NPC npc)
+        public bool IfHoverNPC(NPC npc)
         {
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true && modNPC.owner == Main.myPlayer) return true;
-            return base.CanChat(npc);
-        }
-
-        public override void GetChat(NPC npc, ref string chat)
-        {
-            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true && Main.player[modNPC.owner].talkNPC == npc.whoAmI)
+            if (!Main.player[Main.myPlayer].dead && Main.myPlayer == modNPC.owner)
             {
-                Main.drawingPlayerChat = false;
+                Rectangle rectangle = new Rectangle((int)((float)Main.mouseX + Main.screenPosition.X), (int)((float)Main.mouseY + Main.screenPosition.Y), 1, 1);
+                bool flag5;
+                bool flag4;
+                if (npc.active)
+                {
+                    flag5 = rectangle.Intersects(npc.getRect());
+                    flag4 = (flag5 || (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == npc.whoAmI));
+                    if (flag4)
+                    {
+                        return true;
+                    }
+                }
             }
-            else
-            {
-                base.GetChat(npc, ref chat);
-            }
+            return false;
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul.Minions
 {
-    public class Imp : ModNPC
+    public class Imp : MinionBase
     {
         public override void SetDefaults()
         {
@@ -16,10 +16,6 @@ namespace ClassOverhaul.Minions
             npc.height = 32;
             npc.lifeMax = 300;
             npc.life = 300;
-            npc.noTileCollide = false;
-            npc.noGravity = true;
-            modNPC.isMinion = true;
-            modNPC.minionSlots = 1;
             modNPC.inertia = 30f;
             modNPC.shootSpeed = 10f;
             modNPC.idleAccel = 10f;
@@ -30,31 +26,34 @@ namespace ClassOverhaul.Minions
             modNPC.shootCool = 80f;       //how fast the minion can shoot
             modNPC.shoot = ProjectileID.ImpFireball;
             Main.npcFrameCount[npc.type] = 8;
-            animationType = NPCID.Harpy;
         }
 
         public override void FindFrame(int frameHeight)
         {
-            npc.frameCounter -= 0.25f;
+            npc.frameCounter += 0.25f;
             npc.frameCounter %= Main.npcFrameCount[npc.type];
             int frame = (int)npc.frameCounter;
             npc.frame.Y = frame * frameHeight;
             npc.spriteDirection = npc.direction;
         }
 
-        public virtual void CreateDust()
+        public override void CreateDust()
         {
+            if (npc.frameCounter % 2 == 0)
+            {
+                int num45 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y), npc.width, npc.height, 6, 0f, 0f, 100, default(Color), 2f);
+                Dust obj2 = Main.dust[num45];
+                obj2.velocity *= 0.3f;
+                Main.dust[num45].noGravity = true;
+                Main.dust[num45].noLight = true;
+            }
         }
 
-        public virtual void SelectFrame()
+        public override void Behavior()
         {
-        }
-
-        public override void AI()
-        {
-            base.AI();
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
             Player player = Main.player[modNPC.owner];
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             float spacing = (float)npc.width * modNPC.spacingMult;
             for (int k = 0; k < 1000; k++)
             {
@@ -172,7 +171,6 @@ namespace ClassOverhaul.Minions
                 }
             }
             npc.rotation = npc.velocity.X * 0.05f;
-            SelectFrame();
             CreateDust();
             if (npc.velocity.X > 0f)
             {
@@ -180,7 +178,7 @@ namespace ClassOverhaul.Minions
             }
             else if (npc.velocity.X < 0f)
             {
-                 npc.spriteDirection = (npc.direction = -1);
+                npc.spriteDirection = (npc.direction = -1);
             }
             if (npc.ai[1] > 0f)
             {

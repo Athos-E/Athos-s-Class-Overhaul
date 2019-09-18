@@ -97,7 +97,6 @@ namespace ClassOverhaul
             if (ingredient5 > 0) recipe.AddIngredient(ingredient5);
             recipe.SetResult(mod.GetItem(result.Name).item.type, quantity);
             recipe.AddRecipe();
-            
         }
     }
 }

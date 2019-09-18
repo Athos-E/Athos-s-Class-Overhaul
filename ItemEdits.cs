@@ -4,8 +4,6 @@ using Terraria.ID;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Utilities;
-using ClassOverhaul.Minions;
-using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul
 {
@@ -24,6 +22,7 @@ namespace ClassOverhaul
         public bool extraTooltip = false;
         public bool isBasic = false;
         public bool hasSummon = false;
+        public bool blocked = false;
         public int summonNPC;
         public int cooldown;
         public override void SetDefaults(Item item)
@@ -283,6 +282,9 @@ namespace ClassOverhaul
                 {
                     item.damage += item.crit - 4;
                 }
+            }
+            if(item.magic == true)
+            {
                 item.crit = 0;
             }
             if (item.thrown == true && item.type > 0 && item.type < 3930)
@@ -306,6 +308,10 @@ namespace ClassOverhaul
             if (item.type == ItemID.AnkhCharm)
             {
                 item.accessory = false;
+            }
+            if (item.type == ItemID.BookofSkulls)
+            {
+                item.mana = 12;
             }
             //if (item.type == ItemID.ImpStaff)
             //{
@@ -532,6 +538,15 @@ namespace ClassOverhaul
                 if (line != null)
                 {
                     line.text = "Shoots summoned bees like arrows";
+                }
+
+            }
+            if (item.type == ItemID.HellwingBow)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "Shoots summoned Hell Bats like arrows";
                 }
 
             }

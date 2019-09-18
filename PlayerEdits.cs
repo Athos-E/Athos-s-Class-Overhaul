@@ -2,8 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System.Collections.Generic;
-using ClassOverhaul.Minions;
+using ClassOverhaul.UI;
 
 namespace ClassOverhaul
 {
@@ -14,6 +13,7 @@ namespace ClassOverhaul
         public bool defeatedWoF = false;
         public bool choseJob = false;
         public bool gellyfishArmor;
+        public int itemCool;
         public int job;
         public int armorJob;
         public bool immune;
@@ -47,13 +47,20 @@ namespace ClassOverhaul
             job = tag.GetInt("job");
             armorJob = tag.GetInt("armorJob");
             defeatedWoF = tag.GetBool("defeatedWoF");
-            immune = tag.GetBool("immune");
             rogueBonus = tag.GetBool("rogueBonus");
         }
         public override void PostUpdate()
         {
             base.PostUpdate();
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (player.whoAmI == Main.myPlayer)
+            {
+                if (modPlayer.defeatedWoF && !modPlayer.choseJob)
+                {
+                    modPlayer.immune = true;
+                    JobSelection.visible = true;
+                }
+            }
             if (modPlayer.job == JobID.chemist)
             {
                 if (modPlayer.managedRecipes == false) {
@@ -104,6 +111,7 @@ namespace ClassOverhaul
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modItem.blocked == true) return false;
             if (modItem.isBasic == true) return true;
             if (modItem.preHardmode == true)
             {
@@ -398,27 +406,64 @@ namespace ClassOverhaul
             return base.CanHitNPCWithProj(proj, target);
         }
 
+        public override bool PreItemCheck()
+        {
+            if (player.HeldItem != null)
+            {
+                Item item = player.HeldItem;
+                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+                if (item.type == ItemID.PiranhaGun && player.whoAmI == Main.myPlayer)
+                {
+                    if (player.statMana < item.mana)
+                    {
+                        modItem.blocked = true;
+                    }
+                    else
+                    {
+                        modItem.blocked = false;
+                    }
+                    if (modItem.blocked == true)
+                    {
+                        player.controlUseItem = false;
+                        return base.PreItemCheck();
+                    }
+                    if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
+                    {
+                        PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+                        if (modPlayer.itemCool == 0) player.statMana -= item.mana;
+                        if (modPlayer.itemCool == 0) modPlayer.itemCool = item.useTime;
+                        modPlayer.itemCool--;
+                    }
+                }
+                if (modItem.blocked == true) player.controlUseItem = false;
+            }
+            return base.PreItemCheck();
+        }
+
         public override void PostItemCheck()
         {
-            Item item = player.HeldItem;
-            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-            if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer)
+            if (player.HeldItem != null)
             {
-                int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
-                NPC minion = Main.npc[id];
-                NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
-                PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                modMinion.owner = Main.myPlayer;
-                if (modPlayer.usedMinionSlots + modMinion.minionSlots > player.maxMinions)
+                Item item = player.HeldItem;
+                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+                if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer && modItem.hasSummon)
                 {
-                    minion.active = false;
-                }
-                else
-                {
-                    modPlayer.usedMinionSlots += modMinion.minionSlots;
-                    player.numMinions++;
-                    modMinion.minionPos = player.numMinions;
-                    minion.damage = item.damage;
+                    int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
+                    NPC minion = Main.npc[id];
+                    NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
+                    PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+                    modMinion.owner = Main.myPlayer;
+                    if (modPlayer.usedMinionSlots + modMinion.minionSlots > player.maxMinions)
+                    {
+                        minion.active = false;
+                    }
+                    else
+                    {
+                        modPlayer.usedMinionSlots += modMinion.minionSlots;
+                        player.numMinions++;
+                        modMinion.minionPos = player.numMinions;
+                        minion.damage = item.damage;
+                    }
                 }
             }
             base.PostItemCheck();
