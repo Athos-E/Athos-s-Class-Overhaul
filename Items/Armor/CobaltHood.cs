@@ -45,8 +45,8 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.meleeSpeed = 0.23f;
-            player.thrownVelocity = 0.10f;
+            player.meleeSpeed += 0.23f;
+            player.thrownVelocity += 0.10f;
             player.setBonus = "23% increased melee speed\n10% increased thrown velocity";
         }
     }

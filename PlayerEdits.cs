@@ -27,6 +27,7 @@ namespace ClassOverhaul
             rogueBonus = false;
             gellyfishArmor = false;
             player.armorPenetration = 0;
+            if (job == JobID.rogue) player.dash = 1;
         }
         public override TagCompound Save()
         {
@@ -406,7 +407,7 @@ namespace ClassOverhaul
             return base.CanHitNPCWithProj(proj, target);
         }
 
-        public override bool PreItemCheck()
+        public override void PostItemCheck()
         {
             if (player.HeldItem != null)
             {
@@ -425,7 +426,6 @@ namespace ClassOverhaul
                     if (modItem.blocked == true)
                     {
                         player.controlUseItem = false;
-                        return base.PreItemCheck();
                     }
                     if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
                     {
@@ -436,16 +436,6 @@ namespace ClassOverhaul
                     }
                 }
                 if (modItem.blocked == true) player.controlUseItem = false;
-            }
-            return base.PreItemCheck();
-        }
-
-        public override void PostItemCheck()
-        {
-            if (player.HeldItem != null)
-            {
-                Item item = player.HeldItem;
-                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
                 if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer && modItem.hasSummon)
                 {
                     int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);

@@ -1,6 +1,11 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.4.3
+-Fixed drop item freeze (sorry for that).
+-Fixed a few Hood stats(like Cobalt Hood's melee speed).
+-Rogue now can dash by default if no item that define your dash skill is available.
+
 0.4.2
 -Book of Skulls mana cost reduced to 12.
 -Updated Hellwing Bow description.
