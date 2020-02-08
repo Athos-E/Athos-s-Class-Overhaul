@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using ClassOverhaul.UI;
+using Terraria.DataStructures;
 
 namespace ClassOverhaul
 {
@@ -16,18 +17,21 @@ namespace ClassOverhaul
         public int itemCool;
         public int job;
         public int armorJob;
+        public int stunTimer;
+        public int knockbackTimer;
         public bool immune;
         public bool managedRecipes;
         public bool rogueBonus;
+        public bool stunned;
         public override void ResetEffects()
         {
             base.ResetEffects();
             chemicalDamage = 1f;
+            player.armorPenetration = 0;
             armorJob = 0;
             rogueBonus = false;
             gellyfishArmor = false;
-            player.armorPenetration = 0;
-            if (job == JobID.rogue) player.dash = 1;
+            stunned = false;
         }
         public override TagCompound Save()
         {
@@ -49,6 +53,11 @@ namespace ClassOverhaul
             armorJob = tag.GetInt("armorJob");
             defeatedWoF = tag.GetBool("defeatedWoF");
             rogueBonus = tag.GetBool("rogueBonus");
+        }
+        public override void PreUpdate()
+        {
+            base.PreUpdate();
+            if (job == JobID.rogue) player.dash = 1;
         }
         public override void PostUpdate()
         {
@@ -96,7 +105,6 @@ namespace ClassOverhaul
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (modPlayer.immune == true)
             {
-                Player player = Main.player[Main.myPlayer];
                 player.controlJump = false;
                 player.controlDown = false;
                 player.controlLeft = false;
@@ -107,6 +115,20 @@ namespace ClassOverhaul
                 player.controlThrow = false;
                 player.gravDir = 0f;
             }
+            if (modPlayer.stunned == true)
+            {
+                player.controlJump = false;
+                player.controlDown = false;
+                player.controlLeft = false;
+                player.controlRight = false;
+                player.controlUp = false;
+                player.controlUseItem = false;
+                player.controlUseTile = false;
+                player.controlThrow = false;
+            }
+            if (modPlayer.stunTimer > 0 && modPlayer.stunned == false) modPlayer.stunTimer--;
+            if (modPlayer.knockbackTimer > 0) { modPlayer.knockbackTimer--; player.noKnockback = true; }
+
         }
         public bool CanEquip(Item item, Player player)
         {
@@ -190,6 +212,16 @@ namespace ClassOverhaul
                 return modItem.preHardmode;
             }
         }
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        {
+            base.Hurt(pvp, quiet, damage, hitDirection, crit);
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modPlayer.stunned == false && modPlayer.stunTimer <= 0) player.AddBuff(mod.BuffType("Stun"), 30, true);
+            if (modPlayer.knockbackTimer <= 0)
+            {
+                modPlayer.knockbackTimer = 90;
+            }
+        }
         public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
         {
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
@@ -212,7 +244,6 @@ namespace ClassOverhaul
         }
         public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
         {
-            base.OnHitByNPC(npc, damage, crit);
             if (gellyfishArmor)
             {
                 player.ApplyDamageToNPC(npc, (int)((1 + (player.statDefense / 2)) * player.minionDamage), 5f, npc.direction * -1, false);
@@ -411,50 +442,51 @@ namespace ClassOverhaul
         {
             if (player.HeldItem != null)
             {
-                Item item = player.HeldItem;
-                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                if (item.type == ItemID.PiranhaGun && player.whoAmI == Main.myPlayer)
+                try
                 {
-                    if (player.statMana < item.mana)
+                    Item item = player.HeldItem;
+                    ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+                    if (item.type == ItemID.PiranhaGun && player.whoAmI == Main.myPlayer)
                     {
-                        modItem.blocked = true;
+                        if (player.statMana < item.mana)
+                        {
+                            modItem.blocked = true;
+                        }
+                        else
+                        {
+                            modItem.blocked = false;
+                        }
+                        if (modItem.blocked == true)
+                        {
+                            player.controlUseItem = false;
+                        }
+                        if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
+                        {
+                            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+                            if (modPlayer.itemCool == 0) player.statMana -= item.mana;
+                            if (modPlayer.itemCool == 0) modPlayer.itemCool = item.useTime;
+                            modPlayer.itemCool--;
+                        }
                     }
-                    else
-                    {
-                        modItem.blocked = false;
-                    }
-                    if (modItem.blocked == true)
-                    {
-                        player.controlUseItem = false;
-                    }
-                    if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
+                    if (modItem.blocked == true) player.controlUseItem = false;
+                    if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer && modItem.hasSummon)
                     {
                         PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                        if (modPlayer.itemCool == 0) player.statMana -= item.mana;
-                        if (modPlayer.itemCool == 0) modPlayer.itemCool = item.useTime;
-                        modPlayer.itemCool--;
+                        if (!(modPlayer.usedMinionSlots + modItem.summonSlots > player.maxMinions))
+                        {
+                            int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
+                            NPC minion = Main.npc[id];
+                            NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
+                            modMinion.owner = Main.myPlayer;
+                            modPlayer.usedMinionSlots += modMinion.minionSlots;
+                            modMinion.minionSlots = modItem.summonSlots;
+                            player.numMinions++;
+                            modMinion.minionPos = player.numMinions;
+                            minion.damage = item.damage;
+                        }
                     }
                 }
-                if (modItem.blocked == true) player.controlUseItem = false;
-                if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer && modItem.hasSummon)
-                {
-                    int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
-                    NPC minion = Main.npc[id];
-                    NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
-                    PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                    modMinion.owner = Main.myPlayer;
-                    if (modPlayer.usedMinionSlots + modMinion.minionSlots > player.maxMinions)
-                    {
-                        minion.active = false;
-                    }
-                    else
-                    {
-                        modPlayer.usedMinionSlots += modMinion.minionSlots;
-                        player.numMinions++;
-                        modMinion.minionPos = player.numMinions;
-                        minion.damage = item.damage;
-                    }
-                }
+                catch (System.IndexOutOfRangeException) { }  //Sometimes, if changing items or mouse clicking the held item, item id will change and the script won't resolve. But no gameplay issues.
             }
             base.PostItemCheck();
         }

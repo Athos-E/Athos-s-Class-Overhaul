@@ -15,10 +15,12 @@ namespace ClassOverhaul
         public int defaultAtkSpeed = 30;
         public bool isMinion;
         public bool firstUpdate;
+        public bool stunned;
         public int owner = -1;
         public int minionNum;
         public int minionPos;
         public int shoot;
+        public int stunTimer;
         public float knockback;
         public float minionSlots;
         public float shootSpeed;
@@ -53,6 +55,13 @@ namespace ClassOverhaul
                 npc.HitSound = SoundID.NPCHit1;
             }
         }
+        public override bool PreAI(NPC npc)
+        {
+            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
+            if (modNPC.stunTimer > 0 && modNPC.stunned == false) { stunTimer--; }
+            if (modNPC.stunned == true) return false;
+            return base.PreAI(npc);
+        }
         public override void AI(NPC npc)
         {
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
@@ -67,7 +76,6 @@ namespace ClassOverhaul
                     PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
                     modPlayer.usedMinionSlots -= modNPC.minionSlots;
                     Main.player[modNPC.owner].numMinions--;
-                    Main.PlaySound(SoundID.NPCDeath1);
                     npc.active = false;
                 }
             }
@@ -89,6 +97,7 @@ namespace ClassOverhaul
             base.ResetEffects(npc);
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
             modNPC.atkSpeed = modNPC.defaultAtkSpeed;
+            modNPC.stunned = false;
         }
 
         public override bool CheckDead(NPC npc)
@@ -189,6 +198,12 @@ namespace ClassOverhaul
                 }
             }
             return false;
+        }
+        public override void HitEffect(NPC npc, int hitDirection, double damage)
+        {
+            base.HitEffect(npc, hitDirection, damage);
+            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
+            if (npc.boss == false && modNPC.stunned == false && modNPC.stunTimer <= 0) { npc.AddBuff(mod.BuffType("Stun"), 30, true); }
         }
     }
 }

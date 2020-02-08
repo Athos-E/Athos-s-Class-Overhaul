@@ -24,6 +24,7 @@ namespace ClassOverhaul
         public bool hasSummon = false;
         public bool blocked = false;
         public int summonNPC;
+        public int summonSlots;
         public int cooldown;
         public override void SetDefaults(Item item)
         {
@@ -44,10 +45,9 @@ namespace ClassOverhaul
             }
             if (item.rare < 4 ^ item.type == ItemID.SlimeStaff ^ item.type == ItemID.FlaskofPoison
                 ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
-                ^ item.type == ItemID.GoldenBugNet)
+                ^ item.type == ItemID.GoldenBugNet ^ item.type == ItemID.EoCShield)
             { modItem.preHardmode = true; }
             else { modItem.preHardmode = false; }
-            if (item.type == ItemID.EoCShield) { modItem.preHardmode = true; }
             if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
                 ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
                 ^ item.type == ItemID.AncientArmorPants ^ item.type == ItemID.AncientArmorShirt
@@ -92,13 +92,15 @@ namespace ClassOverhaul
             {
                 modItem.knightItem = true;
             }
-            if (item.type == ItemID.AnkhShield ^ item.type == ItemID.CobaltShield
-                ^ item.type == ItemID.EoCShield ^ item.type == ItemID.ObsidianShield
-                ^ item.type == ItemID.PaladinsShield)
+            if (item.type == ItemID.AnkhShield ^ item.type == ItemID.PaladinsShield)
             {
                 modItem.isBasic = false;
                 modItem.knightItem = true;
+                item.defense += 4;
             }
+            if (item.type == ItemID.PaladinsShield) { item.defense += 2; }
+            if (item.type == ItemID.CobaltShield) { item.defense += 3; }
+            if (item.type == ItemID.ObsidianShield) { item.defense += 4; }
             if (item.type == ItemID.CobaltMask ^ item.type == ItemID.PalladiumHelmet // Ranger sets
                 ^ item.type == ItemID.MythrilHat ^ item.type == ItemID.OrichalcumHelmet
                 ^ item.type == ItemID.AdamantiteMask ^ item.type == ItemID.TitaniumHelmet
@@ -501,15 +503,23 @@ namespace ClassOverhaul
                 player.moveSpeed += 0.15f;
             }
         }
+        public override void UpdateAccessory(Item item, Player player, bool hideVisual)
+        {
+            base.UpdateAccessory(item, player, hideVisual);
+            if (item.type == ItemID.CobaltShield)
+            {
+                player.noKnockback = false;
+            }
+            if (item.type == ItemID.ObsidianShield ^ item.type == ItemID.EoCShield ^ item.type == ItemID.AnkhShield
+                ^ item.type == ItemID.PaladinsShield)
+            {
+                player.noKnockback = true;
+            }
+        }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
-            if (item.type == ItemID.ToxicFlask)
-            {
-                return 0;
-            } else
-            {
-                return base.ChoosePrefix(item, rand);
-            }
+            if (item.type == ItemID.ToxicFlask) return 0;
+            return base.ChoosePrefix(item, rand);
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
@@ -520,7 +530,7 @@ namespace ClassOverhaul
                 if (tt != null)
                 {
                     string[] split = tt.text.Split(' ');
-                    tt.text = split.First() + " thrown chemical damage";
+                    tt.text = split.First() + " chemical damage";
                 }
             }
             if (item.type == ItemID.SpectreHood)
@@ -828,6 +838,10 @@ namespace ClassOverhaul
                 tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");
                 tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
             }
+            if (item.type == ItemID.CobaltShield)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+            }
         }
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
@@ -892,7 +906,7 @@ namespace ClassOverhaul
             else
             {
                 ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                if (item.melee == false && item.thrown == false && item.ranged == false && item.magic == false && item.summon == false && modItem.chemical == false) return true;
+                if (item.melee == false && item.thrown == false && item.ranged == false && item.magic == false && item.summon == false && modItem.chemical == false && item.defense <= 0) return true;
                 if (item.axe > 0 ^ item.pick > 0 ^ item.hammer > 0) return true; else return false;
             }
         }

@@ -22,7 +22,6 @@ namespace ClassOverhaul
             npc.noTileCollide = false;
             npc.noGravity = true;
             modNPC.isMinion = true;
-            modNPC.minionSlots = 1;
             modNPC.inertia = 30f;
             modNPC.idleAccel = 10f;
             modNPC.spacingMult = 1f;
