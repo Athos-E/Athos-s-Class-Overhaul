@@ -16,10 +16,6 @@ namespace ClassOverhaul
         {
             base.AddRecipes();
             ModRecipe recipe = new ModRecipe(this);
-            //recipe.AddIngredient(ItemID.Wood, 1);
-            //recipe.SetResult(this.GetItem("StaffOfFireball"), 1);
-            //recipe.AddRecipe();
-            //recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.Gel, 10);
             recipe.AddIngredient(ItemID.Wood, 10);
             recipe.AddTile(TileID.WorkBenches);
@@ -74,7 +70,7 @@ namespace ClassOverhaul
                 editor.DeleteRecipe();
             }
         }
-        public static void EnableRecipeVanillaItem(Mod mod, int result, int quantity = 1, int ingredient1 = 1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
+        public static void EnableRecipeVanillaItem(Mod mod, int result, int quantity, int ingredient1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
         {
             ModRecipe recipe = new ModRecipe(mod);
             if (tile > 0) recipe.AddTile(tile);
@@ -86,7 +82,7 @@ namespace ClassOverhaul
             recipe.SetResult(result, quantity);
             recipe.AddRecipe();
         }
-        public static void EnableRecipeModItem(Mod mod, ModItem result, int quantity = 1, int ingredient1 = 1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
+        public static void EnableRecipeModItem(Mod mod, ModItem result, int quantity, int ingredient1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
         {
             ModRecipe recipe = new ModRecipe(mod);
             if (tile > 0) recipe.AddTile(tile);

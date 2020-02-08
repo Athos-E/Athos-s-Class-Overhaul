@@ -1,6 +1,15 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.5.0
+-Code optimization.
+-Stun debuff introduced.
+-Buffed all shields' defenses, except for EoC.
+-Cobalt shield no longer grants knockback immunity(Obsidian and the next ones still do).
+-Battle mechanics around knockback (and now, stun too) changed. Details on WIKI.
+-Dealt with errors around item index in this mod.
+
+
 0.4.3
 -Fixed drop item freeze (sorry for that).
 -Fixed a few Hood stats(like Cobalt Hood's melee speed).
