@@ -11,6 +11,8 @@ namespace ClassOverhaul
     {
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
+        public static Mod consolaria = ModLoader.GetMod("Consolaria");
+        public static bool consolariaExists = consolaria != null;
         public bool knightItem = false;
         public bool rogueItem = false;
         public bool rangerItem = false;
@@ -48,29 +50,28 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.GoldenBugNet ^ item.type == ItemID.EoCShield)
             { modItem.preHardmode = true; }
             else { modItem.preHardmode = false; }
-            if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
-                ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
-                ^ item.type == ItemID.AncientArmorPants ^ item.type == ItemID.AncientArmorShirt
-                ^ item.type == ItemID.TikiMask ^ item.type == ItemID.TikiPants
-                ^ item.type == ItemID.TikiShirt ^ item.type == ItemID.SpookyHelmet
-                ^ item.type == ItemID.SpookyBreastplate ^ item.type == ItemID.SpookyLeggings
-                ^ item.type == ItemID.StardustBreastplate ^ item.type == ItemID.StardustHelmet
-                ^ item.type == ItemID.StardustLeggings ^ item.type == ItemID.ApprenticeHat
-                ^ item.type == ItemID.ApprenticeRobe ^ item.type == ItemID.ApprenticeTrousers
-                ^ item.type == ItemID.SquireGreatHelm ^ item.type == ItemID.SquirePlating
-                ^ item.type == ItemID.SquireGreaves ^ item.type == ItemID.HuntressWig
-                ^ item.type == ItemID.HuntressJerkin ^ item.type == ItemID.HuntressPants
-                ^ item.type == ItemID.MonkBrows ^ item.type == ItemID.MonkShirt
-                ^ item.type == ItemID.MonkPants ^ item.type == ItemID.ApprenticeAltHead
-                ^ item.type == ItemID.ApprenticeAltPants ^ item.type == ItemID.ApprenticeAltShirt
-                ^ item.type == ItemID.HuntressAltHead ^ item.type == ItemID.HuntressAltPants
-                ^ item.type == ItemID.HuntressAltShirt ^ item.type == ItemID.MonkAltHead
-                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
-                ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
-                ^ item.type == ItemID.SquireAltShirt
-                )
+            if (consolariaExists)
             {
+                if (item.type == consolaria.ItemType("Sharanga"))
+                {
+                    modItem.preHardmode = true;
+                }
+            }
+            if (item.type == ItemID.CobaltBreastplate ^ item.type == ItemID.CobaltLeggings
+            ^ item.type == ItemID.PalladiumBreastplate ^ item.type == ItemID.PalladiumLeggings
+            ^ item.type == ItemID.MythrilChainmail ^ item.type == ItemID.MythrilGreaves
+            ^ item.type == ItemID.OrichalcumBreastplate ^ item.type == ItemID.OrichalcumLeggings
+            ^ item.type == ItemID.AdamantiteBreastplate ^ item.type == ItemID.AdamantiteLeggings
+            ^ item.type == ItemID.TitaniumBreastplate ^ item.type == ItemID.TitaniumLeggings
+            ^ item.type == ItemID.HallowedPlateMail ^ item.type == ItemID.HallowedGreaves
+            ^ item.type == ItemID.ChlorophytePlateMail ^ item.type == ItemID.ChlorophyteGreaves
+            ) {
+                modItem.knightItem = true;
+                modItem.rogueItem = true;
+                modItem.rangerItem = true;
+                modItem.magicItem = true;
                 modItem.summonerItem = true;
+                modItem.chemistItem = true;
             }
             if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask // Knight sets
                 ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
@@ -91,6 +92,15 @@ namespace ClassOverhaul
                 )
             {
                 modItem.knightItem = true;
+            }
+            if (consolariaExists)
+            {
+                if (item.type == consolaria.ItemType("AncientDragonMask") ^ item.type == consolaria.ItemType("AncientDragonBreastplate")
+                ^ item.type == consolaria.ItemType("AncientDragonGreaves") ^ item.type == consolaria.ItemType("DragonMask")
+                ^ item.type == consolaria.ItemType("DragonGreaves") ^ item.type == consolaria.ItemType("DragonBreastplate")
+                ) {
+                    modItem.knightItem = true;
+                }
             }
             if (item.type == ItemID.AnkhShield ^ item.type == ItemID.PaladinsShield)
             {
@@ -118,6 +128,23 @@ namespace ClassOverhaul
             {
                 modItem.rangerItem = true;
             }
+            if (consolariaExists)
+            {
+                if (item.type == consolaria.ItemType("AncientTitanHelmet") ^ item.type == consolaria.ItemType("AncientTitanLeggings")
+                    ^ item.type == consolaria.ItemType("AncientTitanMail") ^ item.type == consolaria.ItemType("TitanHelmet")
+                    ^ item.type == consolaria.ItemType("TitanLeggings") ^ item.type == consolaria.ItemType("TitanMail")
+                    )
+                {
+                    modItem.rangerItem = true;
+                }
+            }
+            if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
+            ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
+            ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine) {
+                item.magic = false;
+                item.ranged = true;
+                item.autoReuse = true;
+            }
             if (item.type == ItemID.CobaltHat ^ item.type == ItemID.PalladiumHeadgear // Mage sets
                 ^ item.type == ItemID.MythrilHood ^ item.type == ItemID.OrichalcumHeadgear
                 ^ item.type == ItemID.AdamantiteHeadgear ^ item.type == ItemID.TitaniumHeadgear
@@ -134,6 +161,60 @@ namespace ClassOverhaul
             {
                 modItem.magicItem = true;
             }
+            if(consolariaExists)
+            {
+                if (item.type == consolaria.ItemType("AncientSpectralArmor") ^ item.type == consolaria.ItemType("AncientSpectralHeadgear")
+                ^ item.type == consolaria.ItemType("AncientSpectralSubligar") ^ item.type == consolaria.ItemType("SpectralArmor")
+                ^ item.type == consolaria.ItemType("SpectralHeadgear") ^ item.type == consolaria.ItemType("SpectralSubligar")
+                ) {
+                    modItem.magicItem = true;
+                }
+            }
+            if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
+            ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
+            ^ item.type == ItemID.AncientArmorPants ^ item.type == ItemID.AncientArmorShirt
+            ^ item.type == ItemID.TikiMask ^ item.type == ItemID.TikiPants
+            ^ item.type == ItemID.TikiShirt ^ item.type == ItemID.SpookyHelmet
+            ^ item.type == ItemID.SpookyBreastplate ^ item.type == ItemID.SpookyLeggings
+            ^ item.type == ItemID.StardustBreastplate ^ item.type == ItemID.StardustHelmet
+            ^ item.type == ItemID.StardustLeggings ^ item.type == ItemID.ApprenticeHat
+            ^ item.type == ItemID.ApprenticeRobe ^ item.type == ItemID.ApprenticeTrousers
+            ^ item.type == ItemID.SquireGreatHelm ^ item.type == ItemID.SquirePlating
+            ^ item.type == ItemID.SquireGreaves ^ item.type == ItemID.HuntressWig
+            ^ item.type == ItemID.HuntressJerkin ^ item.type == ItemID.HuntressPants
+            ^ item.type == ItemID.MonkBrows ^ item.type == ItemID.MonkShirt
+            ^ item.type == ItemID.MonkPants ^ item.type == ItemID.ApprenticeAltHead
+            ^ item.type == ItemID.ApprenticeAltPants ^ item.type == ItemID.ApprenticeAltShirt
+            ^ item.type == ItemID.HuntressAltHead ^ item.type == ItemID.HuntressAltPants
+            ^ item.type == ItemID.HuntressAltShirt ^ item.type == ItemID.MonkAltHead
+            ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
+            ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
+            ^ item.type == ItemID.SquireAltShirt
+            )
+            {
+                modItem.summonerItem = true;
+            }
+            if (consolariaExists)
+            {
+                if (item.type == consolaria.ItemType("AncientWarlockHood") ^ item.type == consolaria.ItemType("AncientWarlockLeggings")
+                    ^ item.type == consolaria.ItemType("AncientWarlockRobe") ^ item.type == consolaria.ItemType("WarlockHood")
+                    ^ item.type == consolaria.ItemType("WarlockLeggings") ^ item.type == consolaria.ItemType("WarlockRobe")
+                    )
+                {
+                    modItem.summonerItem = true;
+                }
+            }
+            if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
+            ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
+            ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
+            ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun
+            ^ item.type == ItemID.ScourgeoftheCorruptor)
+            {
+                item.ranged = false;
+                item.melee = false;
+                item.magic = false;
+                item.summon = true;
+            }
             if (item.type == ItemID.BeetleScaleMail ^ item.type == ItemID.BeetleHelmet //Rogue sets
                 ^ item.type == ItemID.BeetleLeggings ^ item.type == ItemID.FrostHelmet
                 ^ item.type == ItemID.FrostBreastplate ^ item.type == ItemID.FrostLeggings
@@ -142,34 +223,6 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt)
             {
                 modItem.rogueItem = true;
-            }
-            if (item.type == ItemID.CobaltBreastplate ^ item.type == ItemID.CobaltLeggings
-                ^ item.type == ItemID.PalladiumBreastplate ^ item.type == ItemID.PalladiumLeggings
-                ^ item.type == ItemID.MythrilChainmail ^ item.type == ItemID.MythrilGreaves
-                ^ item.type == ItemID.OrichalcumBreastplate ^ item.type == ItemID.OrichalcumLeggings
-                ^ item.type == ItemID.AdamantiteBreastplate ^ item.type == ItemID.AdamantiteLeggings
-                ^ item.type == ItemID.TitaniumBreastplate ^ item.type == ItemID.TitaniumLeggings
-                ^ item.type == ItemID.HallowedPlateMail ^ item.type == ItemID.HallowedGreaves
-                ^ item.type == ItemID.ChlorophytePlateMail ^ item.type == ItemID.ChlorophyteGreaves
-                )
-            {
-                modItem.knightItem = true;
-                modItem.rogueItem = true;
-                modItem.rangerItem = true;
-                modItem.magicItem = true;
-                modItem.summonerItem = true;
-                modItem.chemistItem = true;
-            }
-            if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
-                ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
-                ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
-                ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun
-                ^ item.type == ItemID.ScourgeoftheCorruptor)
-            {
-                item.ranged = false;
-                item.melee = false;
-                item.magic = false;
-                item.summon = true;
             }
             if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
                 ^ item.type == ItemID.IceBoomerang ^ item.type == ItemID.FruitcakeChakram
@@ -196,13 +249,13 @@ namespace ClassOverhaul
                 item.magic = false;
                 item.thrown = true;
             }
-            if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
-                ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
-                ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine)
+            if (consolariaExists)
             {
-                item.magic = false;
-                item.ranged = true;
-                item.autoReuse = true;
+                if (item.type == consolaria.ItemType("AlbinoMandible"))
+                {
+                    item.ranged = false;
+                    item.thrown = true;
+                }
             }
             if (item.type == ItemID.LightDisc ^ item.type == ItemID.Bananarang
                 ^ item.type == ItemID.PossessedHatchet ^ item.type == ItemID.ShadowFlameKnife
@@ -231,6 +284,71 @@ namespace ClassOverhaul
                 )
             {
                 item.defense += 20;
+            }
+            if (consolariaExists)
+            {
+                if (item.type == consolaria.ItemType("AncientDragonBreastplate") ^ item.type == consolaria.ItemType("DragonBreastplate")
+                ) {
+                    item.defense += 20;
+                }
+            }
+            if (item.type == ItemID.ToxicFlask)
+            {
+                item.magic = false;
+                modItem.chemical = true;
+                item.consumable = true;
+                item.crit = 0;
+                item.mana = 0;
+                item.value = 5000;
+                item.maxStack = 99;
+            }
+            if (item.magic == true && item.type > 0 && item.type < 3930)
+            {
+                item.damage += (10 + (item.mana / 2) + item.rare);
+                if (item.crit > 4)
+                {
+                    item.damage += item.crit - 4;
+                }
+            }
+            else
+            {
+                if (consolariaExists && item.magic)
+                {
+                    item.damage += (10 + (item.mana / 2) + item.rare);
+                    if (item.crit > 4)
+                    {
+                        item.damage += item.crit - 4;
+                    }
+                }
+            }
+            if (item.magic == true)
+            {
+                item.crit = 0;
+            }
+            if (item.thrown == true && item.type > 0 && item.type < 3930)
+            {
+                if (item.crit >= 4)
+                {
+                    item.crit -= 4;
+                }
+                else
+                {
+                    item.crit = 0;
+                }
+            }
+            else
+            {
+                if (consolariaExists && item.thrown)
+                {
+                    if (item.crit >= 4)
+                    {
+                        item.crit -= 4;
+                    }
+                    else
+                    {
+                        item.crit = 0;
+                    }
+                }
             }
             if (item.type == ItemID.BeesKnees)
             {
@@ -266,38 +384,6 @@ namespace ClassOverhaul
             if (item.type == ItemID.ChargedBlasterCannon)
             {
                 item.mana = 10;
-            }
-            if (item.type == ItemID.ToxicFlask)
-            {
-                item.magic = false;
-                modItem.chemical = true;
-                item.consumable = true;
-                item.crit = 0;
-                item.mana = 0;
-                item.value = 5000;
-                item.maxStack = 99;
-            }
-            if (item.magic == true && item.type > 0 && item.type < 3930)
-            {
-                item.damage += (10 + (item.mana / 2) + item.rare);
-                if (item.crit > 4)
-                {
-                    item.damage += item.crit - 4;
-                }
-            }
-            if(item.magic == true)
-            {
-                item.crit = 0;
-            }
-            if (item.thrown == true && item.type > 0 && item.type < 3930)
-            {
-                if (item.crit >= 4)
-                {
-                    item.crit -= 4;
-                } else
-                {
-                    item.crit = 0;
-                }
             }
             if (item.type == ItemID.MeteorStaff)
             {

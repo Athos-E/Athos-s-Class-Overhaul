@@ -1,6 +1,9 @@
 A change to how Terraria handles classes.
 
 Changelogs
+0.5.1
+-Sightly supports Consolaria. There will be adjustments. You can equip armors and use items normally, now.
+
 0.5.0
 -Code optimization.
 -Stun debuff introduced.
