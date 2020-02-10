@@ -10,6 +10,14 @@ namespace ClassOverhaul
 {
     public class ClassOverhaul : Mod
     {
+        public static Mod instance
+        {
+            get
+            {
+                return ModLoader.GetMod("ClassOverhaul");
+            }
+        }
+        public ClassOverhaul() { }
         internal JobSelection jobSelectionUI;
         public UserInterface jobSelectionInterface;
         public override void AddRecipes()

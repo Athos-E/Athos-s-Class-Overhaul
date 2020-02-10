@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using ClassOverhaul;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Utilities;
@@ -11,8 +12,6 @@ namespace ClassOverhaul
     {
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
-        public static Mod consolaria = ModLoader.GetMod("Consolaria");
-        public static bool consolariaExists = consolaria != null;
         public bool knightItem = false;
         public bool rogueItem = false;
         public bool rangerItem = false;
@@ -28,6 +27,14 @@ namespace ClassOverhaul
         public int summonNPC;
         public int summonSlots;
         public int cooldown;
+        
+        public ItemEdits() { }
+
+        public bool IsModItem(Item item)
+        {
+            return item.type >= ItemID.Count;
+        }
+
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
@@ -50,13 +57,6 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.GoldenBugNet ^ item.type == ItemID.EoCShield)
             { modItem.preHardmode = true; }
             else { modItem.preHardmode = false; }
-            if (consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("Sharanga"))
-                {
-                    modItem.preHardmode = true;
-                }
-            }
             if (item.type == ItemID.CobaltBreastplate ^ item.type == ItemID.CobaltLeggings
             ^ item.type == ItemID.PalladiumBreastplate ^ item.type == ItemID.PalladiumLeggings
             ^ item.type == ItemID.MythrilChainmail ^ item.type == ItemID.MythrilGreaves
@@ -93,15 +93,6 @@ namespace ClassOverhaul
             {
                 modItem.knightItem = true;
             }
-            if (consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("AncientDragonMask") ^ item.type == consolaria.ItemType("AncientDragonBreastplate")
-                ^ item.type == consolaria.ItemType("AncientDragonGreaves") ^ item.type == consolaria.ItemType("DragonMask")
-                ^ item.type == consolaria.ItemType("DragonGreaves") ^ item.type == consolaria.ItemType("DragonBreastplate")
-                ) {
-                    modItem.knightItem = true;
-                }
-            }
             if (item.type == ItemID.AnkhShield ^ item.type == ItemID.PaladinsShield)
             {
                 modItem.isBasic = false;
@@ -128,16 +119,6 @@ namespace ClassOverhaul
             {
                 modItem.rangerItem = true;
             }
-            if (consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("AncientTitanHelmet") ^ item.type == consolaria.ItemType("AncientTitanLeggings")
-                    ^ item.type == consolaria.ItemType("AncientTitanMail") ^ item.type == consolaria.ItemType("TitanHelmet")
-                    ^ item.type == consolaria.ItemType("TitanLeggings") ^ item.type == consolaria.ItemType("TitanMail")
-                    )
-                {
-                    modItem.rangerItem = true;
-                }
-            }
             if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
             ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
             ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine) {
@@ -160,15 +141,6 @@ namespace ClassOverhaul
                 )
             {
                 modItem.magicItem = true;
-            }
-            if(consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("AncientSpectralArmor") ^ item.type == consolaria.ItemType("AncientSpectralHeadgear")
-                ^ item.type == consolaria.ItemType("AncientSpectralSubligar") ^ item.type == consolaria.ItemType("SpectralArmor")
-                ^ item.type == consolaria.ItemType("SpectralHeadgear") ^ item.type == consolaria.ItemType("SpectralSubligar")
-                ) {
-                    modItem.magicItem = true;
-                }
             }
             if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
             ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
@@ -193,16 +165,6 @@ namespace ClassOverhaul
             )
             {
                 modItem.summonerItem = true;
-            }
-            if (consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("AncientWarlockHood") ^ item.type == consolaria.ItemType("AncientWarlockLeggings")
-                    ^ item.type == consolaria.ItemType("AncientWarlockRobe") ^ item.type == consolaria.ItemType("WarlockHood")
-                    ^ item.type == consolaria.ItemType("WarlockLeggings") ^ item.type == consolaria.ItemType("WarlockRobe")
-                    )
-                {
-                    modItem.summonerItem = true;
-                }
             }
             if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
             ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
@@ -249,14 +211,6 @@ namespace ClassOverhaul
                 item.magic = false;
                 item.thrown = true;
             }
-            if (consolariaExists)
-            {
-                if (item.type == consolaria.ItemType("AlbinoMandible"))
-                {
-                    item.ranged = false;
-                    item.thrown = true;
-                }
-            }
             if (item.type == ItemID.LightDisc ^ item.type == ItemID.Bananarang
                 ^ item.type == ItemID.PossessedHatchet ^ item.type == ItemID.ShadowFlameKnife
                 ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.Anchor
@@ -285,12 +239,9 @@ namespace ClassOverhaul
             {
                 item.defense += 20;
             }
-            if (consolariaExists)
+            if (Consolaria.consolariaExists)
             {
-                if (item.type == consolaria.ItemType("AncientDragonBreastplate") ^ item.type == consolaria.ItemType("DragonBreastplate")
-                ) {
-                    item.defense += 20;
-                }
+                ConsolariaSupport.ItemSupport.SetDefaults(item);
             }
             if (item.type == ItemID.ToxicFlask)
             {
@@ -302,7 +253,7 @@ namespace ClassOverhaul
                 item.value = 5000;
                 item.maxStack = 99;
             }
-            if (item.magic == true && item.type > 0 && item.type < 3930)
+            if (item.magic == true && IsModItem(item) == false)
             {
                 item.damage += (10 + (item.mana / 2) + item.rare);
                 if (item.crit > 4)
@@ -310,22 +261,11 @@ namespace ClassOverhaul
                     item.damage += item.crit - 4;
                 }
             }
-            else
-            {
-                if (consolariaExists && item.magic)
-                {
-                    item.damage += (10 + (item.mana / 2) + item.rare);
-                    if (item.crit > 4)
-                    {
-                        item.damage += item.crit - 4;
-                    }
-                }
-            }
-            if (item.magic == true)
+            if (item.magic == true && IsModItem(item) == false)
             {
                 item.crit = 0;
             }
-            if (item.thrown == true && item.type > 0 && item.type < 3930)
+            if (item.thrown == true && IsModItem(item) == false)
             {
                 if (item.crit >= 4)
                 {
@@ -334,20 +274,6 @@ namespace ClassOverhaul
                 else
                 {
                     item.crit = 0;
-                }
-            }
-            else
-            {
-                if (consolariaExists && item.thrown)
-                {
-                    if (item.crit >= 4)
-                    {
-                        item.crit -= 4;
-                    }
-                    else
-                    {
-                        item.crit = 0;
-                    }
                 }
             }
             if (item.type == ItemID.BeesKnees)
@@ -619,6 +545,12 @@ namespace ClassOverhaul
                     tt.text = split.First() + " chemical damage";
                 }
             }
+            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            if (item.melee == true && modPlayer.job == JobID.rogue && item.type != ItemID.SolarEruption)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
+                line.text += "\n" + (item.rare * 2).ToString() + " armor penetration";
+            }
             if (item.type == ItemID.SpectreHood)
             {
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
@@ -858,12 +790,6 @@ namespace ClassOverhaul
                 {
                     line.text = "10% increased melee damage\n25% increased thrown damage\n43% increased melee critical strike chance\n26% increased melee speed";
                 }
-            }
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
-            if (item.melee == true && modPlayer.job == JobID.rogue && item.type != ItemID.SolarEruption)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "ItemName" && x.mod == "Terraria");
-                line.text += "\nRogue: " + (item.rare * 2).ToString() + " armor penetration";
             }
             if (item.type == ItemID.MonkBrows)
             {
