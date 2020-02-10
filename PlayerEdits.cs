@@ -59,6 +59,7 @@ namespace ClassOverhaul
             base.PreUpdate();
             if (job == JobID.rogue) player.dash = 1;
         }
+        /*
         public override void PostUpdate()
         {
             base.PostUpdate();
@@ -88,7 +89,8 @@ namespace ClassOverhaul
                     modPlayer.managedRecipes = true;
                 }
             }
-        }
+            
+        }*/
         public override void PreUpdateBuffs()
         {
             base.PreUpdateBuffs();

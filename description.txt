@@ -1,6 +1,11 @@
-A change to how Terraria handles classes.
+      A change to how Terraria handles classes. 
+  Feeling like summoner is useless or completely idle? Melee armor doesn't tank enough? Mages low on damage and far too squishy for it? This mod is for you. 
+  This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
 
 Changelogs
+0.5.3
+-Yet another fix. Perfomance issues.
+
 0.5.2
 -Hotfix for Magic item values and consolaria support.
 
@@ -14,103 +19,3 @@ Changelogs
 -Cobalt shield no longer grants knockback immunity(Obsidian and the next ones still do).
 -Battle mechanics around knockback (and now, stun too) changed. Details on WIKI.
 -Dealt with errors around item index in this mod.
-
-0.4.3
--Fixed drop item freeze (sorry for that).
--Fixed a few Hood stats(like Cobalt Hood's melee speed).
--Rogue now can dash by default if no item that define your dash skill is available.
-
-0.4.2
--Book of Skulls mana cost reduced to 12.
--Updated Hellwing Bow description.
--Piranha Gun now slowly drains mana to to upkeep the Piranha.
--Fixed some errors.
--Fixed glitches on Job Selection UI
--Slime Staff recipe now requires a Mana Crystal.
--New prehardmode magic weapon: Book Of Shooting Stars.
-
-0.4.1
--Shield of EoC is a pre-hardmode item, so it should be equipable by any class(same with Cobalt and Obsidian Shields).
--Ankh Charm is now not equipable and is a Material(for Ankh Shield, which is Knight only).
--Potion Sickness now lasts 30 seconds(15 with Philosopher's Stone).
-
-0.4.0
--Rogue can't shoot sword projectiles.
--Rogue get armor penetration(melee only) based on weapon rarity.
--Rogue can't use Knight exclusive sets anymore.
--Rogue can't use Solar Eruption.
--Monk/Shinobi infiltrator are now Rogue sets.
--Player regular immune time without Cross Necklace is now 10 frames, 45 with cross necklace.
--NPC regular immune time is now 5 frames.
--NPCs now have a melee speed stat, which defines the cooldown for hiting players, the default is 30 frames(feels like vanilla right now). Will be edited on some NPCs in the future.
--Buffed SOME hardmode thrown weapons by 20 damage.
--Nerfed Daybreak and hardmode Yoyos by 15 damage.
--Shields are Knight-only items.
-
-0.3.1
--Fixing UI glitch
--Fixed bug on Old One's army sets.
--New Rogue armor sets from tier 1 hardmode ores to chlorophyte tier.
--Scourge of The Corruptor is now a summoning weapon with 12 base mana cost.
--Beetle Scale Mail is now Rogue only, while Beetle Shell is Knight only.
--Beetle Scale Mail has +43 melee crit chance, +26% melee speed, +25% thrown damage and 10% increased melee damage.
--Melee speed now affects thrown items.
-
-0.3.0
--Toxic Flask is now not craftable by default.(It'll become craftable in the future under certain ingame circunstances -surprise-)
--Job system implemented. Characters now have to choose a Job or Class once they beat Wall of Flesh for the first time, this will limit their equipment choices.
--I've been working on Rogue job right now, but I have still to finish the sprites for the sets, for now it can equip all hardmode basic ore plus chlorophyte and hallowed head pieces. (no end game armor- yet)
--Old One's army sets allows to use 2 types of weapons, in general it helps Summoner more than the other jobs, but it's still equipable by 2 different Jobs.
-
-0.2.3
--Thrown weapons get weapon imbuements, magma stone and frostburn effects.
--Swapped thrown weapons and magic weapons crits patches.(Throwns now get -4% crit chance and magic got crit chance set to 0)
--Removed thrown weapons 10 damage buff.
--Magic items that had crit chance higher than 4% on vanilla(or 0 with this mod) got a damage buff based on the removed crit chance.
-
-0.2.2
--Magic weapons get a bonus damage based on item rarity and half of the mana cost.
--New pre-hardmode summoning armor: Gellyfish Armor.
--Pink, Green and Blue Jellyfishes are now catcheable through Bug Net.
--Updated mod description and homepage.
-
-0.2.1
--Hellwing Bow and Piranha Gun are now summon damage items.
--Increased Hellwing Bow's base damage to 25
--Paladin's Hammer is no longer a thrown weapon(reversed to melee weapon).
--Cleaner code and fixes.
-
-0.2.0
-So... Throws?
--Wooden Boomerang, Ice Boomerang, Enchanted Boomerang, Flamarang, Bananarang, Fruitcake Chakram, Thorn Chakram, Flying Knife, Light Disc, Toxic Flask, Possessed Hatchet, Paladin's Hammer, Shadowflame Knife, Vampire Knives, Scourge of The Corruptor, Daybreak, Anchor, Chain Knife, Chain Gillotines, KO Cannon, Golem Fist and all vanillla Yoyos are now thrown damage weapons.
--Toxic Flask is also consumable & craftable(post plantera).
--Above items and vanilla thrown damage items got buffed by 10 damage(except for Yoyos) and removed their base crit chance entirely(set to 0).
-
-0.1.6
-Mages? Wizards? Where?
-I found out that the previous changes do magic armor didn't do the job... so I exchanged crit chance for raw damage.
--Removed critical strike chance bonuses from magic armor(including the ones from last patch) and added its previous values to magic damage.
--Above patch also affects Spectre chest, Nebula chest, Ancient Cobalt Armor and Jungle sets.
--All vanilla magic weapons(after this mod's changes) got +10 damage.
--4% reduced magic critical strike chance from every magic weapon in the game.
--Increased The Bee's Knees's damage to 31.
-
-0.1.5
-The Ranged Mana update!
--Space Gun, Laser Rifle, Leaf Blower, Heat Ray, Laser Machine Gun, Charged Blaster Cannon and Razorpine are now Ranged weapons(They still cost mana).
--Space Gun and Laser Rifle mana costs were reduced by 1 each.
--Razorpine mana cost reduced to 10.
--5 new prefixes exclusive to ranged damage mana weapons!
--Meteorite set's magic damage bonus reduced to 4% to each piece.
--Meteorite set now has a 5% ranged damage bonus to each piece.
--All hardmode magic head armor(except old one's army sets) got buffed by 3% on damage or critical strike chance existing buffs.
--Spectre Mask got a 5% damage buff instead.
-
-0.1
-As of now, I'm trying to go for the basics, by editing vanilla stuff. This initial release is for Summon class changes.
--The Bee's Knees, Book of Skulls, Bee Gun, Wasp Gun, Spectre Staff and Bat Sceptre are now Summoning weapons and benefit from summon bonuses.
--The Bee's Knees mana cost reduced to 5.
--Spectre Staff base damage reduced to 68.
--Spectre Armor now only reduces 25% magic damage and it gives 5% reduced mana cost.
--New Recipe for Slime Staff.
--New Magic weapon Staff of Fireball.
