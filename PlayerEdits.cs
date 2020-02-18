@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 
 namespace ClassOverhaul
 {
-    class PlayerEdits : ModPlayer
+    public class PlayerEdits : ModPlayer
     {
         public float chemicalDamage = 1f;
         public float usedMinionSlots = 0f;
@@ -20,7 +20,6 @@ namespace ClassOverhaul
         public int stunTimer;
         public int knockbackTimer;
         public bool immune;
-        public bool managedRecipes;
         public bool rogueBonus;
         public bool stunned;
         public override void ResetEffects()
@@ -53,13 +52,13 @@ namespace ClassOverhaul
             armorJob = tag.GetInt("armorJob");
             defeatedWoF = tag.GetBool("defeatedWoF");
             rogueBonus = tag.GetBool("rogueBonus");
+
         }
         public override void PreUpdate()
         {
             base.PreUpdate();
             if (job == JobID.rogue) player.dash = 1;
         }
-        /*
         public override void PostUpdate()
         {
             base.PostUpdate();
@@ -72,33 +71,16 @@ namespace ClassOverhaul
                     JobSelection.visible = true;
                 }
             }
-            if (modPlayer.job == JobID.chemist)
-            {
-                if (modPlayer.managedRecipes == false) {
-                    ClassOverhaul.EnableRecipeVanillaItem(mod, ItemID.ToxicFlask, 15, ItemID.Bottle, 15, ItemID.Deathweed, 1, ItemID.VialofVenom, 1, ItemID.Fireblossom, 1, ItemID.ExplosivePowder, 1, TileID.AlchemyTable);
-                }
-                modPlayer.managedRecipes = true;
-            } else
-            {
-                if (modPlayer.job != JobID.chemist)
-                {
-                    ClassOverhaul.DisableRecipe(mod, ItemID.ToxicFlask, 15);
-                    modPlayer.managedRecipes = false;
-                } else
-                {
-                    modPlayer.managedRecipes = true;
-                }
-            }
-            
-        }*/
+        }
         public override void PreUpdateBuffs()
         {
             base.PreUpdateBuffs();
+            int index;
             if (player.HasBuff(BuffID.PotionSickness))
             {
-               int index = player.FindBuffIndex(BuffID.PotionSickness);
-               if (player.pStone && player.buffTime[index] > 900) player.buffTime[index] = 900;
-                else if(player.buffTime[index] > 1800) player.buffTime[index] = 1800;
+               index = player.FindBuffIndex(BuffID.PotionSickness);
+               if (player.pStone && player.buffTime[index] > 900) player.buffTime[index] /= 2;
+                else if(player.buffTime[index] > 1800) player.buffTime[index] /= 1800;
             }
         }
         public override void PostUpdateBuffs()
@@ -138,81 +120,87 @@ namespace ClassOverhaul
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (modItem.blocked == true) return false;
             if (modItem.isBasic == true) return true;
-            if (modItem.preHardmode == true)
+            if (modPlayer.choseJob == true)
             {
-                return true;
-            } else {
-                if (modPlayer.choseJob == true)
+                switch (modPlayer.job)
                 {
-                    switch (modPlayer.job)
-                    {
-                        case JobID.knight:
-                            if (modPlayer.armorJob == JobID.summoner)
-                            {
-                                if (modItem.knightItem ^ item.melee ^ item.summon) return true; else return false;
-                            }
-                            else
-                            {
-                                if (modItem.knightItem ^ item.melee) return true; else return false;
-                            }
-                        case JobID.rogue:
-                            if (modPlayer.armorJob == JobID.summoner)
-                            {
-                                if (modItem.rogueItem ^ item.thrown ^ item.melee ^ item.summon) return true; else return false;
-                            }
-                            else
-                            {
-                                if (modItem.rogueItem ^ item.thrown ^ item.melee) return true; else return false;
-                            }
-                        case JobID.ranger:
-                            if (modPlayer.armorJob == JobID.summoner)
-                            {
-                                if (modItem.rangerItem ^ item.ranged ^ item.summon) return true; else return false;
-                            }
-                            else
-                            {
-                                if (modItem.rangerItem ^ item.ranged) return true; else return false;
-                            }
-                        case JobID.mage:
-                            if (modPlayer.armorJob == JobID.summoner)
-                            {
-                                if (modItem.magicItem ^ item.magic ^ item.summon) return true; else return false;
-                            }
-                            else
-                            {
-                                if (modItem.magicItem ^ item.magic) return true; else return false;
-                            }
-                        case JobID.summoner:
-                            switch (modPlayer.armorJob)
-                            {
-                                case 0:
-                                    if (modItem.summonerItem ^ item.summon) return true; else return false;
-                                case JobID.knight:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.knightItem ^ item.melee) return true; else return false;
-                                case JobID.rogue:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.rogueItem ^ item.thrown) return true; else return false;
-                                case JobID.ranger:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.rangerItem ^ item.ranged) return true; else return false;
-                                case JobID.mage:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.magicItem ^ item.magic) return true; else return false;
-                                case JobID.chemist:
-                                    if (modItem.summonerItem ^ item.summon ^ modItem.chemistItem ^ modItem.chemical) return true; else return false;
-                            }
-                            if (modItem.summonerItem ^ item.summon) return true; else return false;
-                        case JobID.chemist:
-                            if (modPlayer.armorJob == JobID.summoner)
-                            {
-                                if (modItem.chemistItem ^ item.thrown ^ modItem.chemical ^ item.summon) return true; else return false;
-                            }
-                            else
-                            {
-                                if (modItem.chemistItem ^ item.thrown ^ modItem.chemical) return true; else return false;
-                            }
-                    }
-                    return modItem.preHardmode;
+                    case JobID.knight:
+                        if (modPlayer.armorJob == JobID.summoner)
+                        {
+                            if (modItem.knightItem ^ item.melee ^ item.summon) return true;
+                        }
+                        else
+                        {
+                            if (modItem.knightItem ^ item.melee) return true;
+                        }
+                        break;
+                    case JobID.rogue:
+                        if (modPlayer.armorJob == JobID.summoner)
+                        {
+                            if (modItem.rogueItem ^ item.thrown ^ item.melee ^ item.summon) return true;
+                        }
+                        else
+                        {
+                            if (modItem.rogueItem ^ item.thrown ^ item.melee) return true;
+                        }
+                        break;
+                    case JobID.ranger:
+                        if (modPlayer.armorJob == JobID.summoner)
+                        {
+                            if (modItem.rangerItem ^ item.ranged ^ item.summon) return true;
+                        }
+                        else
+                        {
+                            if (modItem.rangerItem ^ item.ranged) return true;
+                        }
+                        break;
+                    case JobID.mage:
+                        if (modPlayer.armorJob == JobID.summoner)
+                        {
+                            if (modItem.mageItem ^ item.magic ^ item.summon) return true;
+                        }
+                        else
+                        {
+                            if (modItem.mageItem ^ item.magic) return true;
+                        }
+                        break;
+                    case JobID.summoner:
+                        switch (modPlayer.armorJob)
+                        {
+                            case 0:
+                                if (modItem.summonerItem ^ item.summon) return true;
+                                break;
+                            case JobID.knight:
+                                if (modItem.summonerItem ^ item.summon ^ item.melee) return true;
+                                break;
+                            case JobID.rogue:
+                                if (modItem.summonerItem ^ item.summon ^ item.thrown) return true;
+                                break;
+                            case JobID.ranger:
+                                if (modItem.summonerItem ^ item.summon ^ item.ranged) return true;
+                                break;
+                            case JobID.mage:
+                                if (modItem.summonerItem ^ item.summon ^ item.magic) return true;
+                                break;
+                            case JobID.chemist:
+                                if (modItem.summonerItem ^ item.summon ^ modItem.chemical) return true;
+                                break;
+                        }
+                        if (modItem.summonerItem ^ item.summon) return true;
+                        break;
+                    case JobID.chemist:
+                        if (modPlayer.armorJob == JobID.summoner)
+                        {
+                            if (modItem.chemistItem ^ item.thrown ^ modItem.chemical ^ item.summon) return true;
+                        }
+                        else
+                        {
+                            if (modItem.chemistItem ^ item.thrown ^ modItem.chemical) return true;
+                        }
+                        break;
                 }
-                return modItem.preHardmode;
             }
+            return modItem.preHardmode;
         }
         public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
         {
@@ -438,59 +426,6 @@ namespace ClassOverhaul
                 if (Main.player[modNPC.owner].hostile == false) return false;
             }
             return base.CanHitNPCWithProj(proj, target);
-        }
-
-        public override void PostItemCheck()
-        {
-            if (player.HeldItem != null)
-            {
-                try
-                {
-                    Item item = player.HeldItem;
-                    ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                    if (item.type == ItemID.PiranhaGun && player.whoAmI == Main.myPlayer)
-                    {
-                        if (player.statMana < item.mana)
-                        {
-                            modItem.blocked = true;
-                        }
-                        else
-                        {
-                            modItem.blocked = false;
-                        }
-                        if (modItem.blocked == true)
-                        {
-                            player.controlUseItem = false;
-                        }
-                        if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
-                        {
-                            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                            if (modPlayer.itemCool == 0) player.statMana -= item.mana;
-                            if (modPlayer.itemCool == 0) modPlayer.itemCool = item.useTime;
-                            modPlayer.itemCool--;
-                        }
-                    }
-                    if (modItem.blocked == true) player.controlUseItem = false;
-                    if (player.itemTime == item.useTime && player.controlUseItem && player.whoAmI == Main.myPlayer && modItem.hasSummon)
-                    {
-                        PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                        if (!(modPlayer.usedMinionSlots + modItem.summonSlots > player.maxMinions))
-                        {
-                            int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
-                            NPC minion = Main.npc[id];
-                            NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
-                            modMinion.owner = Main.myPlayer;
-                            modPlayer.usedMinionSlots += modMinion.minionSlots;
-                            modMinion.minionSlots = modItem.summonSlots;
-                            player.numMinions++;
-                            modMinion.minionPos = player.numMinions;
-                            minion.damage = item.damage;
-                        }
-                    }
-                }
-                catch (System.IndexOutOfRangeException) { }  //Sometimes, if changing items or mouse clicking the held item, item id will change and the script won't resolve. But no gameplay issues.
-            }
-            base.PostItemCheck();
         }
     }
 }

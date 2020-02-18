@@ -48,6 +48,10 @@ namespace ClassOverhaul
                 projectile.magic = false;
                 projectile.thrown = true;
             }
+            if (ConsolariaSupport.Consolaria.consolariaExists)
+            {
+                ConsolariaSupport.ProjectileSupport.SetDefaults(projectile);
+            }
         }
         public override void AI(Projectile projectile)
         {
@@ -187,6 +191,10 @@ namespace ClassOverhaul
                     expr_E123_cp_0.velocity.Y = expr_E123_cp_0.velocity.Y - 0.5f;
                 }
             }
+            if (ConsolariaSupport.Consolaria.consolariaExists)
+            {
+                ConsolariaSupport.ProjectileSupport.AI(projectile);
+            }
         }
         public override bool? CanHitNPC(Projectile projectile, NPC target)
         {
@@ -198,6 +206,14 @@ namespace ClassOverhaul
             if (target.immuneTime <= 0) return true;
             return base.CanHitPvp(projectile, target);
 
+        }
+        public override void Kill(Projectile projectile, int timeLeft)
+        {
+            base.Kill(projectile, timeLeft);
+            if (ConsolariaSupport.Consolaria.consolariaExists)
+            {
+                ConsolariaSupport.ProjectileSupport.Kill(projectile);
+            }
         }
     }
 }

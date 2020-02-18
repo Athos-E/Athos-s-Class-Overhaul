@@ -5,6 +5,7 @@ using ClassOverhaul;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.Utilities;
+using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul
 {
@@ -15,7 +16,7 @@ namespace ClassOverhaul
         public bool knightItem = false;
         public bool rogueItem = false;
         public bool rangerItem = false;
-        public bool magicItem = false;
+        public bool mageItem = false;
         public bool summonerItem = false;
         public bool chemistItem = false;
         public bool preHardmode = false;
@@ -27,22 +28,18 @@ namespace ClassOverhaul
         public int summonNPC;
         public int summonSlots;
         public int cooldown;
-        
+
         public ItemEdits() { }
 
-        public bool IsModItem(Item item)
-        {
-            return item.type >= ItemID.Count;
-        }
+        public bool IsModItem(Item item) { return item.type >= ItemID.Count; }
 
         public override void SetDefaults(Item item)
         {
             base.SetDefaults(item);
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-            if (item.accessory == true)
-            {
-                modItem.isBasic = true;
-            }
+            if (item.accessory == true) modItem.isBasic = true;
+            if (item.axe > 0 ^ item.pick > 0 ^ item.hammer > 0) modItem.isBasic = true;
+            if (item.melee == false && item.thrown == false && item.ranged == false && item.magic == false && item.summon == false && modItem.chemical == false && item.defense == 0) modItem.isBasic = true;
             if (modItem.chemical == true)
             {
                 item.thrown = false;
@@ -56,7 +53,6 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.FlaskofParty ^ item.type == ItemID.FlaskofFire
                 ^ item.type == ItemID.GoldenBugNet ^ item.type == ItemID.EoCShield)
             { modItem.preHardmode = true; }
-            else { modItem.preHardmode = false; }
             if (item.type == ItemID.CobaltBreastplate ^ item.type == ItemID.CobaltLeggings
             ^ item.type == ItemID.PalladiumBreastplate ^ item.type == ItemID.PalladiumLeggings
             ^ item.type == ItemID.MythrilChainmail ^ item.type == ItemID.MythrilGreaves
@@ -66,12 +62,7 @@ namespace ClassOverhaul
             ^ item.type == ItemID.HallowedPlateMail ^ item.type == ItemID.HallowedGreaves
             ^ item.type == ItemID.ChlorophytePlateMail ^ item.type == ItemID.ChlorophyteGreaves
             ) {
-                modItem.knightItem = true;
-                modItem.rogueItem = true;
-                modItem.rangerItem = true;
-                modItem.magicItem = true;
-                modItem.summonerItem = true;
-                modItem.chemistItem = true;
+                modItem.isBasic = true;
             }
             if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask // Knight sets
                 ^ item.type == ItemID.MythrilHelmet ^ item.type == ItemID.OrichalcumMask
@@ -89,8 +80,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
                 ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
                 ^ item.type == ItemID.SquireAltShirt
-                )
-            {
+                ) {
                 modItem.knightItem = true;
             }
             if (item.type == ItemID.AnkhShield ^ item.type == ItemID.PaladinsShield)
@@ -115,13 +105,13 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.HuntressJerkin ^ item.type == ItemID.HuntressPants
                 ^ item.type == ItemID.HuntressAltHead ^ item.type == ItemID.HuntressAltPants
                 ^ item.type == ItemID.HuntressAltShirt
-                )
-            {
+                ) {
                 modItem.rangerItem = true;
             }
             if (item.type == ItemID.SpaceGun ^ item.type == ItemID.LaserRifle ^ item.type == ItemID.LeafBlower
             ^ item.type == ItemID.HeatRay ^ item.type == ItemID.LaserMachinegun
-            ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine) {
+            ^ item.type == ItemID.ChargedBlasterCannon ^ item.type == ItemID.Razorpine
+            ) {
                 item.magic = false;
                 item.ranged = true;
                 item.autoReuse = true;
@@ -138,9 +128,8 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.ApprenticeHat ^ item.type == ItemID.ApprenticeRobe
                 ^ item.type == ItemID.ApprenticeTrousers ^ item.type == ItemID.ApprenticeAltHead
                 ^ item.type == ItemID.ApprenticeAltPants ^ item.type == ItemID.ApprenticeAltShirt
-                )
-            {
-                modItem.magicItem = true;
+                ) {
+                modItem.mageItem = true;
             }
             if (item.type == ItemID.SpiderMask ^ item.type == ItemID.SpiderBreastplate // Summoner sets
             ^ item.type == ItemID.SpiderGreaves ^ item.type == ItemID.AncientBattleArmorHat
@@ -162,16 +151,15 @@ namespace ClassOverhaul
             ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
             ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
             ^ item.type == ItemID.SquireAltShirt
-            )
-            {
+            ) {
                 modItem.summonerItem = true;
             }
             if (item.type == ItemID.BeesKnees ^ item.type == ItemID.BeeGun
             ^ item.type == ItemID.WaspGun ^ item.type == ItemID.SpectreStaff
             ^ item.type == ItemID.BatScepter ^ item.type == ItemID.BookofSkulls
             ^ item.type == ItemID.HellwingBow ^ item.type == ItemID.PiranhaGun
-            ^ item.type == ItemID.ScourgeoftheCorruptor)
-            {
+            ^ item.type == ItemID.ScourgeoftheCorruptor
+            ) {
                 item.ranged = false;
                 item.melee = false;
                 item.magic = false;
@@ -182,8 +170,8 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.FrostBreastplate ^ item.type == ItemID.FrostLeggings
                 ^ item.type == ItemID.MonkBrows ^ item.type == ItemID.MonkShirt
                 ^ item.type == ItemID.MonkPants ^ item.type == ItemID.MonkAltHead
-                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt)
-            {
+                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
+                ) {
                 modItem.rogueItem = true;
             }
             if (item.type == ItemID.WoodenBoomerang ^ item.type == ItemID.EnchantedBoomerang
@@ -191,8 +179,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.ThornChakram ^ item.type == ItemID.Flamarang
                 ^ item.type == ItemID.FlyingKnife ^ item.type == ItemID.LightDisc
                 ^ item.type == ItemID.Bananarang ^ item.type == ItemID.PossessedHatchet
-                ^ item.type == ItemID.ShadowFlameKnife
-                ^ item.type == ItemID.VampireKnives
+                ^ item.type == ItemID.ShadowFlameKnife ^ item.type == ItemID.VampireKnives
                 ^ item.type == ItemID.DayBreak ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
                 ^ item.type == ItemID.GolemFist ^ item.type == ItemID.ChainKnife
@@ -205,8 +192,8 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.Code2 ^ item.type == ItemID.Yelets
                 ^ item.type == ItemID.RedsYoyo ^ item.type == ItemID.ValkyrieYoyo
                 ^ item.type == ItemID.Kraken ^ item.type == ItemID.TheEyeOfCthulhu
-                ^ item.type == ItemID.Terrarian)
-            {
+                ^ item.type == ItemID.Terrarian
+                ) {
                 item.melee = false;
                 item.magic = false;
                 item.thrown = true;
@@ -215,8 +202,8 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.PossessedHatchet ^ item.type == ItemID.ShadowFlameKnife
                 ^ item.type == ItemID.VampireKnives ^ item.type == ItemID.Anchor
                 ^ item.type == ItemID.ChainGuillotines ^ item.type == ItemID.KOCannon
-                ^ item.type == ItemID.GolemFist)
-            {
+                ^ item.type == ItemID.GolemFist
+                ) {
                 item.damage += 20;
             }
             if (item.type == ItemID.FormatC ^ item.type == ItemID.DayBreak
@@ -226,8 +213,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.RedsYoyo ^ item.type == ItemID.ValkyrieYoyo
                 ^ item.type == ItemID.Kraken ^ item.type == ItemID.TheEyeOfCthulhu
                 ^ item.type == ItemID.Terrarian
-                )
-            {
+                ) {
                 item.damage -= 15;
             }
             if (item.type == ItemID.CobaltHelmet ^ item.type == ItemID.PalladiumMask
@@ -235,11 +221,10 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
                 ^ item.type == ItemID.HallowedMask ^ item.type == ItemID.ChlorophyteMask
                 ^ item.type == ItemID.BeetleShell ^ item.type == ItemID.SolarFlareBreastplate
-                )
-            {
+                ) {
                 item.defense += 20;
             }
-            if (Consolaria.consolariaExists)
+            if (ConsolariaSupport.Consolaria.consolariaExists)
             {
                 ConsolariaSupport.ItemSupport.SetDefaults(item);
             }
@@ -911,25 +896,14 @@ namespace ClassOverhaul
         public override bool CanUseItem(Item item, Player player)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.CanEquip(item, player))
-            {
-                return base.CanUseItem(item, player);
-            }
-            else
-            {
-                ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                if (item.melee == false && item.thrown == false && item.ranged == false && item.magic == false && item.summon == false && modItem.chemical == false && item.defense <= 0) return true;
-                if (item.axe > 0 ^ item.pick > 0 ^ item.hammer > 0) return true; else return false;
-            }
+            if (modPlayer.CanEquip(item, player)) return base.CanUseItem(item, player);
+            return false;
         }
         public override bool CanEquipAccessory(Item item, Player player, int slot)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.CanEquip(item, player) == false) return false;
-            else
-            {
-                return base.CanEquipAccessory(item, player, slot);
-            }
+            if (modPlayer.CanEquip(item, player)) return base.CanEquipAccessory(item, player, slot);
+            return false;
         }
         public override void GetWeaponDamage(Item item, Player player, ref int damage)
         {
@@ -985,6 +959,7 @@ namespace ClassOverhaul
         {
             base.HoldItem(item, player);
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             if (item.melee == true)
             {
                 if (modPlayer.job == JobID.rogue)
@@ -996,6 +971,65 @@ namespace ClassOverhaul
                     }
                 }
             }
+            if (item.type == ItemID.PiranhaGun)
+            {
+                if (player.statMana < item.mana)
+                {
+                    modItem.blocked = true;
+                }
+                else
+                {
+                    modItem.blocked = false;
+                }
+                if (modItem.blocked == true)
+                {
+                    player.controlUseItem = false;
+                }
+                if (player.controlUseItem == true && modItem.blocked == false && player.itemAnimation > 0)
+                {
+                    if (modPlayer.itemCool == 0) player.statMana -= item.mana;
+                    if (modPlayer.itemCool == 0) modPlayer.itemCool = item.useTime;
+                    modPlayer.itemCool--;
+                }
+            }
+            if (modItem.blocked == true)
+            {
+                player.controlUseItem = false;
+                player.channel = false;
+            }
+            if (player.itemTime == item.useTime && player.controlUseItem && modItem.hasSummon)
+            {
+                if (!(modPlayer.usedMinionSlots + modItem.summonSlots > player.maxMinions))
+                {
+                    int id = NPC.NewNPC((int)player.Center.X, (int)player.Center.Y, modItem.summonNPC);
+                    NPC minion = Main.npc[id];
+                    NPCEdits modMinion = minion.GetGlobalNPC<NPCEdits>();
+                    modMinion.owner = Main.myPlayer;
+                    modPlayer.usedMinionSlots += modMinion.minionSlots;
+                    modMinion.minionSlots = modItem.summonSlots;
+                    player.numMinions++;
+                    modMinion.minionPos = player.numMinions;
+                    minion.damage = item.damage;
+                }
+            }
+        }
+    }
+    public class ChemistRecipe : ModRecipe
+    {
+        public PlayerEdits modPlayer;
+        public ChemistRecipe(Mod mod) : base(mod) {
+            if(Main.LocalPlayer.whoAmI > 0)
+            {
+                modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
+            }
+        }
+        public override bool RecipeAvailable()
+        {
+            if (modPlayer != null && modPlayer.job == JobID.chemist)
+            {
+                return base.RecipeAvailable();
+            }
+            return false;
         }
     }
 }

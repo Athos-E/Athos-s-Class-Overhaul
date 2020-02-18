@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul.ConsolariaSupport
 {
@@ -17,10 +13,6 @@ namespace ClassOverhaul.ConsolariaSupport
             {
                 Mod consolaria = Consolaria.instance;
                 ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                if (item.type == consolaria.ItemType("Sharanga"))
-                {
-                    modItem.preHardmode = true;
-                }
                 if (item.type == consolaria.ItemType("AncientDragonMask") ^ item.type == consolaria.ItemType("AncientDragonBreastplate")
                 ^ item.type == consolaria.ItemType("AncientDragonGreaves") ^ item.type == consolaria.ItemType("DragonMask")
                 ^ item.type == consolaria.ItemType("DragonGreaves") ^ item.type == consolaria.ItemType("DragonBreastplate")
@@ -37,7 +29,7 @@ namespace ClassOverhaul.ConsolariaSupport
                 ^ item.type == consolaria.ItemType("AncientSpectralSubligar") ^ item.type == consolaria.ItemType("SpectralArmor")
                 ^ item.type == consolaria.ItemType("SpectralHeadgear") ^ item.type == consolaria.ItemType("SpectralSubligar")
                 ) {
-                    modItem.magicItem = true;
+                    modItem.mageItem = true;
                 }
                 if (item.type == consolaria.ItemType("AncientWarlockHood") ^ item.type == consolaria.ItemType("AncientWarlockLeggings")
                 ^ item.type == consolaria.ItemType("AncientWarlockRobe") ^ item.type == consolaria.ItemType("WarlockHood")
@@ -79,6 +71,10 @@ namespace ClassOverhaul.ConsolariaSupport
                             item.crit = 0;
                         }
                     }
+                }
+                if (item.type == consolaria.ItemType("SpectralArrow"))
+                {
+                    item.alpha = 127;
                 }
             }
         }

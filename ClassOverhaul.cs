@@ -10,24 +10,29 @@ namespace ClassOverhaul
 {
     public class ClassOverhaul : Mod
     {
-        public static Mod instance
-        {
-            get
-            {
-                return ModLoader.GetMod("ClassOverhaul");
-            }
-        }
+        public static Mod instance { get { return ModLoader.GetMod("ClassOverhaul"); } }
         public ClassOverhaul() { }
         internal JobSelection jobSelectionUI;
         public UserInterface jobSelectionInterface;
-        public override void AddRecipes()
+        public override void PostSetupContent()
         {
-            base.AddRecipes();
+            base.PostSetupContent();
             ModRecipe recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.Gel, 10);
             recipe.AddIngredient(ItemID.Wood, 10);
+            recipe.AddIngredient(ItemID.ManaCrystal, 1);
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(ItemID.SlimeStaff);
+            recipe.AddRecipe();
+            ChemistRecipe crecipe = new ChemistRecipe(this);
+            crecipe.AddIngredient(ItemID.Bottle, 15);
+            crecipe.AddIngredient(ItemID.Deathweed, 1);
+            crecipe.AddIngredient(ItemID.VialofVenom, 1);
+            crecipe.AddIngredient(ItemID.Fireblossom, 1);
+            crecipe.AddIngredient(ItemID.ExplosivePowder, 1);
+            crecipe.AddTile(TileID.AlchemyTable);
+            crecipe.SetResult(ItemID.ToxicFlask, 15);
+            crecipe.AddRecipe();
         }
         public override void Load()
         {
@@ -40,12 +45,12 @@ namespace ClassOverhaul
             }
             base.Load();
         }
+
         public override void UpdateUI(GameTime gameTime)
         {
             base.UpdateUI(gameTime);
             // it will only draw if the player is not on the main menu
-            if (!Main.gameMenu
-                && JobSelection.visible)
+            if (!Main.gameMenu && JobSelection.visible)
             {
                 jobSelectionInterface?.Update(gameTime);
             }
@@ -61,46 +66,11 @@ namespace ClassOverhaul
         private bool DrawJobSelection()
         {
             // it will only draw if the player is not on the main menu
-            if (!Main.gameMenu
-                && JobSelection.visible)
+            if (!Main.gameMenu && JobSelection.visible)
             {
                 jobSelectionInterface.Draw(Main.spriteBatch, new GameTime());
             }
             return true;
-        }
-        public static void DisableRecipe(Mod mod, int result, int quantity)
-        {
-            RecipeFinder finder = new RecipeFinder();
-            finder.SetResult(result, quantity);
-            foreach (Recipe recipe in finder.SearchRecipes())
-            {
-                RecipeEditor editor = new RecipeEditor(recipe);
-                editor.DeleteRecipe();
-            }
-        }
-        public static void EnableRecipeVanillaItem(Mod mod, int result, int quantity, int ingredient1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            if (tile > 0) recipe.AddTile(tile);
-            recipe.AddIngredient(ingredient1, units1);
-            if (ingredient2 > 0) recipe.AddIngredient(ingredient2);
-            if (ingredient3 > 0) recipe.AddIngredient(ingredient3);
-            if (ingredient4 > 0) recipe.AddIngredient(ingredient4);
-            if (ingredient5 > 0) recipe.AddIngredient(ingredient5);
-            recipe.SetResult(result, quantity);
-            recipe.AddRecipe();
-        }
-        public static void EnableRecipeModItem(Mod mod, ModItem result, int quantity, int ingredient1, int units1 = 1, int ingredient2 = 0, int units2 = 1, int ingredient3 = 0, int units3 = 1, int ingredient4 = 0, int units4 = 1, int ingredient5 = 0, int units5 = 1, int tile = 0)
-        {
-            ModRecipe recipe = new ModRecipe(mod);
-            if (tile > 0) recipe.AddTile(tile);
-            recipe.AddIngredient(ingredient1);
-            if (ingredient2 > 0) recipe.AddIngredient(ingredient2);
-            if (ingredient3 > 0) recipe.AddIngredient(ingredient3);
-            if (ingredient4 > 0) recipe.AddIngredient(ingredient4);
-            if (ingredient5 > 0) recipe.AddIngredient(ingredient5);
-            recipe.SetResult(mod.GetItem(result.Name).item.type, quantity);
-            recipe.AddRecipe();
         }
     }
 }
