@@ -3,6 +3,10 @@
   This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
 
 Changelogs
+0.5.5
+-Using mana potions also gives you a Mana Sickness debuff that reduces Ranged damage.
+-Ranged Mana prefixes(modifiers) got fixed.
+
 0.5.4
 -A fix, anything new around here?
 -A few tweaks on Consolaria.

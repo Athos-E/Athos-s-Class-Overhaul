@@ -513,9 +513,19 @@ namespace ClassOverhaul
                 player.noKnockback = true;
             }
         }
+        public override bool? PrefixChance(Item item, int pre, UnifiedRandom rand)
+        {
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (modItem.chemical == true)
+            {
+                if (pre == -1 ^ pre == -3) return false;
+            }
+            return base.PrefixChance(item, pre, rand);
+        }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
-            if (item.type == ItemID.ToxicFlask) return 0;
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (modItem.chemical == true) return 0;
             return base.ChoosePrefix(item, rand);
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)

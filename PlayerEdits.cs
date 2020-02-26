@@ -82,6 +82,17 @@ namespace ClassOverhaul
                if (player.pStone && player.buffTime[index] > 900) player.buffTime[index] /= 2;
                 else if(player.buffTime[index] > 1800) player.buffTime[index] /= 1800;
             }
+            if (player.HasBuff(BuffID.ManaSickness))
+            {
+                index = player.FindBuffIndex(BuffID.ManaSickness);
+                if (player.HasBuff(mod.BuffType("RangedManaSickness")))
+                {
+                    int index2 = player.FindBuffIndex(mod.BuffType("RangedManaSickness"));
+                    player.buffTime[index2] = player.buffTime[index];
+                } else {
+                    player.AddBuff(mod.BuffType("RangedManaSickness"), player.buffTime[index]);
+                }
+            }
         }
         public override void PostUpdateBuffs()
         {
@@ -112,7 +123,6 @@ namespace ClassOverhaul
             }
             if (modPlayer.stunTimer > 0 && modPlayer.stunned == false) modPlayer.stunTimer--;
             if (modPlayer.knockbackTimer > 0) { modPlayer.knockbackTimer--; player.noKnockback = true; }
-
         }
         public bool CanEquip(Item item, Player player)
         {
