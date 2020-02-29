@@ -76,8 +76,7 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.SolarFlareHelmet ^ item.type == ItemID.SolarFlareBreastplate
                 ^ item.type == ItemID.SolarFlareLeggings
                 ^ item.type == ItemID.SquireGreatHelm ^ item.type == ItemID.SquirePlating
-                ^ item.type == ItemID.SquireGreaves ^ item.type == ItemID.MonkAltHead
-                ^ item.type == ItemID.MonkAltPants ^ item.type == ItemID.MonkAltShirt
+                ^ item.type == ItemID.SquireGreaves
                 ^ item.type == ItemID.SquireAltHead ^ item.type == ItemID.SquireAltPants
                 ^ item.type == ItemID.SquireAltShirt
                 ) {
@@ -221,8 +220,14 @@ namespace ClassOverhaul
                 ^ item.type == ItemID.AdamantiteHelmet ^ item.type == ItemID.TitaniumMask
                 ^ item.type == ItemID.HallowedMask ^ item.type == ItemID.ChlorophyteMask
                 ^ item.type == ItemID.BeetleShell ^ item.type == ItemID.SolarFlareBreastplate
+                ^ item.type == ItemID.SquirePlating ^ item.type == ItemID.SquireAltShirt
+                ^ item.type == ItemID.TurtleScaleMail
                 ) {
-                item.defense += 20;
+                item.defense += 10 + (item.rare * 2);
+            }
+            if (item.type == ItemID.FrostBreastplate)
+            {
+                item.defense += 6;
             }
             if (ConsolariaSupport.Consolaria.consolariaExists)
             {
@@ -499,6 +504,88 @@ namespace ClassOverhaul
                 player.meleeCrit += 20;
                 player.moveSpeed += 0.15f;
             }
+            if (item.type == ItemID.CobaltHelmet)
+            {
+                player.meleeSpeed -= 0.06f; // 6% on helmet
+                player.moveSpeed -= 0.03f; // 4% on helmet
+            }
+            if (item.type == ItemID.PalladiumMask)
+            {
+                player.meleeDamage -= 0.03f; // 5% on mask
+                player.meleeSpeed -= 0.06f; // 6% on mask
+            }
+            if (item.type == ItemID.MythrilHelmet)
+            {
+                player.meleeCrit -= 2; // 3% on helmet
+                player.meleeDamage -= 0.03f; // 7% on helmet
+            }
+            if (item.type == ItemID.OrichalcumMask)
+            {
+                player.meleeDamage -= 0.02f; // 5% on mask
+                player.meleeSpeed -= 0.04f; // 4% on mask
+                player.moveSpeed -= 0.04f; // 4% on mask
+            }
+            if (item.type == ItemID.AdamantiteHelmet)
+            {
+                player.meleeCrit -= 3; // 4% on helmet
+                player.meleeDamage -= 0.04f; // 10% on helmet
+            }
+            if (item.type == ItemID.TitaniumMask)
+            {
+                player.meleeDamage -= 0.02f; // 6% on mask
+                player.meleeCrit -= 2; // 6% on mask
+            }
+            if (item.type == ItemID.SquireGreaves) {
+                player.meleeCrit -= 10; // 10% on greaves
+                player.moveSpeed -= 0.08f; // 12% on greaves
+            }
+            if (item.type == ItemID.HallowedMask)
+            {
+                player.meleeDamage -= 0.02f; // 8% on mask
+                player.meleeCrit -= 4; // 6% on mask
+                player.meleeSpeed -= 0.03f; // 7% on mask
+            }
+            if (item.type == ItemID.ChlorophyteMask)
+            {
+                player.meleeDamage -= 0.04f; // 12% on mask
+                player.meleeCrit -= 2; // 4% on mask
+            }
+            if (item.type == ItemID.TurtleHelmet)
+            {
+                player.meleeDamage -= 0.02f; // 4% on helmet
+            }
+            if (item.type == ItemID.TurtleScaleMail)
+            {
+                player.meleeDamage -= 0.03f; // 5% on mail
+                player.meleeCrit -= 3; // 5% on mail 
+            }
+            if (item.type == ItemID.TurtleLeggings)
+            {
+                player.meleeCrit -= 2; // 2% on leggings
+            }
+            if (item.type == ItemID.BeetleShell)
+            {
+                player.meleeDamage -= 0.02f; // 3% on shell
+                player.meleeCrit -= 3; // 2% on shell
+            }
+            if (item.type == ItemID.SquireAltPants)
+            {
+                player.meleeCrit -= 8; // 12% on pants
+                player.moveSpeed -= 0.15f; // 15% on pants
+            }
+            if (item.type == ItemID.SolarFlareHelmet)
+            {
+                player.meleeCrit -= 7; // 10% on helmet
+            }
+            if (item.type == ItemID.SolarFlareBreastplate)
+            {
+                player.meleeDamage -= 0.1f; // 12% on breastplate
+            }
+            if (item.type == ItemID.SolarFlareLeggings)
+            {
+                player.moveSpeed -= 0.06f; // 9% on leggings
+                player.meleeSpeed -= 0.05f; // 10% on leggings
+            }
         }
         public override void UpdateAccessory(Item item, Player player, bool hideVisual)
         {
@@ -541,7 +628,7 @@ namespace ClassOverhaul
                 }
             }
             PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
-            if (item.melee == true && modPlayer.job == JobID.rogue && item.type != ItemID.SolarEruption)
+            if (item.melee == true && (modPlayer.job == JobID.rogue ^ modPlayer.armorJob == JobID.rogue) && item.type != ItemID.SolarEruption)
             {
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
                 line.text += "\n" + (item.rare * 2).ToString() + " armor penetration";
@@ -849,6 +936,157 @@ namespace ClassOverhaul
             {
                 tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");
             }
+            if (item.type == ItemID.CobaltHelmet)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "6% increased melee speed\n4% increased move speed";
+                }
+            }
+            if (item.type == ItemID.PalladiumMask)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "5% increased melee damage\n6% increased melee speed";
+                }
+            }
+            if (item.type == ItemID.MythrilHelmet)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "7% increased melee damage\n3% increased melee critical strike chance";
+                }
+            }
+            if (item.type == ItemID.OrichalcumMask)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "5% increased melee damage\n4% increased melee and movement speed";
+                }
+            }
+            if (item.type == ItemID.AdamantiteHelmet)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "10% increased melee damage\n4% increased melee critical strike chance";
+                }
+            }
+            if (item.type == ItemID.TitaniumMask)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "6% increased melee damage and critical strike chance";
+                }
+            }
+            if (item.type == ItemID.SquireGreaves)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "15% increased minion damage\n10% increased melee critical strike chance\n12% increased move speed";
+                }
+            }
+            if (item.type == ItemID.HallowedMask)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "8% increased melee damage\n7% increased melee speed\n6% increased melee critical strike chance";
+                }
+            }
+            if (item.type == ItemID.ChlorophyteMask)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "12% increased melee damage\n4% increased melee critical strike chance";
+                }
+            }
+            if (item.type == ItemID.TurtleHelmet)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "4% increased melee damage\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.TurtleScaleMail)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "5% increased melee damage and critical strike chance\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.TurtleLeggings)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "2% increased melee critical strike chance\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.BeetleShell)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "3% increased damage damage\n2% increased melee critical strike chance\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.SquireAltPants)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "20% increased minion damage\n12% increased melee critical strike chance\n15% increased move speed";
+                }
+            }
+            if (item.type == ItemID.SolarFlareHelmet)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "10% increased melee critical strike chance\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.SolarFlareBreastplate)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "12% increased melee damage\nEnemies are more likely to target you";
+                }
+            }
+            if (item.type == ItemID.SolarFlareLeggings)
+            {
+                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
+                if (line != null)
+                {
+                    line.text = "10% increased melee speed\n9% increased move speed\nEnemies are more likely to target you";
+                }
+            }
         }
         public override string IsArmorSet(Item head, Item body, Item legs)
         {
@@ -870,6 +1108,18 @@ namespace ClassOverhaul
                 { return "ShinobiInfiltrator"; }
             if (head.type == ItemID.BeetleHelmet && body.type == ItemID.BeetleScaleMail && legs.type == ItemID.BeetleLeggings)
                 { return "BeetleScaleArmor"; }
+            if (head.type == ItemID.AdamantiteHelmet && body.type == ItemID.AdamantiteBreastplate && legs.type == ItemID.AdamantiteLeggings)
+                { return "AdamantiteKnight"; }
+            if (head.type == ItemID.MythrilHelmet && body.type == ItemID.MythrilChainmail && legs.type == ItemID.MythrilGreaves)
+                { return "MythrilKnight"; }
+            if (head.type == ItemID.CobaltHelmet && body.type == ItemID.CobaltBreastplate && legs.type == ItemID.CobaltLeggings)
+                { return "CobaltKnight"; }
+            if (head.type == ItemID.HallowedMask && body.type == ItemID.HallowedPlateMail && legs.type == ItemID.HallowedGreaves)
+                { return "HallowedKnight"; }
+            if (head.type == ItemID.FrostHelmet && body.type == ItemID.FrostBreastplate && legs.type == ItemID.FrostLeggings)
+                { return "FrostArmor"; }
+            if (head.type == ItemID.AncientBattleArmorHat && body.type == ItemID.AncientBattleArmorShirt && legs.type == ItemID.AncientBattleArmorPants)
+                { return "ForbiddenArmor"; }
             return base.IsArmorSet(head, body, legs);
         }
         public override void UpdateArmorSet(Player player, string set)
@@ -900,7 +1150,39 @@ namespace ClassOverhaul
             if (set == "BeetleScaleArmor")
             {
                 player.thrownVelocity += 0.25f;
-                player.setBonus += "\n25% increased thrown velocity";
+                player.setBonus = "25% increased thrown velocity\n" + player.setBonus;
+            }
+            if (set == "AdamantiteKnight")
+            {
+                player.meleeSpeed -= 0.09f; // 9% on set
+                player.moveSpeed -= 0.09f; // 9% on set
+                player.setBonus = "9% increased melee and movement speed";
+            }
+            if (set == "MythrilKnight")
+            {
+                player.meleeCrit -= 2; // 3% on set
+                player.setBonus = "3% increased melee critical strike chance";
+            }
+            if (set == "CobaltKnight")
+            {
+                player.meleeSpeed -= 0.07f; // 8% on set
+                player.setBonus = "8% increased melee speed";
+            }
+            if (set == "HallowedKnight")
+            {
+                player.meleeSpeed -= 0.8f; // 11% on set
+                player.moveSpeed -= 0.10f; // 9% on set
+                player.setBonus = "11% increased melee speed\n9% increased move speed";
+            }
+            if (set == "FrostArmor" && (modPlayer.job == JobID.knight ^ modPlayer.job == JobID.ranger))
+            {
+                if (modPlayer.job == JobID.knight) modPlayer.armorJob = JobID.ranger; else modPlayer.armorJob = JobID.knight;
+                player.setBonus += "\nAllows using items of other class";
+            }
+            if (set == "ForbiddenArmor" && (modPlayer.job == JobID.mage ^ modPlayer.job == JobID.summoner))
+            {
+                if (modPlayer.job == JobID.mage) modPlayer.armorJob = JobID.summoner; else modPlayer.armorJob = JobID.mage;
+                player.setBonus += "\nAllows using items of other class";
             }
         }
         public override bool CanUseItem(Item item, Player player)
@@ -972,7 +1254,7 @@ namespace ClassOverhaul
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             if (item.melee == true)
             {
-                if (modPlayer.job == JobID.rogue)
+                if (modPlayer.job == JobID.rogue ^ modPlayer.armorJob == JobID.rogue)
                 {
                     if (modPlayer.rogueBonus == false)
                     {

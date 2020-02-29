@@ -3,6 +3,16 @@
   This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
 
 Changelogs
+0.5.6
+-Changed the Mana Sickness (Ranged) debuff's damage reduction to half of its original value(2.5% per second, instead of 5%).
+-Frost Armor and Forbidden Armor sets now allow the use of its job counterparts' weapons.
+-Summoners now benefit from Rogue dash and Armor penetration passives when using Old One's Rogue sets.
+-Changed Knight's defense bonus from (20) to (10 + 'item rarity' * 2). (starts as 18, goes up to 30).
+-Buffed Frost Breastplate's defense by (6) points.
+-Fixed Shinobi Infiltrator set also getting treated as knight set.
+-Fixed Squire and Valhalla Knight chest armors not getting knight defense bonus.
+-Nerfed Knight sets' melee damage, melee crit, melee speed and move speed.
+
 0.5.5
 -Using mana potions also gives you a Mana Sickness debuff that reduces Ranged damage.
 -Ranged Mana prefixes(modifiers) got fixed.
@@ -11,13 +21,8 @@ Changelogs
 -A fix, anything new around here?
 -A few tweaks on Consolaria.
 
-0.5.3
--Yet another fix. Perfomance issues.
-
-0.5.2
--Hotfix for Magic item values and consolaria support.
-
-0.5.1
+0.5.1~0.5.3
+-A bunch of hotfixes.
 -Sightly supports Consolaria. There will be adjustments. You can equip armors and use items normally, now.
 
 0.5.0

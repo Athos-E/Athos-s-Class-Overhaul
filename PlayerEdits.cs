@@ -57,7 +57,7 @@ namespace ClassOverhaul
         public override void PreUpdate()
         {
             base.PreUpdate();
-            if (job == JobID.rogue) player.dash = 1;
+            if (job == JobID.rogue ^ armorJob == JobID.rogue) player.dash = 1;
         }
         public override void PostUpdate()
         {
@@ -135,13 +135,17 @@ namespace ClassOverhaul
                 switch (modPlayer.job)
                 {
                     case JobID.knight:
-                        if (modPlayer.armorJob == JobID.summoner)
+                        switch (modPlayer.armorJob)
                         {
-                            if (modItem.knightItem ^ item.melee ^ item.summon) return true;
-                        }
-                        else
-                        {
-                            if (modItem.knightItem ^ item.melee) return true;
+                            case 0:
+                                if (modItem.knightItem ^ item.melee) return true;
+                                break;
+                            case JobID.summoner:
+                                if (modItem.knightItem ^ item.melee ^ item.summon) return true;
+                                break;
+                            case JobID.ranger:
+                                if (modItem.knightItem ^ item.melee ^ item.ranged) return true;
+                                break;
                         }
                         break;
                     case JobID.rogue:
@@ -155,23 +159,28 @@ namespace ClassOverhaul
                         }
                         break;
                     case JobID.ranger:
-                        if (modPlayer.armorJob == JobID.summoner)
+                        switch (modPlayer.armorJob)
                         {
-                            if (modItem.rangerItem ^ item.ranged ^ item.summon) return true;
-                        }
-                        else
-                        {
-                            if (modItem.rangerItem ^ item.ranged) return true;
+                            case 0:
+                                if (modItem.rangerItem ^ item.ranged) return true;
+                                break;
+                            case JobID.summoner:
+                                if (modItem.rangerItem ^ item.ranged ^ item.summon) return true;
+                                break;
+                            case JobID.knight:
+                                if (modItem.rangerItem ^ item.ranged ^ item.melee) return true;
+                                break;
                         }
                         break;
                     case JobID.mage:
-                        if (modPlayer.armorJob == JobID.summoner)
+                        switch (modPlayer.armorJob)
                         {
-                            if (modItem.mageItem ^ item.magic ^ item.summon) return true;
-                        }
-                        else
-                        {
-                            if (modItem.mageItem ^ item.magic) return true;
+                            case 0:
+                                if (modItem.mageItem ^ item.magic) return true;
+                                break;
+                            case JobID.summoner:
+                                if (modItem.mageItem ^ item.magic ^ item.summon) return true;
+                                break;
                         }
                         break;
                     case JobID.summoner:
@@ -184,7 +193,7 @@ namespace ClassOverhaul
                                 if (modItem.summonerItem ^ item.summon ^ item.melee) return true;
                                 break;
                             case JobID.rogue:
-                                if (modItem.summonerItem ^ item.summon ^ item.thrown) return true;
+                                if (modItem.summonerItem ^ item.summon ^ item.thrown ^ item.melee) return true;
                                 break;
                             case JobID.ranger:
                                 if (modItem.summonerItem ^ item.summon ^ item.ranged) return true;

@@ -8,14 +8,14 @@ namespace ClassOverhaul.Buffs.Debuffs
         float percent = 0f;
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Mana Sickness");
+            DisplayName.SetDefault("Mana Sickness (Ranged)");
             Description.SetDefault("Ranged damage reduced by " + 0f + "%");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
         }
 
         public float rangedReduction(Player player, ref int buffIndex)
-            => (player.buffTime[buffIndex] > 600 ? 600 : player.buffTime[buffIndex]) / 12 * 0.01f;
+            => (player.buffTime[buffIndex] > 600 ? 600 : player.buffTime[buffIndex]) / 24 * 0.01f;
 
         public override void Update(Player player, ref int buffIndex)
         {
