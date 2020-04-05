@@ -13,27 +13,27 @@ namespace ClassOverhaul.ConsolariaSupport
             {
                 Mod consolaria = Consolaria.instance;
                 ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-                if (item.type == consolaria.ItemType("AncientDragonMask") ^ item.type == consolaria.ItemType("AncientDragonBreastplate")
-                ^ item.type == consolaria.ItemType("AncientDragonGreaves") ^ item.type == consolaria.ItemType("DragonMask")
-                ^ item.type == consolaria.ItemType("DragonGreaves") ^ item.type == consolaria.ItemType("DragonBreastplate")
+                if (item.type == consolaria.ItemType("AncientDragonMask") || item.type == consolaria.ItemType("AncientDragonBreastplate")
+                || item.type == consolaria.ItemType("AncientDragonGreaves") || item.type == consolaria.ItemType("DragonMask")
+                || item.type == consolaria.ItemType("DragonGreaves") || item.type == consolaria.ItemType("DragonBreastplate")
                 ) {
                     modItem.knightItem = true;
                 }
-                if (item.type == consolaria.ItemType("AncientTitanHelmet") ^ item.type == consolaria.ItemType("AncientTitanLeggings")
-                ^ item.type == consolaria.ItemType("AncientTitanMail") ^ item.type == consolaria.ItemType("TitanHelmet")
-                ^ item.type == consolaria.ItemType("TitanLeggings") ^ item.type == consolaria.ItemType("TitanMail")
+                if (item.type == consolaria.ItemType("AncientTitanHelmet") || item.type == consolaria.ItemType("AncientTitanLeggings")
+                || item.type == consolaria.ItemType("AncientTitanMail") || item.type == consolaria.ItemType("TitanHelmet")
+                || item.type == consolaria.ItemType("TitanLeggings") || item.type == consolaria.ItemType("TitanMail")
                 ) {
                     modItem.rangerItem = true;
                 }
-                if (item.type == consolaria.ItemType("AncientSpectralArmor") ^ item.type == consolaria.ItemType("AncientSpectralHeadgear")
-                ^ item.type == consolaria.ItemType("AncientSpectralSubligar") ^ item.type == consolaria.ItemType("SpectralArmor")
-                ^ item.type == consolaria.ItemType("SpectralHeadgear") ^ item.type == consolaria.ItemType("SpectralSubligar")
+                if (item.type == consolaria.ItemType("AncientSpectralArmor") || item.type == consolaria.ItemType("AncientSpectralHeadgear")
+                || item.type == consolaria.ItemType("AncientSpectralSubligar") || item.type == consolaria.ItemType("SpectralArmor")
+                || item.type == consolaria.ItemType("SpectralHeadgear") || item.type == consolaria.ItemType("SpectralSubligar")
                 ) {
                     modItem.mageItem = true;
                 }
-                if (item.type == consolaria.ItemType("AncientWarlockHood") ^ item.type == consolaria.ItemType("AncientWarlockLeggings")
-                ^ item.type == consolaria.ItemType("AncientWarlockRobe") ^ item.type == consolaria.ItemType("WarlockHood")
-                ^ item.type == consolaria.ItemType("WarlockLeggings") ^ item.type == consolaria.ItemType("WarlockRobe")
+                if (item.type == consolaria.ItemType("AncientWarlockHood") || item.type == consolaria.ItemType("AncientWarlockLeggings")
+                || item.type == consolaria.ItemType("AncientWarlockRobe") || item.type == consolaria.ItemType("WarlockHood")
+                || item.type == consolaria.ItemType("WarlockLeggings") || item.type == consolaria.ItemType("WarlockRobe")
                 ) {
                     modItem.summonerItem = true;
                 }
@@ -42,7 +42,7 @@ namespace ClassOverhaul.ConsolariaSupport
                     item.ranged = false;
                     item.thrown = true;
                 }
-                if (item.type == consolaria.ItemType("AncientDragonBreastplate") ^ item.type == consolaria.ItemType("DragonBreastplate")
+                if (item.type == consolaria.ItemType("AncientDragonBreastplate") || item.type == consolaria.ItemType("DragonBreastplate")
                 ) {
                     item.defense += 20;
                 }

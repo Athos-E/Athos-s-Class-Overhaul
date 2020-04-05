@@ -57,7 +57,7 @@ namespace ClassOverhaul
         public override void PreUpdate()
         {
             base.PreUpdate();
-            if (job == JobID.rogue ^ armorJob == JobID.rogue) player.dash = 1;
+            if (job == JobID.rogue || armorJob == JobID.rogue) player.dash = 1;
         }
         public override void PostUpdate()
         {
@@ -138,37 +138,37 @@ namespace ClassOverhaul
                         switch (modPlayer.armorJob)
                         {
                             case 0:
-                                if (modItem.knightItem ^ item.melee) return true;
+                                if (modItem.knightItem || item.melee) return true;
                                 break;
                             case JobID.summoner:
-                                if (modItem.knightItem ^ item.melee ^ item.summon) return true;
+                                if (modItem.knightItem || item.melee || item.summon) return true;
                                 break;
                             case JobID.ranger:
-                                if (modItem.knightItem ^ item.melee ^ item.ranged) return true;
+                                if (modItem.knightItem || item.melee || item.ranged) return true;
                                 break;
                         }
                         break;
                     case JobID.rogue:
                         if (modPlayer.armorJob == JobID.summoner)
                         {
-                            if (modItem.rogueItem ^ item.thrown ^ item.melee ^ item.summon) return true;
+                            if (modItem.rogueItem || item.thrown || item.melee || item.summon) return true;
                         }
                         else
                         {
-                            if (modItem.rogueItem ^ item.thrown ^ item.melee) return true;
+                            if (modItem.rogueItem || item.thrown || item.melee) return true;
                         }
                         break;
                     case JobID.ranger:
                         switch (modPlayer.armorJob)
                         {
                             case 0:
-                                if (modItem.rangerItem ^ item.ranged) return true;
+                                if (modItem.rangerItem || item.ranged) return true;
                                 break;
                             case JobID.summoner:
-                                if (modItem.rangerItem ^ item.ranged ^ item.summon) return true;
+                                if (modItem.rangerItem || item.ranged || item.summon) return true;
                                 break;
                             case JobID.knight:
-                                if (modItem.rangerItem ^ item.ranged ^ item.melee) return true;
+                                if (modItem.rangerItem || item.ranged || item.melee) return true;
                                 break;
                         }
                         break;
@@ -176,10 +176,10 @@ namespace ClassOverhaul
                         switch (modPlayer.armorJob)
                         {
                             case 0:
-                                if (modItem.mageItem ^ item.magic) return true;
+                                if (modItem.mageItem || item.magic) return true;
                                 break;
                             case JobID.summoner:
-                                if (modItem.mageItem ^ item.magic ^ item.summon) return true;
+                                if (modItem.mageItem || item.magic || item.summon) return true;
                                 break;
                         }
                         break;
@@ -187,34 +187,34 @@ namespace ClassOverhaul
                         switch (modPlayer.armorJob)
                         {
                             case 0:
-                                if (modItem.summonerItem ^ item.summon) return true;
+                                if (modItem.summonerItem || item.summon) return true;
                                 break;
                             case JobID.knight:
-                                if (modItem.summonerItem ^ item.summon ^ item.melee) return true;
+                                if (modItem.summonerItem || item.summon || item.melee) return true;
                                 break;
                             case JobID.rogue:
-                                if (modItem.summonerItem ^ item.summon ^ item.thrown ^ item.melee) return true;
+                                if (modItem.summonerItem || item.summon || item.thrown || item.melee) return true;
                                 break;
                             case JobID.ranger:
-                                if (modItem.summonerItem ^ item.summon ^ item.ranged) return true;
+                                if (modItem.summonerItem || item.summon || item.ranged) return true;
                                 break;
                             case JobID.mage:
-                                if (modItem.summonerItem ^ item.summon ^ item.magic) return true;
+                                if (modItem.summonerItem || item.summon || item.magic) return true;
                                 break;
                             case JobID.chemist:
-                                if (modItem.summonerItem ^ item.summon ^ modItem.chemical) return true;
+                                if (modItem.summonerItem || item.summon || modItem.chemical) return true;
                                 break;
                         }
-                        if (modItem.summonerItem ^ item.summon) return true;
+                        if (modItem.summonerItem || item.summon) return true;
                         break;
                     case JobID.chemist:
                         if (modPlayer.armorJob == JobID.summoner)
                         {
-                            if (modItem.chemistItem ^ item.thrown ^ modItem.chemical ^ item.summon) return true;
+                            if (modItem.chemistItem || item.thrown || modItem.chemical || item.summon) return true;
                         }
                         else
                         {
-                            if (modItem.chemistItem ^ item.thrown ^ modItem.chemical) return true;
+                            if (modItem.chemistItem || item.thrown || modItem.chemical) return true;
                         }
                         break;
                 }

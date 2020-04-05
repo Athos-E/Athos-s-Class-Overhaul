@@ -3,6 +3,9 @@
   This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
 
 Changelogs
+0.5.7
+-Hotfix for omnitools not working for non-Knight classes.
+
 0.5.6
 -Changed the Mana Sickness (Ranged) debuff's damage reduction to half of its original value(2.5% per second, instead of 5%).
 -Frost Armor and Forbidden Armor sets now allow the use of its job counterparts' weapons.
