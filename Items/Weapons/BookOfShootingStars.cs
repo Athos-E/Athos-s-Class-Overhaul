@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 
-namespace ClassOverhaul.Items
+namespace ClassOverhaul.Items.Weapons
 {
     public class BookOfShootingStars : ModItem
     {

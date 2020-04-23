@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using ClassOverhaul.UI;
+using ClassOverhaul.Jobs;
+using ClassOverhaul.ModSupport;
 using Terraria.DataStructures;
 
 namespace ClassOverhaul
@@ -10,7 +12,9 @@ namespace ClassOverhaul
     public class PlayerEdits : ModPlayer
     {
         public float chemicalDamage = 1f;
+        public float chemicalDamageMult = 1f;
         public float usedMinionSlots = 0f;
+        public int magicDefense = 0;
         public bool defeatedWoF = false;
         public bool choseJob = false;
         public bool gellyfishArmor;
@@ -22,16 +26,21 @@ namespace ClassOverhaul
         public bool immune;
         public bool rogueBonus;
         public bool stunned;
+
         public override void ResetEffects()
         {
             base.ResetEffects();
             chemicalDamage = 1f;
+            chemicalDamageMult = 1f;
             player.armorPenetration = 0;
+            magicDefense = 0;
             armorJob = 0;
             rogueBonus = false;
             gellyfishArmor = false;
             stunned = false;
+            PlayerMethods.ResetEffects(player);
         }
+
         public override TagCompound Save()
         {
             return new TagCompound
@@ -44,6 +53,7 @@ namespace ClassOverhaul
                 {"rogueBonus", rogueBonus }
             };
         }
+
         public override void Load(TagCompound tag)
         {
             base.Load(tag);
@@ -52,26 +62,31 @@ namespace ClassOverhaul
             armorJob = tag.GetInt("armorJob");
             defeatedWoF = tag.GetBool("defeatedWoF");
             rogueBonus = tag.GetBool("rogueBonus");
-
         }
+
         public override void PreUpdate()
         {
             base.PreUpdate();
             if (job == JobID.rogue || armorJob == JobID.rogue) player.dash = 1;
+            if (player.longInvince && player.immuneTime > 30) player.immuneTime = 30;
+            if (!player.longInvince && player.immuneTime > 15) player.immuneTime = 15;
         }
+
         public override void PostUpdate()
         {
             base.PostUpdate();
+            PlayerMethods.PostUpdate(player);
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (player.whoAmI == Main.myPlayer)
             {
                 if (modPlayer.defeatedWoF && !modPlayer.choseJob)
                 {
                     modPlayer.immune = true;
-                    JobSelection.visible = true;
+                    JobSelectionUI.visible = true;
                 }
             }
         }
+
         public override void PreUpdateBuffs()
         {
             base.PreUpdateBuffs();
@@ -94,6 +109,7 @@ namespace ClassOverhaul
                 }
             }
         }
+
         public override void PostUpdateBuffs()
         {
             base.PostUpdateBuffs();
@@ -124,140 +140,7 @@ namespace ClassOverhaul
             if (modPlayer.stunTimer > 0 && modPlayer.stunned == false) modPlayer.stunTimer--;
             if (modPlayer.knockbackTimer > 0) { modPlayer.knockbackTimer--; player.noKnockback = true; }
         }
-        public bool CanEquip(Item item, Player player)
-        {
-            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
-            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modItem.blocked == true) return false;
-            if (modItem.isBasic == true) return true;
-            if (modPlayer.choseJob == true)
-            {
-                switch (modPlayer.job)
-                {
-                    case JobID.knight:
-                        switch (modPlayer.armorJob)
-                        {
-                            case 0:
-                                if (modItem.knightItem || item.melee) return true;
-                                break;
-                            case JobID.summoner:
-                                if (modItem.knightItem || item.melee || item.summon) return true;
-                                break;
-                            case JobID.ranger:
-                                if (modItem.knightItem || item.melee || item.ranged) return true;
-                                break;
-                        }
-                        break;
-                    case JobID.rogue:
-                        if (modPlayer.armorJob == JobID.summoner)
-                        {
-                            if (modItem.rogueItem || item.thrown || item.melee || item.summon) return true;
-                        }
-                        else
-                        {
-                            if (modItem.rogueItem || item.thrown || item.melee) return true;
-                        }
-                        break;
-                    case JobID.ranger:
-                        switch (modPlayer.armorJob)
-                        {
-                            case 0:
-                                if (modItem.rangerItem || item.ranged) return true;
-                                break;
-                            case JobID.summoner:
-                                if (modItem.rangerItem || item.ranged || item.summon) return true;
-                                break;
-                            case JobID.knight:
-                                if (modItem.rangerItem || item.ranged || item.melee) return true;
-                                break;
-                        }
-                        break;
-                    case JobID.mage:
-                        switch (modPlayer.armorJob)
-                        {
-                            case 0:
-                                if (modItem.mageItem || item.magic) return true;
-                                break;
-                            case JobID.summoner:
-                                if (modItem.mageItem || item.magic || item.summon) return true;
-                                break;
-                        }
-                        break;
-                    case JobID.summoner:
-                        switch (modPlayer.armorJob)
-                        {
-                            case 0:
-                                if (modItem.summonerItem || item.summon) return true;
-                                break;
-                            case JobID.knight:
-                                if (modItem.summonerItem || item.summon || item.melee) return true;
-                                break;
-                            case JobID.rogue:
-                                if (modItem.summonerItem || item.summon || item.thrown || item.melee) return true;
-                                break;
-                            case JobID.ranger:
-                                if (modItem.summonerItem || item.summon || item.ranged) return true;
-                                break;
-                            case JobID.mage:
-                                if (modItem.summonerItem || item.summon || item.magic) return true;
-                                break;
-                            case JobID.chemist:
-                                if (modItem.summonerItem || item.summon || modItem.chemical) return true;
-                                break;
-                        }
-                        if (modItem.summonerItem || item.summon) return true;
-                        break;
-                    case JobID.chemist:
-                        if (modPlayer.armorJob == JobID.summoner)
-                        {
-                            if (modItem.chemistItem || item.thrown || modItem.chemical || item.summon) return true;
-                        }
-                        else
-                        {
-                            if (modItem.chemistItem || item.thrown || modItem.chemical) return true;
-                        }
-                        break;
-                }
-            }
-            return modItem.preHardmode;
-        }
-        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
-        {
-            base.Hurt(pvp, quiet, damage, hitDirection, crit);
-            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.stunned == false && modPlayer.stunTimer <= 0) player.AddBuff(mod.BuffType("Stun"), 30, true);
-            if (modPlayer.knockbackTimer <= 0)
-            {
-                modPlayer.knockbackTimer = 90;
-            }
-        }
-        public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
-        {
-            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (immune == true) return false;
-            if (modNPC.atkCooldown > 0) return false;
-            else if (modNPC.atkCooldown == 0)
-            {
-                if (npc.friendly == true) return false;
-                else return true;
-            }
-            return base.CanBeHitByNPC(npc, ref cooldownSlot);
-        }
-        public override bool CanBeHitByProjectile(Projectile proj)
-        {
-            if (immune == true)
-            {
-                return false;
-            }
-            return base.CanBeHitByProjectile(proj);
-        }
-        public override void ModifyHitByNPC(NPC npc, ref int damage, ref bool crit)
-        {
-            if (gellyfishArmor)
-            {
-                player.ApplyDamageToNPC(npc, (int)((1 + (player.statDefense / 2)) * player.minionDamage), 5f, npc.direction * -1, false);
-            }
-        }
+
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
         {
             if (proj.thrown == true)
@@ -315,6 +198,7 @@ namespace ClassOverhaul
             }
             base.OnHitNPCWithProj(proj, target, damage, knockback, crit);
         }
+
         public override void OnHitPvpWithProj(Projectile proj, Player target, int damage, bool crit)
         {
             if (proj.thrown == true)
@@ -372,79 +256,87 @@ namespace ClassOverhaul
             }
             base.OnHitPvpWithProj(proj, target, damage, crit);
         }
+
+        public override void Hurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit)
+        {
+            base.Hurt(pvp, quiet, damage, hitDirection, crit);
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            if (modPlayer.stunned == false && modPlayer.stunTimer <= 0) player.AddBuff(mod.BuffType("Stun"), 30, true);
+            if (modPlayer.knockbackTimer <= 0) modPlayer.knockbackTimer = 90;
+        }
+
+        public override bool CanHitPvp(Item item, Player target)
+        {
+            PlayerEdits modTarget = target.GetModPlayer<PlayerEdits>();
+            if (modTarget.immune) return false;
+            return base.CanHitPvp(item, target);
+        }
+
+        public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot)
+        {
+            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
+            if (immune) return false;
+            if (modNPC.atkCooldown > 0) return false; 
+            return base.CanBeHitByNPC(npc, ref cooldownSlot);
+        }
+
+        public override bool CanBeHitByProjectile(Projectile proj)
+        {
+            if (immune) return false;
+            return base.CanBeHitByProjectile(proj);
+        }
+
         public override void OnHitByNPC(NPC npc, int damage, bool crit)
         {
+            if (gellyfishArmor)
+            {
+                player.ApplyDamageToNPC(npc, (int)((1 + (player.statDefense / 2)) * player.minionDamage), 5f, npc.direction * -1, false);
+            }
             base.OnHitByNPC(npc, damage, crit);
-            if (player.longInvince == true)
-            {
-                player.immune = true;
-                player.immuneTime = 45;
-            }
-            else
-            {
-                player.immune = true;
-                player.immuneTime = 10;
-            }
-        }
-        public override void OnHitByProjectile(Projectile proj, int damage, bool crit)
-        {
-            base.OnHitByProjectile(proj, damage, crit);
-            if (player.longInvince == true)
-            {
-                player.immune = true;
-                player.immuneTime = 45;
-            }
-            else
-            {
-                player.immune = true;
-                player.immuneTime = 10;
-            }
-        }
-        public override void OnHitPvp(Item item, Player target, int damage, bool crit)
-        {
-            base.OnHitPvp(item, target, damage, crit);
-            if (target.longInvince == true)
-            {
-                target.immune = true;
-                target.immuneTime = 45;
-            }
-            else
-            {
-                target.immune = true;
-                target.immuneTime = 10;
-            }
-        }
-        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            base.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
-            target.immune[Main.myPlayer] = 5;
-        }
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
-        {
-            base.ModifyHitNPC(item, target, ref damage, ref knockback, ref crit);
-            target.immune[Main.myPlayer] = 5;
         }
 
-        public override bool? CanHitNPC(Item item, NPC target)
+        public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit)
         {
-            NPCEdits modNPC = target.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion)
+            base.ModifyHitPvp(item, target, ref damage, ref crit);
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            PlayerEdits modTarget = target.GetModPlayer<PlayerEdits>();
+            if (item.magic || modItem.chemical)
             {
-                if (modNPC.owner == Main.myPlayer) return false;
-                if (Main.player[modNPC.owner].hostile == false) return false;
+                if (Main.expertMode)
+                {
+                    damage += target.statDefense * 3 / 4;
+                    if (item.magic) damage -= modTarget.magicDefense * 3 / 4;
+                    if (modItem.chemical) damage -= modTarget.magicDefense * 3 / 8 - target.statDefense * 3 / 8;
+                }
+                else
+                {
+                    damage += target.statDefense / 2;
+                    if (item.magic) damage -= modTarget.magicDefense / 2;
+                    if (modItem.chemical) damage -= modTarget.magicDefense / 4 - target.statDefense / 4;
+                }
             }
-            return base.CanHitNPC(item, target);
         }
 
-        public override bool? CanHitNPCWithProj(Projectile proj, NPC target)
+        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit)
         {
-            NPCEdits modNPC = target.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion)
+            ProjectileEdits modProjectile = proj.GetGlobalProjectile<ProjectileEdits>();
+            PlayerEdits modTarget = player.GetModPlayer<PlayerEdits>();
+            if (proj.magic || modProjectile.chemical)
             {
-                if (modNPC.owner == Main.myPlayer) return false;
-                if (Main.player[modNPC.owner].hostile == false) return false;
+                if (Main.expertMode)
+                {
+                    damage += player.statDefense * 3 / 4;
+                    if (proj.magic) damage -= modTarget.magicDefense * 3 / 4;
+                    if (modProjectile.chemical) damage -= modTarget.magicDefense * 3 / 8 - player.statDefense * 3 / 8;
+                }
+                else
+                {
+                    damage += player.statDefense / 2;
+                    if (proj.magic) damage -= modTarget.magicDefense / 2;
+                    if (modProjectile.chemical) damage -= modTarget.magicDefense / 4 - player.statDefense / 4;
+                }
             }
-            return base.CanHitNPCWithProj(proj, target);
+            base.ModifyHitByProjectile(proj, ref damage, ref crit);
         }
     }
 }

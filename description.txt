@@ -3,6 +3,17 @@
   This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
 
 Changelogs
+0.6.0
+-Treasure bags for non-expert mode bosses, using their default loot chances. Replacing the default loots.
+-Adjusted npc and player immune times.
+-Magic projectiles are now properly unable to crit.
+-Reverted Toxic Flask being unavaible. It'll have its changes when I'm done.
+-Introduced Magic Defense.
+-Magic Defense-related prefixes to Armor and Accessory items.
+-Magic items no longer get crit bonus from prefixes(vanilla). Instead, their damage increase by 3x their previous crit bonus.
+-Accessory prefixes can now be given to Armor items.
+-Ranged Mana(Mana guns) possible prefixes adjusted.
+
 0.5.7
 -Hotfix for omnitools not working for non-Knight classes.
 

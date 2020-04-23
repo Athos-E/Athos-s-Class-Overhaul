@@ -4,4 +4,4 @@ homepage = https://forums.terraria.org/index.php?threads/athoss-class-overhaul.8
 weakReferences = Consolaria@1.2.1.3
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = false
-version = 0.5.7
+version = 0.6.0

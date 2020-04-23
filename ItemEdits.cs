@@ -1,9 +1,11 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using ClassOverhaul;
+using ClassOverhaul.Jobs;
+using ClassOverhaul.ModSupport;
 using System.Collections.Generic;
 using System.Linq;
+using ClassOverhaul.Prefixes;
 using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 
@@ -25,13 +27,16 @@ namespace ClassOverhaul
         public bool isBasic = false;
         public bool hasSummon = false;
         public bool blocked = false;
+        public int magicDefense;
         public int summonNPC;
         public int summonSlots;
         public int cooldown;
 
         public ItemEdits() { }
 
-        public bool IsModItem(Item item) { return item.type >= ItemID.Count; }
+        public static bool IsModItem(Item item) { return item.type >= ItemID.Count; }
+
+        public static bool IsCOItem(Item item) { return IsModItem(item) && item.type == ClassOverhaul.instance.ItemType(item.modItem.Name); }
 
         public override void SetDefaults(Item item)
         {
@@ -197,7 +202,20 @@ namespace ClassOverhaul
                 item.magic = false;
                 item.thrown = true;
             }
-
+            /*
+            if (item.type == ItemID.ToxicFlask)
+            {
+                item.magic = false;
+                modItem.chemical = true;
+                item.consumable = true;
+                item.crit = 0;
+                item.mana = 0;
+                item.value = 5000;
+                item.maxStack = 999;
+            }
+            */
+            if (IsCOItem(item) || IsModItem(item) == false) JobHooks.ApplyClassAssigns(item);
+            ItemMethods.SetDefaults(item);
             if (item.type == ItemID.LightDisc || item.type == ItemID.Bananarang
                 || item.type == ItemID.PossessedHatchet || item.type == ItemID.ShadowFlameKnife
                 || item.type == ItemID.VampireKnives || item.type == ItemID.Anchor
@@ -226,47 +244,28 @@ namespace ClassOverhaul
                 ) {
                 item.defense += 10 + (item.rare * 2);
             }
-            if (item.type == ItemID.FrostBreastplate)
-            {
-                item.defense += 6;
+            if (item.type == ItemID.FrostBreastplate) item.defense += 6;
+            if (item.defense > 0 && IsCOItem(item) == false) {
+                if (modItem.mageItem || modItem.summonerItem)
+                    modItem.magicDefense = item.defense * 3;
+                if (modItem.knightItem)
+                    modItem.magicDefense = item.defense - item.defense / 10;
+                if (modItem.rangerItem || modItem.chemistItem)
+                    modItem.magicDefense = item.defense + item.defense / 4;
+                if (modItem.rogueItem)
+                    modItem.magicDefense = item.defense + item.defense / 6;
+                if (modItem.summonerItem && (modItem.knightItem || modItem.rangerItem
+                    || modItem.rogueItem || modItem.chemistItem))
+                    modItem.magicDefense = item.defense + item.defense / 2;
+                if (!(modItem.mageItem && modItem.summonerItem && modItem.knightItem
+                    && modItem.rogueItem && modItem.rangerItem && modItem.chemistItem))
+                    modItem.magicDefense = item.defense;
             }
-            if (ConsolariaSupport.Consolaria.consolariaExists)
-            {
-                ConsolariaSupport.ItemSupport.SetDefaults(item);
-            }
-            if (item.type == ItemID.ToxicFlask)
-            {
-                item.magic = false;
-                modItem.chemical = true;
-                item.consumable = true;
-                item.crit = 0;
-                item.mana = 0;
-                item.value = 5000;
-                item.maxStack = 99;
-            }
-            if (item.magic == true && IsModItem(item) == false)
-            {
-                item.damage += (10 + (item.mana / 2) + item.rare);
-                if (item.crit > 4)
-                {
-                    item.damage += item.crit - 4;
-                }
-            }
-            if (item.magic == true && IsModItem(item) == false)
-            {
-                item.crit = 0;
-            }
-            if (item.thrown == true && IsModItem(item) == false)
-            {
-                if (item.crit >= 4)
-                {
-                    item.crit -= 4;
-                }
-                else
-                {
-                    item.crit = 0;
-                }
-            }
+            if (item.magic == true && IsCOItem(item) == false)
+                { item.damage += (10 + (item.mana / 2) + item.rare); if (item.crit > 4) item.damage += item.crit - 4; }
+            if (item.magic == true && IsCOItem(item) == false) item.crit = 0;
+            if (item.thrown == true && IsCOItem(item) == false)
+                { if (item.crit >= 4) item.crit -= 4; else item.crit = 0; }
             if (item.type == ItemID.BeesKnees)
             {
                 item.autoReuse = true;
@@ -328,7 +327,8 @@ namespace ClassOverhaul
         public override void UpdateEquip(Item item, Player player)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.CanEquip(item, player) == false)
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (JobHooks.CanEquip(item, player) == false)
             {
                 int num5 = (item.vanity && !item.accessory) ? 10 : 0;
                 item.favorited = false;
@@ -354,6 +354,11 @@ namespace ClassOverhaul
                     Recipe.FindRecipes();
                 }
             }
+            if (modItem.magicDefense != 0) modPlayer.magicDefense += modItem.magicDefense;
+            if (item.prefix == mod.PrefixType("Magic")) modPlayer.magicDefense += 1;
+            if (item.prefix == mod.PrefixType("Blessed")) modPlayer.magicDefense += 2;
+            if (item.prefix == mod.PrefixType("Runic")) modPlayer.magicDefense += 3;
+            if (item.prefix == mod.PrefixType("Witchs")) modPlayer.magicDefense += 4;
             if (item.type == ItemID.SpectreHood)
             {
                 player.magicDamage += 0.15f; // -25% mDamage
@@ -608,12 +613,149 @@ namespace ClassOverhaul
             {
                 if (pre == -1 || pre == -3) return false;
             }
+            if (item.accessory == false && item.defense > 0
+                && !(item.melee && item.ranged && item.magic && item.summon && item.thrown && modItem.chemical))
+            {
+                if (pre == -1 || pre == -2 || pre == -3) return true;
+
+            }
             return base.PrefixChance(item, pre, rand);
         }
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             if (modItem.chemical == true) return 0;
+            if (item.accessory == false && item.defense > 0
+                && !(item.melee && item.ranged && item.magic && item.summon && item.thrown && modItem.chemical))
+            {
+                List<byte> prefixes = new List<byte>();
+                prefixes.Add(PrefixID.Hard);
+                prefixes.Add(PrefixID.Guarding);
+                prefixes.Add(PrefixID.Armored);
+                prefixes.Add(PrefixID.Precise);
+                prefixes.Add(PrefixID.Lucky);
+                prefixes.Add(PrefixID.Jagged);
+                prefixes.Add(PrefixID.Spiked);
+                prefixes.Add(PrefixID.Angry);
+                prefixes.Add(PrefixID.Menacing);
+                prefixes.Add(PrefixID.Brisk);
+                prefixes.Add(PrefixID.Fleeting);
+                prefixes.Add(PrefixID.Hasty2);
+                prefixes.Add(PrefixID.Quick2);
+                prefixes.Add(PrefixID.Wild);
+                prefixes.Add(PrefixID.Rash);
+                prefixes.Add(PrefixID.Intrepid);
+                prefixes.Add(PrefixID.Violent);
+                prefixes.Add(PrefixID.Arcane);
+                for (int i = 0; i < ModPrefix.GetPrefixesInCategory(PrefixCategory.Accessory).Count; i++)
+                {
+                    prefixes.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Accessory)[i].Type);
+                }
+                int[] result = new int[prefixes.Count];
+                for (int i = 0; i < prefixes.Count; i++)
+                {
+                    result[i] = prefixes[i];
+                }
+                return rand.Next(result);
+            }
+            if (item.ranged && item.mana > 0)
+            {
+                List<byte> prefixes = new List<byte>();
+                prefixes.Add(PrefixID.Keen);
+                prefixes.Add(PrefixID.Superior);
+                prefixes.Add(PrefixID.Forceful);
+                prefixes.Add(PrefixID.Broken);
+                prefixes.Add(PrefixID.Damaged);
+                prefixes.Add(PrefixID.Shoddy);
+                prefixes.Add(PrefixID.Hurtful);
+                prefixes.Add(PrefixID.Strong);
+                prefixes.Add(PrefixID.Unpleasant);
+                prefixes.Add(PrefixID.Weak);
+                prefixes.Add(PrefixID.Ruthless);
+                prefixes.Add(PrefixID.Godly);
+                prefixes.Add(PrefixID.Demonic);
+                prefixes.Add(PrefixID.Zealous);
+                prefixes.Add(PrefixID.Quick);
+                prefixes.Add(PrefixID.Deadly);
+                prefixes.Add(PrefixID.Agile);
+                prefixes.Add(PrefixID.Nimble);
+                prefixes.Add(PrefixID.Murderous);
+                prefixes.Add(PrefixID.Slow);
+                prefixes.Add(PrefixID.Sluggish);
+                prefixes.Add(PrefixID.Lazy);
+                prefixes.Add(PrefixID.Annoying);
+                prefixes.Add(PrefixID.Nasty);
+                prefixes.Add(PrefixID.Intimidating);
+                prefixes.Add(PrefixID.Staunch);
+                prefixes.Add(PrefixID.Lethargic);
+                prefixes.Add(PrefixID.Awkward);
+                prefixes.Add(PrefixID.Powerful);
+                prefixes.Add(PrefixID.Frenzying);
+                prefixes.Add(PrefixID.Adept);
+                prefixes.Add(PrefixID.Inept);
+                prefixes.Add(PrefixID.Ignorant);
+                prefixes.Add(PrefixID.Deranged);
+                prefixes.Add(PrefixID.Intense);
+                prefixes.Add(PrefixID.Celestial);
+                prefixes.Add(PrefixID.Furious);
+                prefixes.Add(PrefixID.Manic);
+                for (int i = 0; i < ModPrefix.GetPrefixesInCategory(PrefixCategory.Ranged).Count; i++)
+                {
+                    prefixes.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Ranged)[i].Type);
+                }
+                for (int i = 0; i < ModPrefix.GetPrefixesInCategory(PrefixCategory.Magic).Count; i++)
+                {
+                    if (!(ModPrefix.GetPrefixesInCategory(PrefixCategory.Magic)[i] is MagicNonCritPrefixes))
+                        prefixes.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Magic)[i].Type);
+                }
+                int[] result = new int[prefixes.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = prefixes[i];
+                }
+                return rand.Next(result);
+            }
+            if (item.magic)
+            {
+                List<byte> prefixes = new List<byte>();
+                prefixes.Add(PrefixID.Forceful);
+                prefixes.Add(PrefixID.Broken);
+                prefixes.Add(PrefixID.Damaged);
+                prefixes.Add(PrefixID.Shoddy);
+                prefixes.Add(PrefixID.Hurtful);
+                prefixes.Add(PrefixID.Strong);
+                prefixes.Add(PrefixID.Unpleasant);
+                prefixes.Add(PrefixID.Weak);
+                prefixes.Add(PrefixID.Ruthless);
+                prefixes.Add(PrefixID.Quick);
+                prefixes.Add(PrefixID.Deadly);
+                prefixes.Add(PrefixID.Nimble);
+                prefixes.Add(PrefixID.Slow);
+                prefixes.Add(PrefixID.Sluggish);
+                prefixes.Add(PrefixID.Lazy);
+                prefixes.Add(PrefixID.Annoying);
+                prefixes.Add(PrefixID.Mystic);
+                prefixes.Add(PrefixID.Adept);
+                prefixes.Add(PrefixID.Masterful);
+                prefixes.Add(PrefixID.Inept);
+                prefixes.Add(PrefixID.Ignorant);
+                prefixes.Add(PrefixID.Deranged);
+                prefixes.Add(PrefixID.Intense);
+                prefixes.Add(PrefixID.Taboo);
+                prefixes.Add(PrefixID.Celestial);
+                prefixes.Add(PrefixID.Furious);
+                prefixes.Add(PrefixID.Manic);
+                for (int i = 0; i < ModPrefix.GetPrefixesInCategory(PrefixCategory.Magic).Count; i++)
+                {
+                        prefixes.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Magic)[i].Type);
+                }
+                int[] result = new int[prefixes.Count];
+                for (int i = 0; i < result.Length; i++)
+                {
+                    result[i] = prefixes[i];
+                }
+                return rand.Next(result);
+            }
             return base.ChoosePrefix(item, rand);
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -628,6 +770,23 @@ namespace ClassOverhaul
                     tt.text = split.First() + " chemical damage";
                 }
             }
+            if (modItem.magicDefense > 0)
+            {
+                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Defense" && x.mod == "Terraria");
+                line.text += "\n" + modItem.magicDefense + " magic defense";
+            }
+            if (item.prefix == mod.PrefixType("Blessed") || item.prefix == mod.PrefixType("Runic")
+                || item.prefix == mod.PrefixType("Witchs") || item.prefix == mod.PrefixType("Magic"))
+            {
+                TooltipLine line = new TooltipLine(mod, "PrefixAccMagicDefense", "");
+                line.isModifier = true;
+                tooltips.Add(line);
+                line = tooltips.FirstOrDefault(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
+                if (item.prefix == mod.PrefixType("Magic")) line.text = "+1 magic defense";
+                if (item.prefix == mod.PrefixType("Blessed")) line.text = "+2 magic defense";
+                if (item.prefix == mod.PrefixType("Runic")) line.text = "+3 magic defense";
+                if (item.prefix == mod.PrefixType("Witchs")) line.text = "+4 magic defense";
+            } else tooltips.RemoveAll(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
             PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
             if (item.melee == true && (modPlayer.job == JobID.rogue || modPlayer.armorJob == JobID.rogue) && item.type != ItemID.SolarEruption)
             {
@@ -1189,37 +1348,28 @@ namespace ClassOverhaul
         public override bool CanUseItem(Item item, Player player)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.CanEquip(item, player)) return base.CanUseItem(item, player);
+            if (JobHooks.CanEquip(item, player)) return base.CanUseItem(item, player);
             return false;
         }
+
         public override bool CanEquipAccessory(Item item, Player player, int slot)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (modPlayer.CanEquip(item, player)) return base.CanEquipAccessory(item, player, slot);
+            if (JobHooks.CanEquip(item, player)) return base.CanEquipAccessory(item, player, slot);
             return false;
         }
-        public override void GetWeaponDamage(Item item, Player player, ref int damage)
+
+        public override void ModifyWeaponDamage(Item item, Player player, ref float add, ref float mult, ref float flat)
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (modItem.chemical == true)
             {
-                PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                int originalDamage = damage;
-                float globalDamage = 1f;
-                damage = (int)(damage * (((player.thrownDamage - 1f) / 2) + modPlayer.chemicalDamage));
-                globalDamage = player.meleeDamage - 1;
-                if (player.magicDamage - 1 < globalDamage)
-                    globalDamage = player.magicDamage - 1;
-                if (player.rangedDamage - 1 < globalDamage)
-                    globalDamage = player.rangedDamage - 1;
-                if (player.minionDamage - 1 < globalDamage)
-                    globalDamage = player.minionDamage - 1;
-                if (player.thrownDamage - 1 < globalDamage)
-                    globalDamage = player.thrownDamage - 1;
-                if (globalDamage > 1)
-                    damage = damage + (int)(originalDamage * globalDamage);
+                add += ((player.thrownDamage - 1f) / 2 + (modPlayer.chemicalDamage - 1f));
+                mult = modPlayer.chemicalDamageMult * player.allDamageMult;
             }
         }
+
         public override float UseTimeMultiplier(Item item, Player player)
         {
             if (item.thrown == true)
@@ -1230,6 +1380,7 @@ namespace ClassOverhaul
             }
             return base.UseTimeMultiplier(item, player);
         }
+        
         public override void UpdateInventory(Item item, Player player)
         {
             base.UpdateInventory(item, player);
@@ -1248,6 +1399,7 @@ namespace ClassOverhaul
                 }
             }
         }
+
         public override void HoldItem(Item item, Player player)
         {
             base.HoldItem(item, player);
@@ -1305,24 +1457,6 @@ namespace ClassOverhaul
                     minion.damage = item.damage;
                 }
             }
-        }
-    }
-    public class ChemistRecipe : ModRecipe
-    {
-        public PlayerEdits modPlayer;
-        public ChemistRecipe(Mod mod) : base(mod) {
-            if(Main.LocalPlayer.whoAmI > 0)
-            {
-                modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
-            }
-        }
-        public override bool RecipeAvailable()
-        {
-            if (modPlayer != null && modPlayer.job == JobID.chemist)
-            {
-                return base.RecipeAvailable();
-            }
-            return false;
-        }
+        } 
     }
 }

@@ -1,12 +1,19 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using ClassOverhaul.ModSupport;
 using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul
 {
     public class ProjectileEdits : GlobalProjectile
     {
+        public bool chemical = false;
+        public bool minionProjectile = false;
+        public int minionOwner = 255;
+        public override bool CloneNewInstances => true;
+        public override bool InstancePerEntity => true;
+
         public override void SetDefaults(Projectile projectile)
         {
             base.SetDefaults(projectile);
@@ -48,10 +55,7 @@ namespace ClassOverhaul
                 projectile.magic = false;
                 projectile.thrown = true;
             }
-            if (ConsolariaSupport.Consolaria.consolariaExists)
-            {
-                ConsolariaSupport.ProjectileSupport.SetDefaults(projectile);
-            }
+            ProjectileMethods.SetDefaults(projectile);
         }
         public override void AI(Projectile projectile)
         {
@@ -191,29 +195,39 @@ namespace ClassOverhaul
                     expr_E123_cp_0.velocity.Y = expr_E123_cp_0.velocity.Y - 0.5f;
                 }
             }
-            if (ConsolariaSupport.Consolaria.consolariaExists)
-            {
-                ConsolariaSupport.ProjectileSupport.AI(projectile);
-            }
+            ProjectileMethods.AI(projectile);
         }
+
         public override bool? CanHitNPC(Projectile projectile, NPC target)
         {
-            if (target.immune[projectile.owner] <= 0 && target.friendly == false) return true;
+            NPCEdits modTarget = target.GetGlobalNPC<NPCEdits>();
+            ProjectileEdits modProjectile = projectile.GetGlobalProjectile<ProjectileEdits>();
+            if (modProjectile.minionProjectile && target.friendly) return false;
             return base.CanHitNPC(projectile, target);
         }
-        public override bool CanHitPvp(Projectile projectile, Player target)
-        {
-            if (target.immuneTime <= 0) return true;
-            return base.CanHitPvp(projectile, target);
 
-        }
         public override void Kill(Projectile projectile, int timeLeft)
         {
             base.Kill(projectile, timeLeft);
-            if (ConsolariaSupport.Consolaria.consolariaExists)
-            {
-                ConsolariaSupport.ProjectileSupport.Kill(projectile);
-            }
+            ProjectileMethods.Kill(projectile);
+        }
+
+        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
+        {
+            if (projectile.magic) crit = false;
+            base.OnHitNPC(projectile, target, damage, knockback, crit);
+        }
+
+        public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit)
+        {
+            if (projectile.magic) crit = false;
+            base.OnHitPlayer(projectile, target, damage, crit);
+        }
+
+        public override void OnHitPvp(Projectile projectile, Player target, int damage, bool crit)
+        {
+            if (projectile.magic) crit = false;
+            base.OnHitPvp(projectile, target, damage, crit);
         }
     }
 }

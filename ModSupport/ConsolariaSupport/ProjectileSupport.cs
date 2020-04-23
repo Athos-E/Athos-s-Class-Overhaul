@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace ClassOverhaul.ConsolariaSupport
+namespace ClassOverhaul.ModSupport.ConsolariaSupport
 {
     public class ProjectileSupport
     {

@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria;
 
-namespace ClassOverhaul.Items
+namespace ClassOverhaul.Items.Weapons
 {
     public class StaffOfFireball : ModItem
     {

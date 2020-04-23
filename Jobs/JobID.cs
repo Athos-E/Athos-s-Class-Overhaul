@@ -1,4 +1,4 @@
-﻿namespace ClassOverhaul
+﻿namespace ClassOverhaul.Jobs
 {
     public class JobID
     {

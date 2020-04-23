@@ -10,6 +10,7 @@ namespace ClassOverhaul
     {
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
+        public int magicDefense = 0;
         public int atkCooldown = 0;
         public int atkSpeed = 30;
         public int defaultAtkSpeed = 30;
@@ -48,40 +49,139 @@ namespace ClassOverhaul
             {
                 npc.catchItem = ItemID.GreenJellyfish;
             }
-            if (modNPC.isMinion)
+            if (npc.type == NPCID.Zombie)
             {
-                npc.friendly = true;
-                npc.friendlyRegen = 100;
-                npc.HitSound = SoundID.NPCHit1;
+                npc.defense = 500;
+                npc.lifeMax = 500000;
+                npc.life = npc.lifeMax;
             }
         }
+
         public override bool PreAI(NPC npc)
         {
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
             if (modNPC.stunTimer > 0 && modNPC.stunned == false) { stunTimer--; }
+            if (modNPC.atkCooldown > 0) atkCooldown -= 1;
+            if (modNPC.atkCooldown < 0) atkCooldown = 0;
+            for (int col = 0; col < npc.immune.Length; col++) if (npc.immune[col] > 15) npc.immune[col] = 15;
             if (modNPC.stunned == true) return false;
             return base.PreAI(npc);
         }
-        public override void AI(NPC npc)
+
+        public override void PostAI(NPC npc)
         {
+            base.PostAI(npc);
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.atkCooldown > 0) atkCooldown -= 1;
-            if (modNPC.atkCooldown < 0) atkCooldown = 0;
-            if (isMinion == true)
-            {
-                Check(npc);
-                Player player = Main.player[modNPC.owner];
-                if (player.talkNPC == npc.whoAmI && modNPC.isMinion == true)
+            for (int col = 0; col < npc.immune.Length; col++) if (npc.immune[col] > 15) npc.immune[col] = 15;
+        }
+
+        public override bool PreNPCLoot(NPC npc)
+        {
+            //NPCLoader.blockLoot.Add(ItemID.ToxicFlask);
+            if (Main.expertMode == false && (npc.type == NPCID.KingSlime
+                || npc.type == NPCID.EyeofCthulhu || npc.type == NPCID.EaterofWorldsHead
+                || npc.type == NPCID.BrainofCthulhu || npc.type == NPCID.QueenBee
+                || npc.type == NPCID.SkeletronHead || npc.type == NPCID.WallofFlesh
+                || npc.type == NPCID.Retinazer || npc.type == NPCID.Spazmatism
+                || npc.type == NPCID.TheDestroyer || npc.type == NPCID.SkeletronPrime
+                || npc.type == NPCID.Plantera || npc.type == NPCID.Golem
+                || npc.type == NPCID.DukeFishron || npc.type == NPCID.MoonLordCore
+                || npc.type == NPCID.DD2Betsy
+                )) {
+                for(int id = 0; id < ItemID.Count; id++)
                 {
-                    PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-                    modPlayer.usedMinionSlots -= modNPC.minionSlots;
-                    Main.player[modNPC.owner].numMinions--;
-                    npc.active = false;
+                    NPCLoader.blockLoot.Add(id);
                 }
             }
-            else
+            return base.PreNPCLoot(npc);
+        }
+
+        public override void NPCLoot(NPC npc)
+        {
+            base.NPCLoot(npc);
+            if (Main.expertMode == false && npc.boss)
             {
-                base.AI(npc);
+                for (int p = 0; p < Main.player.Length; p++)
+                {
+                    if (Main.player[p].active && npc.playerInteraction[p])
+                    {
+                        switch (npc.type)
+                        {
+                            case NPCID.KingSlime:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag1"));
+                                break;
+                            case NPCID.EyeofCthulhu:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag2"));
+                                break;
+                            case NPCID.EaterofWorldsHead:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag3"));
+                                break;
+                            case NPCID.BrainofCthulhu:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag4"));
+                                break;
+                            case NPCID.QueenBee:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag5"));
+                                break;
+                            case NPCID.SkeletronHead:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag6"));
+                                break;
+                            case NPCID.WallofFlesh:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag7"));
+                                break;
+                            case NPCID.Spazmatism:
+                                for (int id = 0; id <= Main.npc.Length; id++)
+                                {
+                                    if (Main.npc[id].type == NPCID.Retinazer && Main.npc[id].active)
+                                    {
+                                        break;
+                                    }
+                                    if (id == Main.npc.Length) Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag8"));
+                                }
+                                break;
+                            case NPCID.Retinazer:
+                                for (int id = 0; id <= Main.npc.Length; id++)
+                                {
+                                    if (Main.npc[id].type == NPCID.Spazmatism && Main.npc[id].active)
+                                    {
+                                        break;
+                                    }
+                                    if (id == Main.npc.Length) Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag8"));
+                                }
+                                break;
+                            case NPCID.TheDestroyer:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag9"));
+                                break;
+                            case NPCID.SkeletronPrime:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag10"));
+                                break;
+                            case NPCID.Plantera:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag11"));
+                                break;
+                            case NPCID.Golem:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag12"));
+                                break;
+                            case NPCID.DukeFishron:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag13"));
+                                break;
+                            //case NPCID.CultistBoss:
+                            case NPCID.MoonLordCore:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag15"));
+                                break;
+                            //case NPCID.DD2DarkMageT3:
+                            //case NPCID.DD2OgreT3:
+                            case NPCID.DD2Betsy:
+                                Main.player[p].QuickSpawnItem(mod.ItemType("TreasureBag18"));
+                                break;
+                            //case NPCID.PirateShip:
+                            //case NPCID.MourningWood:
+                            //case NPCID.Pumpking:
+                            //case NPCID.Everscream:
+                            //case NPCID.SantaNK1:
+                            //case NPCID.IceQueen:
+                            //case NPCID.MartianSaucer:
+                        }
+                    }
+                }
             }
         }
 
@@ -102,8 +202,6 @@ namespace ClassOverhaul
 
         public override bool CheckDead(NPC npc)
         {
-            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true) return false;
             if (base.CheckDead(npc))
             {
                 PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
@@ -115,95 +213,54 @@ namespace ClassOverhaul
             return base.CheckDead(npc);
         }
 
-        public override bool CheckActive(NPC npc)
+        public override void HitEffect(NPC npc, int hitDirection, double damage)
         {
+            base.HitEffect(npc, hitDirection, damage);
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true) return false;
-            return base.CheckActive(npc);
-        }
-
-        public void Check(NPC npc)
-        {
-            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            Player player = Main.player[modNPC.owner];
-            PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if (IfHoverNPC(npc))
-            {
-                if (Main.mouseRight && Main.npcChatRelease)
-                {
-                    npc.life = 0;
-                }
-            }
-            if (player.dead)
-            {
-                npc.life = 0;
-            }
-            if (npc.life <= 0)
-            {
-                modPlayer.usedMinionSlots -= modNPC.minionSlots;
-                Main.player[modNPC.owner].numMinions--;
-                Main.PlaySound(SoundID.NPCDeath1);
-                npc.active = false;
-            }
+            if (npc.boss == false && modNPC.stunned == false && modNPC.stunTimer <= 0) { npc.AddBuff(mod.BuffType("Stun"), 30, true); }
         }
 
         public override bool? CanHitNPC(NPC npc, NPC target)
         {
             NPCEdits modTarget = target.GetGlobalNPC<NPCEdits>();
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true && modTarget.isMinion == true && Main.player[modTarget.owner].hostile == true) return true;
+            if (modNPC.atkCooldown > 0) return false;
+            if (modNPC.stunned) return false;
             return base.CanHitNPC(npc, target);
-        }
-        public override bool? CanBeHitByProjectile(NPC npc, Projectile projectile)
-        {
-            NPCEdits modNPC = Main.npc[projectile.owner].GetGlobalNPC<NPCEdits>();
-            if (projectile.npcProj == true && Main.npc[projectile.owner].friendly == true && modNPC.isMinion == true && Main.player[modNPC.owner].hostile == true && projectile.owner != npc.whoAmI) return true;
-            if (projectile.npcProj == true && Main.npc[projectile.owner].friendly == true && modNPC.isMinion == false && projectile.owner != npc.whoAmI) return false;
-            return base.CanBeHitByProjectile(npc, projectile);
-        }
-
-        public override bool? CanBeHitByItem(NPC npc, Player player, Item item)
-        {
-            NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            return base.CanBeHitByItem(npc, player, item);
         }
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (modNPC.isMinion == true)
-            {
-                if (Main.player[modNPC.owner] == target) return false;
-                if (target.hostile == true && target.immune == false) return true;
-            } 
+            if (modNPC.atkCooldown > 0) return false;
+            if (modNPC.stunned) return false;
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
 
-        public bool IfHoverNPC(NPC npc)
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit)
         {
+            ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (!Main.player[Main.myPlayer].dead && Main.myPlayer == modNPC.owner)
+            if (item.magic || modItem.chemical)
             {
-                Rectangle rectangle = new Rectangle((int)((float)Main.mouseX + Main.screenPosition.X), (int)((float)Main.mouseY + Main.screenPosition.Y), 1, 1);
-                bool flag5;
-                bool flag4;
-                if (npc.active)
-                {
-                    flag5 = rectangle.Intersects(npc.getRect());
-                    flag4 = (flag5 || (Main.SmartInteractShowingGenuine && Main.SmartInteractNPC == npc.whoAmI));
-                    if (flag4)
-                    {
-                        return true;
-                    }
-                }
+                damage += npc.defense / 2;
+                if (item.magic) damage -= modNPC.magicDefense / 2;
+                if (modItem.chemical) damage -= modNPC.magicDefense / 4 - npc.defense / 4;
             }
-            return false;
+            base.ModifyHitByItem(npc, player, item, ref damage, ref knockback, ref crit);
         }
-        public override void HitEffect(NPC npc, int hitDirection, double damage)
+
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            base.HitEffect(npc, hitDirection, damage);
+            ProjectileEdits modProjectile = projectile.GetGlobalProjectile<ProjectileEdits>();
             NPCEdits modNPC = npc.GetGlobalNPC<NPCEdits>();
-            if (npc.boss == false && modNPC.stunned == false && modNPC.stunTimer <= 0) { npc.AddBuff(mod.BuffType("Stun"), 30, true); }
+            if (projectile.magic || modProjectile.chemical)
+            {
+                damage += npc.defense / 2;
+                if (projectile.magic) damage -= modNPC.magicDefense / 2;
+                if (modProjectile.chemical) damage -= modNPC.magicDefense / 4 - npc.defense / 4;
+            }
+            base.ModifyHitByProjectile(npc, projectile, ref damage, ref knockback, ref crit, ref hitDirection);
         }
     }
 }

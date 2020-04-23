@@ -3,6 +3,8 @@ using Terraria.ID;
 using Terraria;
 using Terraria.UI;
 using ClassOverhaul.UI;
+using ClassOverhaul.ModSupport;
+using ClassOverhaul.Jobs;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -12,8 +14,10 @@ namespace ClassOverhaul
     {
         public static Mod instance { get { return ModLoader.GetMod("ClassOverhaul"); } }
         public ClassOverhaul() { }
-        internal JobSelection jobSelectionUI;
+        internal JobSelectionUI jobSelectionUI;
+        internal MagicDefenseUI magicDefenseUI;
         public UserInterface jobSelectionInterface;
+        public UserInterface magicDefenseInterface;
         public override void PostSetupContent()
         {
             base.PostSetupContent();
@@ -33,15 +37,20 @@ namespace ClassOverhaul
             crecipe.AddTile(TileID.AlchemyTable);
             crecipe.SetResult(ItemID.ToxicFlask, 15);
             crecipe.AddRecipe();
+            ModMethods.PostSetupContent();
         }
         public override void Load()
         {
             if (!Main.dedServ)
             {
-                jobSelectionUI = new JobSelection();
+                jobSelectionUI = new JobSelectionUI();
                 jobSelectionUI.Initialize();
                 jobSelectionInterface = new UserInterface();
                 jobSelectionInterface.SetState(jobSelectionUI);
+                magicDefenseUI = new MagicDefenseUI();
+                magicDefenseUI.Initialize();
+                magicDefenseInterface = new UserInterface();
+                magicDefenseInterface.SetState(magicDefenseUI);
             }
             base.Load();
         }
@@ -50,9 +59,13 @@ namespace ClassOverhaul
         {
             base.UpdateUI(gameTime);
             // it will only draw if the player is not on the main menu
-            if (!Main.gameMenu && JobSelection.visible)
+            if (!Main.gameMenu && JobSelectionUI.visible)
             {
                 jobSelectionInterface?.Update(gameTime);
+            }
+            if (!Main.gameMenu)
+            {
+                magicDefenseInterface?.Update(gameTime);
             }
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -60,15 +73,28 @@ namespace ClassOverhaul
             int hotbarIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Hotbar"));
             if (hotbarIndex != -1)
             {
-                layers.Insert(hotbarIndex, new LegacyGameInterfaceLayer("ClassOverhaul: JobSelectionUI", DrawJobSelection, InterfaceScaleType.UI));
+                layers.Insert(hotbarIndex, new LegacyGameInterfaceLayer("ClassOverhaul: JobSelectionUI", DrawJobSelectionUI, InterfaceScaleType.UI));
+            }
+            int defenseIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Info Accessories Bar"));
+            if (defenseIndex != -1)
+            {
+                layers.Insert(defenseIndex, new LegacyGameInterfaceLayer("ClassOverhaul: MagicDefenseUI", DrawMagicDefenseUI, InterfaceScaleType.UI));
             }
         }
-        private bool DrawJobSelection()
+        private bool DrawJobSelectionUI()
         {
             // it will only draw if the player is not on the main menu
-            if (!Main.gameMenu && JobSelection.visible)
+            if (!Main.gameMenu && JobSelectionUI.visible)
             {
                 jobSelectionInterface.Draw(Main.spriteBatch, new GameTime());
+            }
+            return true;
+        }
+        private bool DrawMagicDefenseUI()
+        {
+            if (!Main.gameMenu)
+            {
+                magicDefenseInterface.Draw(Main.spriteBatch, new GameTime());
             }
             return true;
         }

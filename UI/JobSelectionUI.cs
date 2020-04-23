@@ -3,21 +3,22 @@ using Terraria.ID;
 using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
+using ClassOverhaul.Jobs;
 
 namespace ClassOverhaul.UI
 {
-    internal class JobSelection : UIState
+    internal class JobSelectionUI : UIState
     {
         public static bool visible;
-        public JobSelectionPanel panel;
-        public UIText buttonKnight;
-        public UIText buttonRogue;
-        public UIText buttonRanger;
-        public UIText buttonMage;
-        public UIText buttonSummoner;
-        public UIText buttonChemist;
-        public UIText dialogue;
-        public float oldScale;
+        private JobSelectionPanel panel;
+        private UIText buttonKnight;
+        private UIText buttonRogue;
+        private UIText buttonRanger;
+        private UIText buttonMage;
+        private UIText buttonSummoner;
+        private UIText buttonChemist;
+        private UIText dialogue;
+        private float oldScale;
         public override void OnInitialize()
         {
             visible = false;
@@ -84,7 +85,7 @@ namespace ClassOverhaul.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             if (modPlayer.defeatedWoF == true && modPlayer.choseJob == false)
             {
                 visible = true;
@@ -98,7 +99,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickKnight(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.knight;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
@@ -116,7 +117,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickRogue(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.rogue;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
@@ -134,7 +135,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickRanger(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.ranger;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
@@ -152,7 +153,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickMage(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.mage;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
@@ -170,7 +171,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickSummoner(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.summoner;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
@@ -188,7 +189,7 @@ namespace ClassOverhaul.UI
         }
         private void OnClickChemist(UIMouseEvent evt, UIElement listeningElement)
         {
-            PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
+            PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
             modPlayer.job = JobID.chemist;
             modPlayer.choseJob = true;
             modPlayer.immune = false;

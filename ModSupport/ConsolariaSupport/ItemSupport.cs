@@ -1,15 +1,16 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using ClassOverhaul.Jobs;
 
-namespace ClassOverhaul.ConsolariaSupport
+namespace ClassOverhaul.ModSupport.ConsolariaSupport
 {
     public class ItemSupport
     {
         public ItemSupport() { }
         public static void SetDefaults(Item item)
         {
-            if (Consolaria.consolariaExists)
+            if (Consolaria.exists)
             {
                 Mod consolaria = Consolaria.instance;
                 ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
@@ -42,35 +43,11 @@ namespace ClassOverhaul.ConsolariaSupport
                     item.ranged = false;
                     item.thrown = true;
                 }
+                if (ItemEdits.IsModItem(item) && item.modItem != null && item.type == consolaria.ItemType(item.modItem.Name))
+                    JobHooks.ApplyClassAssigns(item);
                 if (item.type == consolaria.ItemType("AncientDragonBreastplate") || item.type == consolaria.ItemType("DragonBreastplate")
                 ) {
                     item.defense += 20;
-                }
-                if (item.modItem != null)
-                {
-                    if (item.magic == true && item.type == consolaria.ItemType(item.modItem.Name))
-                    {
-                        item.damage += (10 + (item.mana / 2) + item.rare);
-                        if (item.crit > 4)
-                        {
-                            item.damage += item.crit - 4;
-                        }
-                    }
-                    if (item.magic == true && item.type == consolaria.ItemType(item.modItem.Name))
-                    {
-                        item.crit = 0;
-                    }
-                    if (item.thrown == true && item.type == consolaria.ItemType(item.modItem.Name))
-                    {
-                        if (item.crit >= 4)
-                        {
-                            item.crit -= 4;
-                        }
-                        else
-                        {
-                            item.crit = 0;
-                        }
-                    }
                 }
                 if (item.type == consolaria.ItemType("SpectralArrow"))
                 {

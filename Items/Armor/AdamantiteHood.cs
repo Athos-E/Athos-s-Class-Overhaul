@@ -18,6 +18,7 @@ namespace ClassOverhaul.Items.Armor
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
             globalItem.rogueItem = true;
             item.defense = 17;
+            globalItem.magicDefense = 20;
             item.rare = 4;
             item.value = 30000;
             item.width = 18;

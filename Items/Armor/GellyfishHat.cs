@@ -15,11 +15,13 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void SetDefaults()
         {
+            ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
             item.width = 18;
             item.height = 18;
             item.value = 3000;
             item.rare = 1;
             item.defense = 5;
+            globalItem.magicDefense = 15;
         }
 
         public override void UpdateEquip(Player player)

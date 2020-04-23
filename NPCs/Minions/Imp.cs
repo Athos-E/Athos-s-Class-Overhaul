@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 
-namespace ClassOverhaul.Minions
+namespace ClassOverhaul.NPCs.Minions
 {
     public class Imp : MinionBase
     {
@@ -37,7 +37,7 @@ namespace ClassOverhaul.Minions
             npc.spriteDirection = npc.direction;
         }
 
-        public override void CreateDust()
+        public void CreateDust()
         {
             if (npc.frameCounter % 2 == 0)
             {
@@ -217,7 +217,7 @@ namespace ClassOverhaul.Minions
                             }
                             shootVel.Normalize();
                             shootVel *= modNPC.shootSpeed;
-                            int proj = Projectile.NewProjectile(npc.Center.X, npc.Center.Y, shootVel.X, shootVel.Y, modNPC.shoot, npc.damage, modNPC.knockback, Main.myPlayer, 0f, 0f);
+                            int proj = Shoot(shootVel);
                             Main.projectile[proj].timeLeft = 300;
                             Main.projectile[proj].netUpdate = true;
                             npc.netUpdate = true;
