@@ -1,8 +1,18 @@
-      A change to how Terraria handles classes. 
-  Feeling like summoner is useless or completely idle? Melee armor doesn't tank enough? Mages low on damage and far too squishy for it? This mod is for you. 
-  This mod aims to rebalance and introduce mechanics to Terraria class/job system. The main objective with those changes is to make every class unique, playable and enjoyable. Right now Summoner is an idle class with few choices of weapon and armor(excluding Old One's Army), Melee class isn't really melee and is fairly squishy for its role and Mage isn't powerful enough in opposition to how weak their armor is. Ranger is fine, but will not be left out.
+                An Overhaul over Classes, now Jobs.
 
-Changelogs
+-Proper class setups:
+-Damage rebalance.
+-No multiclassing(class restricted weapons and armor).
+-Enforcement of strengths and weaknesses of each job.
+-Normal mode Treasure Bags!
+-Simple and pretty.
+
+
+                          Changelogs
+0.6.1
+-Hotfix for the magic defense UI positioning.
+-Repositioning the job selection UI.
+
 0.6.0
 -Treasure bags for non-expert mode bosses, using their default loot chances. Replacing the default loots.
 -Adjusted npc and player immune times.

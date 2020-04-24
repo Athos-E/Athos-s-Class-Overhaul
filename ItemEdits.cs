@@ -1,13 +1,13 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
-using ClassOverhaul.Jobs;
+﻿using ClassOverhaul.Jobs;
 using ClassOverhaul.ModSupport;
+using ClassOverhaul.Prefixes;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using ClassOverhaul.Prefixes;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.Utilities;
-using Microsoft.Xna.Framework;
 
 namespace ClassOverhaul
 {

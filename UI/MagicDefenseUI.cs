@@ -18,8 +18,8 @@ namespace ClassOverhaul.UI
         public override void OnInitialize()
         {
             area = new UIElement();
-            area.Left.Set(-area.Width.Pixels - 230, 1f);
-            area.Top.Set(-area.Height.Pixels - 120, 1f);
+            area.Left.Set(-area.Width.Pixels - 3 - (Main.screenWidth / 6), 1f);
+            area.Top.Set(-area.Height.Pixels - 3 - (Main.screenHeight / 6), 1f);
             area.Width.Set(36, 0f);
             area.Height.Set(36, 0f);
 

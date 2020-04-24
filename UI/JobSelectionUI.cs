@@ -24,8 +24,8 @@ namespace ClassOverhaul.UI
             visible = false;
             panel = new JobSelectionPanel();
             panel.SetPadding(0);
-            panel.Left.Set(410, 0);
-            panel.Top.Set(250, 0);
+            panel.Left.Set(Main.screenWidth / 3, 0);
+            panel.Top.Set(Main.screenHeight / 3, 0);
             panel.Width.Set(500, 0);
             panel.Height.Set(150, 0);
             buttonKnight = new UIText("Knight", 0.8f);

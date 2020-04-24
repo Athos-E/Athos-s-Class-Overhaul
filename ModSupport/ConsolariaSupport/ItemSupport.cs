@@ -8,11 +8,11 @@ namespace ClassOverhaul.ModSupport.ConsolariaSupport
     public class ItemSupport
     {
         public ItemSupport() { }
+        internal static Mod consolaria = Consolaria.instance;
         public static void SetDefaults(Item item)
         {
             if (Consolaria.exists)
             {
-                Mod consolaria = Consolaria.instance;
                 ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
                 if (item.type == consolaria.ItemType("AncientDragonMask") || item.type == consolaria.ItemType("AncientDragonBreastplate")
                 || item.type == consolaria.ItemType("AncientDragonGreaves") || item.type == consolaria.ItemType("DragonMask")
