@@ -5,10 +5,14 @@
 -No multiclassing(class restricted weapons and armor).
 -Enforcement of strengths and weaknesses of each job.
 -Normal mode Treasure Bags!
+-Support for Consolaria and Calamity!
 -Simple and pretty.
 
 
                           Changelogs
+0.6.2
+-Hotfix regarding an error when equiping items with magic defense on vanity slot.
+
 0.6.1
 -Hotfix for the magic defense UI positioning.
 -Repositioning the job selection UI.

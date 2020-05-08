@@ -10,6 +10,15 @@ namespace ClassOverhaul.Jobs
         public static void ApplyClassAssigns(Item item)
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            if (item.defense < 1)
+            {
+                modItem.knightItem = false;
+                modItem.rogueItem = false;
+                modItem.rangerItem = false;
+                modItem.mageItem = false;
+                modItem.summonerItem = false;
+                modItem.chemistItem = false;
+            }
             if (item.melee) { modItem.knightItem = true; modItem.rogueItem = true; }
             if (item.thrown) { modItem.rogueItem = true; modItem.chemistItem = true; }
             if (item.ranged) modItem.rangerItem = true;

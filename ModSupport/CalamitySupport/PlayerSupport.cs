@@ -28,46 +28,69 @@ namespace ClassOverhaul.ModSupport.CalamitySupport
             return null;
         }
 
-        public static FieldInfo[] throwingInfo(Player player)
+        public class throwingDamage
         {
-            FieldInfo throwingDamage = calamityPlayer(player).GetType().GetField("throwingDamage", BindingFlags.Public | BindingFlags.Instance);
-            FieldInfo throwingVelocity = calamityPlayer(player).GetType().GetField("throwingDamage", BindingFlags.Public | BindingFlags.Instance);
-            FieldInfo throwingCrit = calamityPlayer(player).GetType().GetField("throwingDamage", BindingFlags.Public | BindingFlags.Instance);
-            return new FieldInfo[] { throwingDamage, throwingVelocity, throwingCrit };
+            public throwingDamage() { }
+            private static FieldInfo field(Player player) => calamityPlayer(player).GetType().GetField("throwingDamage", BindingFlags.Public | BindingFlags.Instance);
+            public static float GetValue(Player player) => (float)field(player).GetValue(calamityPlayer(player));
+            public static void SetValue(Player player, float value) { field(player).SetValue(calamityPlayer(player), value); }
+        }
+
+        public class throwingVelocity
+        {
+            public throwingVelocity() { }
+            private static FieldInfo field(Player player) => calamityPlayer(player).GetType().GetField("throwingVelocity", BindingFlags.Public | BindingFlags.Instance);
+            public static float GetValue(Player player) => (float)field(player).GetValue(calamityPlayer(player));
+            public static void SetValue(Player player, float value) { field(player).SetValue(calamityPlayer(player), value); }
+        }
+
+        public class throwingCrit
+        {
+            public throwingCrit() { }
+            private static FieldInfo field(Player player) => calamityPlayer(player).GetType().GetField("throwingCrit", BindingFlags.Public | BindingFlags.Instance);
+            public static int GetValue(Player player) => (int)field(player).GetValue(calamityPlayer(player));
+            public static void SetValue(Player player, int value) { field(player).SetValue(calamityPlayer(player), value); }
+        }
+
+        public class gloveOfPrecision
+        {
+            public gloveOfPrecision() { }
+            private static FieldInfo field(Player player) => calamityPlayer(player).GetType().GetField("GloveOfPrecision", BindingFlags.Public | BindingFlags.Instance);
+            public static bool GetValue(Player player) => (bool)field(player).GetValue(calamityPlayer(player));
+            public static void SetValue(Player player, bool value) { field(player).SetValue(calamityPlayer(player), value); }
+        }
+
+        public class gloveOfRecklessness
+        {
+            public gloveOfRecklessness() { }
+            private static FieldInfo field(Player player) => calamityPlayer(player).GetType().GetField("GloveOfRecklessness", BindingFlags.Public | BindingFlags.Instance);
+            public static bool GetValue(Player player) => (bool)field(player).GetValue(calamityPlayer(player));
+            public static void SetValue(Player player, bool value) { field(player).SetValue(calamityPlayer(player), value); }
         }
 
         public static void ResetEffects(Player player)
         {
             if(calamityPlayer(player) != null)
             {
-                throwingInfo(player)[0].SetValue(calamityPlayer(player), (float)1f);
-                throwingInfo(player)[1].SetValue(calamityPlayer(player), (float)1f);
-                throwingInfo(player)[2].SetValue(calamityPlayer(player), (int)0);
+                throwingDamage.SetValue(player, 0f);
+                throwingVelocity.SetValue(player, 0f);
+                throwingCrit.SetValue(player, 0);
             }
         }
 
-        public static void PostUpdate(Player player)
+        public static void PostUpdateBuffs(Player player)
         {
             if(calamityPlayer(player) != null)
             {
-                player.thrownDamage += (float)throwingInfo(player)[0].GetValue(calamityPlayer(player)) - 1f;
-                player.thrownVelocity += (float)throwingInfo(player)[1].GetValue(calamityPlayer(player)) - 1f;
-                player.thrownCrit += (int)throwingInfo(player)[2].GetValue(calamityPlayer(player));
-                throwingInfo(player)[0].SetValue(calamityPlayer(player), (float)0f);
-                throwingInfo(player)[1].SetValue(calamityPlayer(player), (float)0f);
-                throwingInfo(player)[2].SetValue(calamityPlayer(player), (int)0);
-            }
-        }
-
-        public static void ModifyHitNPCWithProj(Player player, Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
-        {
-            if(calamityPlayer(player) != null)
-            {
-                GlobalProjectile calamityProjectile = ProjectileSupport.calamityProjectile(projectile);
-                if((bool)ProjectileSupport.calamityProjectileInfo(projectile)[0].GetValue(calamityProjectile) == true && (projectile.melee || projectile.thrown))
-                {
-                        
-                }
+                player.thrownDamage += throwingDamage.GetValue(player) - 1f;
+                player.thrownVelocity += throwingVelocity.GetValue(player) - 1f;
+                player.thrownCrit += throwingCrit.GetValue(player) / 2;
+                player.meleeDamage += (throwingDamage.GetValue(player) - 1f) / 2;
+                player.meleeSpeed += throwingDamage.GetValue(player) - 1f;
+                player.meleeCrit += throwingCrit.GetValue(player);
+                throwingDamage.SetValue(player, 0f);
+                throwingVelocity.SetValue(player, 0f);
+                throwingCrit.SetValue(player, 0);
             }
         }
     }

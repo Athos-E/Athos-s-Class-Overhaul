@@ -14,11 +14,11 @@ namespace ClassOverhaul.ModSupport
             //    CalamitySupport.PlayerSupport.ResetEffects(player);
             //}
         }
-        public static void PostUpdate(Player player)
+        public static void PostUpdateBuffs(Player player)
         {
             //if (CalamitySupport.Calamity.exists)
             //{
-            //    CalamitySupport.PlayerSupport.PostUpdate(player);
+            //    CalamitySupport.PlayerSupport.PostUpdateBuffs(player);
             //}
         }
     }

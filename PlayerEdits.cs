@@ -75,7 +75,6 @@ namespace ClassOverhaul
         public override void PostUpdate()
         {
             base.PostUpdate();
-            PlayerMethods.PostUpdate(player);
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
             if (player.whoAmI == Main.myPlayer)
             {
@@ -139,6 +138,7 @@ namespace ClassOverhaul
             }
             if (modPlayer.stunTimer > 0 && modPlayer.stunned == false) modPlayer.stunTimer--;
             if (modPlayer.knockbackTimer > 0) { modPlayer.knockbackTimer--; player.noKnockback = true; }
+            PlayerMethods.PostUpdateBuffs(player);
         }
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit)
