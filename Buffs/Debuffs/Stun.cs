@@ -5,11 +5,6 @@ namespace ClassOverhaul.Buffs.Debuffs
 {
     public class Stun : ModBuff
     {
-        public override void SetDefaults()
-        {
-            DisplayName.SetDefault("Stun");
-            Description.SetDefault("Unable to move or attack!");
-        }
         public override void Update(Player player, ref int buffIndex)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();

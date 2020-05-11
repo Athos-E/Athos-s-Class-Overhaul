@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class OrichalcumHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Orichalcum Hood");
-            Tooltip.SetDefault("8% increased melee damage\n20% increased thrown damage\n18% increased melee speed\n60% increased melee critical strike chance\n11% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -48,7 +43,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.onHitPetal = true;
             player.thrownVelocity += 0.13f;
-            player.setBonus = "Flower petals will fall on your target for extra damage\n13% thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.OrichalcumRogue");
         }
     }
 }

@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
 using Terraria.UI;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
 namespace ClassOverhaul.UI
@@ -65,7 +66,7 @@ namespace ClassOverhaul.UI
             if (backImage.IsMouseHovering)
             {
                 PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
-                Main.hoverItemName = $"{modPlayer.magicDefense} Magic Defense";
+                Main.hoverItemName = $"{modPlayer.magicDefense} {Language.GetTextValue("Mods.ClassOverhaul.UIText.MagicDefense")}";
             }
             base.DrawSelf(spriteBatch);
         }

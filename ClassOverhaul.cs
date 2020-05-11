@@ -28,7 +28,7 @@ namespace ClassOverhaul
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(ItemID.SlimeStaff);
             recipe.AddRecipe();
-            ChemistRecipe crecipe = new ChemistRecipe(this);
+            AlchemistRecipe crecipe = new AlchemistRecipe(this);
             crecipe.AddIngredient(ItemID.Bottle, 15);
             crecipe.AddIngredient(ItemID.Deathweed, 1);
             crecipe.AddIngredient(ItemID.VialofVenom, 1);

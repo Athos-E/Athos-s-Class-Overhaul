@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class MythrilMask : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Mythril Mask");
-            Tooltip.SetDefault("11% increased melee damage\n18% increased thrown damage\n13% increased melee speed\n32% increased melee critical strike chance\n8% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -48,7 +43,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.meleeCrit += 6;
             player.thrownVelocity += 0.12f;
-            player.setBonus = "6% increased melee critical strike chance\n12% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.MythrilRogue");
         }
     }
 }

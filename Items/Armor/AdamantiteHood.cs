@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class AdamantiteHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Adamantite Hood");
-            Tooltip.SetDefault("14% increased melee damage\n23% increased thrown damage\n20% increased melee speed\n37% increased melee critical strike chance\n6% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -49,7 +44,7 @@ namespace ClassOverhaul.Items.Armor
             player.meleeSpeed += 0.40f;
             player.moveSpeed += 0.23f;
             player.thrownVelocity += 0.20f;
-            player.setBonus = "40% increased melee speed\n23% increased move speed\n20% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.AdamantiteRogue");
         }
     }
 }

@@ -7,6 +7,6 @@
         public const short ranger = 3;
         public const short mage = 4;
         public const short summoner = 5;
-        public const short chemist = 6;
+        public const short alchemist = 6;
     }
 }

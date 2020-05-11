@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class CobaltHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Cobalt Hood");
-            Tooltip.SetDefault("20% increased melee critical strike chance\n20% increased melee speed\n10% increased thrown velocity\n10% increased movespeed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -48,7 +43,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.meleeSpeed += 0.23f;
             player.thrownVelocity += 0.10f;
-            player.setBonus = "23% increased melee speed\n10% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.CobaltRogue");
         }
     }
 }

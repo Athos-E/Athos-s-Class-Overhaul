@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.Localization;
 
 namespace ClassOverhaul
 {
@@ -20,7 +21,7 @@ namespace ClassOverhaul
         public bool rangerItem = false;
         public bool mageItem = false;
         public bool summonerItem = false;
-        public bool chemistItem = false;
+        public bool alchemistItem = false;
         public bool preHardmode = false;
         public bool chemical = false;
         public bool extraTooltip = false;
@@ -263,15 +264,15 @@ namespace ClassOverhaul
                     modItem.magicDefense = item.defense * 3;
                 if(modItem.knightItem)
                     modItem.magicDefense = item.defense - item.defense / 10;
-                if(modItem.rangerItem || modItem.chemistItem)
+                if(modItem.rangerItem || modItem.alchemistItem)
                     modItem.magicDefense = item.defense + item.defense / 4;
                 if(modItem.rogueItem)
                     modItem.magicDefense = item.defense + item.defense / 6;
                 if(modItem.summonerItem && (modItem.knightItem || modItem.rangerItem
-                    || modItem.rogueItem || modItem.chemistItem))
+                    || modItem.rogueItem || modItem.alchemistItem))
                     modItem.magicDefense = item.defense + item.defense / 2;
                 if(!(modItem.mageItem && modItem.summonerItem && modItem.knightItem
-                    && modItem.rogueItem && modItem.rangerItem && modItem.chemistItem))
+                    && modItem.rogueItem && modItem.rangerItem && modItem.alchemistItem))
                     modItem.magicDefense = item.defense;
             }
             if(item.magic == true && IsCOItem(item) == false)
@@ -638,32 +639,33 @@ namespace ClassOverhaul
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
+            PrefixList prefixList = new PrefixList();
             if(modItem.chemical == true) return 0;
             if(item.accessory == false && item.defense > 0
                 && !(item.melee && item.ranged && item.magic && item.summon && item.thrown && modItem.chemical))
             {
-                int[] result = new int[PrefixList.AccessoryPrefixes.Count];
-                for(int i = 0; i < PrefixList.AccessoryPrefixes.Count; i++)
+                int[] result = new int[prefixList.AccessoryPrefixes.Count];
+                for(int i = 0; i < prefixList.AccessoryPrefixes.Count; i++)
                 {
-                    result[i] = PrefixList.AccessoryPrefixes[i];
+                    result[i] = prefixList.AccessoryPrefixes[i];
                 }
                 return rand.Next(result);
             }
             if(item.ranged && item.mana > 0)
             {
-                int[] result = new int[PrefixList.ManaGunPrefixes.Count];
+                int[] result = new int[prefixList.ManaGunPrefixes.Count];
                 for(int i = 0; i < result.Length; i++)
                 {
-                    result[i] = PrefixList.ManaGunPrefixes[i];
+                    result[i] = prefixList.ManaGunPrefixes[i];
                 }
                 return rand.Next(result);
             }
             if(item.magic)
             {
-                int[] result = new int[PrefixList.MagicPrefixes.Count];
+                int[] result = new int[prefixList.MagicPrefixes.Count];
                 for(int i = 0; i < result.Length; i++)
                 {
-                    result[i] = PrefixList.MagicPrefixes[i];
+                    result[i] = prefixList.MagicPrefixes[i];
                 }
                 return rand.Next(result);
             }
@@ -671,6 +673,7 @@ namespace ClassOverhaul
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            string Root = "Mods.ClassOverhaul";
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             if(modItem.chemical == true)
             {
@@ -678,7 +681,7 @@ namespace ClassOverhaul
                 if(tt != null)
                 {
                     string[] split = tt.text.Split(' ');
-                    tt.text = split.First() + " chemical damage";
+                    tt.text = split.First() + " " + Language.GetTextValue($"{Root}.CommonName.ChemicalDamage");
                 }
             }
             if(modItem.magicDefense > 0)
@@ -690,7 +693,7 @@ namespace ClassOverhaul
                     TooltipLine defense = tooltips.FirstOrDefault(x => x.Name == "Defense" && x.mod == "Terraria");
                     TooltipLine damage = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
                     TooltipLine favDesc = tooltips.FirstOrDefault(x => x.Name == "FavoriteDesc" && x.mod == "Terraria");
-                    TooltipLine line = new TooltipLine(mod, "Magic Defense", modItem.magicDefense + " magic defense");
+                    TooltipLine line = new TooltipLine(mod, "Magic Defense", modItem.magicDefense + " " + Language.GetTextValue($"{Root}.CommonName.MagicDefense"));
                     if(defense != null)
                         tooltips.Insert(tooltips.FindIndex(x => x.Name == "Defense" && x.mod == "Terraria") + 1, line);
                     else if(damage != null)
@@ -708,10 +711,10 @@ namespace ClassOverhaul
                 line.isModifier = true;
                 tooltips.Add(line);
                 line = tooltips.FirstOrDefault(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
-                if(item.prefix == mod.PrefixType("Magic")) line.text = "+1 magic defense";
-                if(item.prefix == mod.PrefixType("Blessed")) line.text = "+2 magic defense";
-                if(item.prefix == mod.PrefixType("Runic")) line.text = "+3 magic defense";
-                if(item.prefix == mod.PrefixType("Witchs")) line.text = "+4 magic defense";
+                if(item.prefix == mod.PrefixType("Magic")) line.text = "+1 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Blessed")) line.text = "+2 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Runic")) line.text = "+3 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Witchs")) line.text = "+4 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
             }
             else tooltips.RemoveAll(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
             PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
@@ -720,302 +723,17 @@ namespace ClassOverhaul
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.mod == "Terraria");
                 if (line != null)
                 {
-                    TooltipLine armorPen = new TooltipLine(mod, "Armor Penetration", (item.rare * 2).ToString() + " armor penetration");
+                    TooltipLine armorPen = new TooltipLine(mod, "Armor Penetration", (item.rare * 2).ToString() + " " + Language.GetTextValue($"{Root}.CommonName.ArmorPenetration"));
                     tooltips.Insert(tooltips.FindIndex(x => x.Name == "Damage" && x.mod == "Terraria") + 1, armorPen);
                 }
             }
-            if(item.type == ItemID.SpectreHood)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "25% decreased magic damage\n5% reduced mana usage";
-                }
-
-            }
-            if(item.type == ItemID.BeesKnees)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "Shoots summoned bees like arrows";
-                }
-
-            }
-            if(item.type == ItemID.HellwingBow)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "Shoots summoned Hell Bats like arrows";
-                }
-
-            }
-            if(item.type == ItemID.MeteorHelmet)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "4% increased magic damage\n5% increased ranged damage";
-                }
-            }
-            if(item.type == ItemID.MeteorSuit)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "4% increased magic damage\n5% increased ranged damage";
-                }
-            }
-            if(item.type == ItemID.MeteorLeggings)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "4% increased magic damage\n5% increased ranged damage";
-                }
-            }
-            if(item.type == ItemID.AncientCobaltHelmet)
+            if(IsModItem(item) == false && Language.Exists($"{Root}.VanillaItemTooltip." + ItemID.Search.GetName(item.type)))
             {
                 tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
                 TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
                 if(line != null)
                 {
-                    line.text = "+40 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.AncientCobaltBreastplate)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+20 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.AncientCobaltLeggings)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+20 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.JungleHat)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+40 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.JungleShirt)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+20 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.JunglePants)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+20 maximum mana\n4% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.CobaltHat)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+40 maximum mana\n15% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.PalladiumHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+60 maximum mana\n20% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.MythrilHood)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+60 maximum mana\n21% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.OrichalcumHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+80 maximum mana\n24% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.AdamantiteHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+80 maximum mana\n30% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.TitaniumHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+100 maximum mana\n27% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.AncientBattleArmorHat)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "15% increased minion damage\n21% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.HallowedHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+100 maximum mana\n32% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.ChlorophyteHeadgear)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+80 maximum mana\n17% reduced mana usage\n35% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.SpectreMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+60 maximum mana\n13% reduced mana usage\n20% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.SpectreRobe)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "14% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.NebulaHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "+60 maximum mana\n15% reduced mana usage\n20% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.NebulaBreastplate)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "18% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.ApprenticeAltPants)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "20% increased minion damage\n25% increased magic damage";
-                }
-            }
-            if(item.type == ItemID.BeetleScaleMail)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "10% increased melee damage\n25% increased thrown damage\n43% increased melee critical strike chance\n26% increased melee speed";
-                }
-            }
-            if(item.type == ItemID.MonkBrows)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "Increases your max number of sentries\n35% increased melee speed";
-                }
-            }
-            if(item.type == ItemID.MonkShirt)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "20% increased minion damage\n20% increased melee damage\n25% increased thrown damage\n15% increased melee critical strike chance";
-                }
-            }
-            if(item.type == ItemID.MonkPants)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "10% increased minion damage\n20% increased melee critical strike chance\n25% increased move speed";
-                }
-            }
-            if(item.type == ItemID.MonkAltHead)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "Increases your max number of sentries\n20% increased melee, thrown & minion damage";
-                }
-            }
-            if(item.type == ItemID.MonkAltShirt)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "20% increased minion damage\n30% increased melee speed";
-                }
-            }
-            if(item.type == ItemID.MonkAltPants)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "20% increased minion damage\n40% increased melee critical strike chance\n35% increased move speed";
+                    line.text = Language.GetTextValue($"{Root}.VanillaItemTooltip." + ItemID.Search.GetName(item.type));
                 }
             }
             if(item.type == ItemID.AnkhCharm)
@@ -1026,157 +744,6 @@ namespace ClassOverhaul
             if(item.type == ItemID.CobaltShield)
             {
                 tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-            }
-            if(item.type == ItemID.CobaltHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "6% increased melee speed\n4% increased move speed";
-                }
-            }
-            if(item.type == ItemID.PalladiumMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "5% increased melee damage\n6% increased melee speed";
-                }
-            }
-            if(item.type == ItemID.MythrilHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "7% increased melee damage\n3% increased melee critical strike chance";
-                }
-            }
-            if(item.type == ItemID.OrichalcumMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "5% increased melee damage\n4% increased melee and movement speed";
-                }
-            }
-            if(item.type == ItemID.AdamantiteHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "10% increased melee damage\n4% increased melee critical strike chance";
-                }
-            }
-            if(item.type == ItemID.TitaniumMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "6% increased melee damage and critical strike chance";
-                }
-            }
-            if(item.type == ItemID.SquireGreaves)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "15% increased minion damage\n10% increased melee critical strike chance\n12% increased move speed";
-                }
-            }
-            if(item.type == ItemID.HallowedMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "8% increased melee damage\n7% increased melee speed\n6% increased melee critical strike chance";
-                }
-            }
-            if(item.type == ItemID.ChlorophyteMask)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "12% increased melee damage\n4% increased melee critical strike chance";
-                }
-            }
-            if(item.type == ItemID.TurtleHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "4% increased melee damage\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.TurtleScaleMail)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "5% increased melee damage and critical strike chance\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.TurtleLeggings)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "2% increased melee critical strike chance\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.BeetleShell)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "3% increased damage damage\n2% increased melee critical strike chance\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.SquireAltPants)
-            {
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "20% increased minion damage\n12% increased melee critical strike chance\n15% increased move speed";
-                }
-            }
-            if(item.type == ItemID.SolarFlareHelmet)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "10% increased melee critical strike chance\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.SolarFlareBreastplate)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "12% increased melee damage\nEnemies are more likely to target you";
-                }
-            }
-            if(item.type == ItemID.SolarFlareLeggings)
-            {
-                tooltips.RemoveAll(x => x.Name == "Tooltip1" && x.mod == "Terraria");
-                TooltipLine line = tooltips.FirstOrDefault(x => x.Name == "Tooltip0" && x.mod == "Terraria");
-                if(line != null)
-                {
-                    line.text = "10% increased melee speed\n9% increased move speed\nEnemies are more likely to target you";
-                }
             }
         }
         public override string IsArmorSet(Item head, Item body, Item legs)
@@ -1217,63 +784,69 @@ namespace ClassOverhaul
         {
             base.UpdateArmorSet(player, set);
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
-            if((set == "Apprentice" || set == "DarkArtist") && (modPlayer.job == JobID.mage || modPlayer.job == JobID.summoner))
+            string Root = "Mods.ClassOverhaul";
+            if(Language.Exists($"{Root}.ArmorSetBonus." + set))
+                player.setBonus = Language.GetTextValue($"{Root}.ArmorSetBonus." + set);
+            switch(set)
             {
-                if(modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.mage; else modPlayer.armorJob = JobID.summoner;
-                player.setBonus += "\nAllows using items of other class";
-            }
-            if((set == "Huntress" || set == "RedRiding") && (modPlayer.job == JobID.ranger || modPlayer.job == JobID.summoner))
-            {
-                if(modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.ranger; else modPlayer.armorJob = JobID.summoner;
-                player.setBonus += "\nAllows using items of other class";
-            }
-            if((set == "Squire" || set == "ValhallaKnight") && (modPlayer.job == JobID.knight || modPlayer.job == JobID.summoner))
-            {
-                if(modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.knight; else modPlayer.armorJob = JobID.summoner;
-                player.setBonus += "\nAllows using items of other class";
-            }
-            if((set == "Monk" || set == "ShinobiInfiltrator") && (modPlayer.job == JobID.rogue || modPlayer.job == JobID.summoner))
-            {
-                player.thrownVelocity += 0.30f;
-                if(modPlayer.job == JobID.summoner) modPlayer.armorJob = JobID.rogue; else modPlayer.armorJob = JobID.summoner;
-                player.setBonus += "\nAllows using items of other class\n30% increased thrown velocity";
-            }
-            if(set == "BeetleScaleArmor")
-            {
-                player.thrownVelocity += 0.25f;
-                player.setBonus = "25% increased thrown velocity\n" + player.setBonus;
-            }
-            if(set == "AdamantiteKnight")
-            {
-                player.meleeSpeed -= 0.09f; // 9% on set
-                player.moveSpeed -= 0.09f; // 9% on set
-                player.setBonus = "9% increased melee and movement speed";
-            }
-            if(set == "MythrilKnight")
-            {
-                player.meleeCrit -= 2; // 3% on set
-                player.setBonus = "3% increased melee critical strike chance";
-            }
-            if(set == "CobaltKnight")
-            {
-                player.meleeSpeed -= 0.07f; // 8% on set
-                player.setBonus = "8% increased melee speed";
-            }
-            if(set == "HallowedKnight")
-            {
-                player.meleeSpeed -= 0.8f; // 11% on set
-                player.moveSpeed -= 0.10f; // 9% on set
-                player.setBonus = "11% increased melee speed\n9% increased move speed";
-            }
-            if(set == "FrostArmor" && (modPlayer.job == JobID.knight || modPlayer.job == JobID.ranger))
-            {
-                if(modPlayer.job == JobID.knight) modPlayer.armorJob = JobID.ranger; else modPlayer.armorJob = JobID.knight;
-                player.setBonus += "\nAllows using items of other class";
-            }
-            if(set == "ForbiddenArmor" && (modPlayer.job == JobID.mage || modPlayer.job == JobID.summoner))
-            {
-                if(modPlayer.job == JobID.mage) modPlayer.armorJob = JobID.summoner; else modPlayer.armorJob = JobID.mage;
-                player.setBonus += "\nAllows using items of other class";
+                case "Apprentice":
+                case "DarkArtist":
+                    if(modPlayer.job == JobID.summoner)
+                        modPlayer.armorJob = JobID.mage;
+                    else
+                        modPlayer.armorJob = JobID.summoner;
+                    break;
+                case "Huntress":
+                case "RedRiding":
+                    if(modPlayer.job == JobID.summoner)
+                        modPlayer.armorJob = JobID.ranger;
+                    else
+                        modPlayer.armorJob = JobID.summoner;
+                    break;
+                case "Squire":
+                case "ValhallaKnight":
+                    if(modPlayer.job == JobID.summoner)
+                        modPlayer.armorJob = JobID.knight;
+                    else
+                        modPlayer.armorJob = JobID.summoner;
+                    break;
+                case "Monk":
+                case "ShinobiInfiltrator":
+                    if(modPlayer.job == JobID.summoner)
+                        modPlayer.armorJob = JobID.rogue;
+                    else
+                        modPlayer.armorJob = JobID.summoner;
+                    player.thrownVelocity += 0.30f;
+                    break;
+                case "FrostArmor":
+                    if(modPlayer.job == JobID.knight)
+                        modPlayer.armorJob = JobID.ranger;
+                    else
+                        modPlayer.armorJob = JobID.knight;
+                    break;
+                case "ForbiddenArmor":
+                    if(modPlayer.job == JobID.mage)
+                        modPlayer.armorJob = JobID.summoner;
+                    else
+                        modPlayer.armorJob = JobID.mage;
+                    break;
+                case "BeetleScaleArmor":
+                    player.thrownVelocity += 0.25f;
+                    break;
+                case "AdamantiteKnight":
+                    player.meleeSpeed -= 0.09f; // 9% on set
+                    player.moveSpeed -= 0.09f; // 9% on set
+                    break;
+                case "MythrilKnight":
+                    player.meleeCrit -= 2; // 3% on set
+                    break;
+                case "CobaltKnight":
+                    player.meleeSpeed -= 0.07f; // 8% on set
+                    break;
+                case "HallowedKnight":
+                    player.meleeSpeed -= 0.8f; // 11% on set
+                    player.moveSpeed -= 0.10f; // 9% on set
+                    break;
             }
         }
         public override bool CanUseItem(Item item, Player player)

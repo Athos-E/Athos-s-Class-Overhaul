@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class PalladiumHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Palladium Hood");
-            Tooltip.SetDefault("8% increased melee damage\n10% increased thrown damage\n23% increased melee speed\n26% increased melee critical strike chance\n5% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -49,7 +44,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.palladiumRegen = true;
             player.thrownVelocity += 0.10f;
-            player.setBonus = "Greatly increases life regeneration after striking an enemy\n10% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.PalladiumRogue");
         }
     }
 }

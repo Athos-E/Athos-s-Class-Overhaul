@@ -7,12 +7,6 @@ namespace ClassOverhaul.Items.Armor
     [AutoloadEquip(EquipType.Body)]
     public class GellyfishShirt : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Gellyfish Shirt");
-            Tooltip.SetDefault("5% increased minion damage.\nIncreases the maximum number of minions.");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -26,8 +20,7 @@ namespace ClassOverhaul.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.minionDamage += 0.05f;
-            player.maxMinions++;
+            player.minionDamage += 0.07f;
         }
 
         public override void AddRecipes()

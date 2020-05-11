@@ -29,25 +29,6 @@ namespace ClassOverhaul.Prefixes
             return false;
         }
 
-        public override void SetDefaults()
-        {
-            switch (id)
-            {
-                case 1:
-                    DisplayName.SetDefault("Magic");
-                    break;
-                case 2:
-                    DisplayName.SetDefault("Blessed");
-                    break;
-                case 3:
-                    DisplayName.SetDefault("Runic");
-                    break;
-                case 4:
-                    DisplayName.SetDefault("Witch's");
-                    break;
-            }
-        }
-
         public override void ModifyValue(ref float valueMult)
         {
             switch (id)

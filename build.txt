@@ -1,6 +1,6 @@
 displayName = Athos's Class Overhaul
 author = Athos E. Akaiger
 homepage = https://forums.terraria.org/index.php?threads/athoss-class-overhaul.82115/
-weakReferences = Consolaria@1.2.1.3, CalamityMod@1.4.4.3
+weakReferences = Consolaria@1.2.1.3
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
-version = 0.6.2
+version = 0.6.3

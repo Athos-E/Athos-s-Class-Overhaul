@@ -8,11 +8,6 @@ namespace ClassOverhaul.Items.Weapons
 {
     public class BookOfShootingStars : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Book of Shooting Stars");
-            Tooltip.SetDefault("What if stars could be commanded?");
-        }
         public override void SetDefaults()
         {
             item.magic = true;

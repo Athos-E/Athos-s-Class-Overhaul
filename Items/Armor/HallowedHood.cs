@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class HallowedHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Hallowed Hood");
-            Tooltip.SetDefault("12% increased melee damage\n25% increased thrown damage\n25% increased melee speed\n30% increased melee critical strike chance\n8% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -49,7 +44,7 @@ namespace ClassOverhaul.Items.Armor
             player.meleeSpeed += 0.25f;
             player.moveSpeed += 0.23f;
             player.thrownVelocity += 0.25f;
-            player.setBonus = "25% increased melee speed\n23% increased move speed\n25% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.HallowedRogue");
         }
     }
 }

@@ -1,0 +1,133 @@
+﻿-COMMON-
+
+CommonName.Knight=Cavaleiro
+CommonName.Rogue=Ladino
+CommonName.Ranger=Ranger
+CommonName.Mage=Mago
+CommonName.Summoner=Invocador
+CommonName.Alchemist=Alquimista
+CommonName.MagicDefense=defesa mágica
+CommonName.ArmorPenetration=de penetração de armadura
+CommonName.ChemicalDamage=de dano químico
+CommonName.MulticlassArmor=Permite o uso de itens de outra classe
+UIText.JobSelection=Escolha sua profissão, você não vai poder mudar isso.\n(Você não poderá usar itens do hardmode de outras classes.)
+UIText.MagicDefense=Defesa Mágica
+
+-PREFIX-
+
+Prefix.Magic=(Mágico)
+Prefix.Blessed=(Abençoado)
+Prefix.Runic=(Rúnico)
+Prefix.Witchs=(Bruxa)
+Prefix.Bionic=(Biônico)
+Prefix.Energized=(Energizado)
+Prefix.Blurring=(Ofuscante)
+Prefix.Otherworldly=(Extraterrestre)
+
+-BUFF NAMES-
+
+BuffName.RangedManaSickness={$BuffName.ManaSickness} (Dano à distância)
+BuffName.Stun=Atordoado
+
+-BUFF TOOLTIPS-
+
+BuffDescription.RangedManaSickness=Danos a distância reduzidos em {0}%
+BuffDescription.Stun=Impossível se mover ou atacar!
+
+-ITEM NAMES-
+
+ItemName.BookOfShootingStars=Livro de Estrelas Cadentes
+ItemName.StaffOfFireball=Cajado de Bola de Fogo
+ItemName.GellyfishHat=Chapéu de Água-Giva
+ItemName.GellyfishShirt=Camisa de Água-Giva
+ItemName.GellyfishLeggings=Calça de Água-Giva
+ItemName.AdamantiteHood=Capuz de Adamantina
+ItemName.ChlorophyteHood=Capuz de Clorofita
+ItemName.CobaltHood=Capuz de Cobalto
+ItemName.HallowedHood=Capuz Consagrado
+ItemName.MythrilMask=Máscara de Mithril
+ItemName.OrichalcumHood=Capuz de Oricalco
+ItemName.PalladiumHood=Capuz de Paládio
+ItemName.TitaniumHood=Capuz de Titânio
+
+-ITEM TOOLTIPS-
+
+ItemTooltip.BookOfShootingStars=E se as estrelas pudessem ser comandadas?
+ItemTooltip.StaffOfFireball=Atira uma rápida bola de fogo que explode ao colidir, queimando o alvo
+ItemTooltip.GellyfishHat=Aumenta o dano causado por lacaios em 4%\nAumenta o número máximo de lacaios que você pode ter
+ItemTooltip.GellyfishShirt=Aumenta o dano causado por lacaios em 7%
+ItemTooltip.GellyfishLeggings=Aumenta o dano causado por lacaios em 4%
+ItemTooltip.CobaltHood=20% de aumento na velocidade do ataque físico\n20% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade de arremesso\n10% de aumento na velocidade dos movimentos
+ItemTooltip.PalladiumHood=8% de aumento nos danos por ataque físico\n10% de aumento nos danos por arremesso\n23% de aumento na velocidade do ataque físico\n26% de aumento na chance de acerto crítico físico\n5% de aumento na velocidade dos movimentos
+ItemTooltip.MythrilMask=11% de aumento nos danos por ataque físico\n18% de aumento nos danos por arremesso\n13% de aumento na velocidade do ataque físico\n32% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
+ItemTooltip.OrichalcumHood=8% de aumento nos danos por ataque físico\n20% de aumento nos danos por arremesso\n18% de aumento na velocidade do ataque físico\n60% de aumento na chance de acerto crítico físico\n11% de aumento na velocidade dos movimentos
+ItemTooltip.AdamantiteHood=14% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n20% de aumento na velocidade do ataque físico\n37% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
+ItemTooltip.TitaniumHood=9% de aumento nos danos por ataque físico\n19% de aumento nos danos por arremesso\n17% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
+ItemTooltip.HallowedHood=12% de aumento nos danos por ataque físico\n25% de aumento nos danos por arremesso\n25% de aumento na velocidade do ataque físico\n30% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
+ItemTooltip.ChlorophyteHood=17% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n10% de aumento na velocidade do ataque físico\n32% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade dos movimentos
+
+VanillaItemTooltip.BeesKnees=Atira abelhas invocadas como se fossem flechas
+VanillaItemTooltip.HellwingBow=Atira morcegos do inferno invocados como se fossem flechas
+VanillaItemTooltip.MeteorHelmet=4% de aumento nos danos por magia\n5% de aumento nos danos por ataque à distância
+VanillaItemTooltip.MeteorSuit=4% de aumento nos danos por magia\n5% de aumento nos danos por ataque à distância
+VanillaItemTooltip.MeteorLeggings=4% de aumento nos danos por magia\n5% de aumento nos danos por ataque à distância
+VanillaItemTooltip.AncientCobaltHelmetJungleHat=Aumenta a mana máxima em 40\n4% de aumento nos danos por magia
+VanillaItemTooltip.AncientCobaltJungleBodyBoots=Aumenta a mana máxima em 20\n4% de aumento nos danos por magia
+VanillaItemTooltip.CobaltHat=Aumenta a mana máxima em 40\n15% de aumento nos danos por magia
+VanillaItemTooltip.PalladiumHeadgear=Aumenta a mana máxima em 60\n20% de aumento nos danos por magia
+VanillaItemTooltip.MythrilHood=Aumenta a mana máxima em 60\n21% de aumento nos danos por magia
+VanillaItemTooltip.OrichalcumHeadgear=Aumenta a mana máxima em 80\n24% de aumento nos danos por magia
+VanillaItemTooltip.AdamantiteHeadgear=Aumenta a mana máxima em 80\n30% de aumento nos danos por magia
+VanillaItemTooltip.TitaniumHeadgear=Aumenta a mana máxima em 100\n21% de aumento nos danos por magia
+VanillaItemTooltip.AncientBattleArmorHat=21% de aumento nos danos por magia\nAumenta os danos causados por lacaios em 15%\n{$Mods.ClassOverhaul.CommonName.MinionIncrease}
+VanillaItemTooltip.HallowedHeadgear=Aumenta a mana máxima em 100\n32% de aumento nos danos por magia
+VanillaItemTooltip.ChlorophyteHeadgear=Aumenta a mana máxima em 80\n35% de aumento nos danos por magia\n17% de redução no consumo de mana
+VanillaItemTooltip.SpectreHood=25% de redução nos danos por magia\n5% de redução no consumo de mana
+VanillaItemTooltip.SpectreMask=Aumenta a mana máxima em 60\n20% de aumento nos danos por magia\n13% de redução no consumo de mana
+VanillaItemTooltip.SpectreRobe=14% de aumento nos danos por magia
+VanillaItemTooltip.NebulaHelmet=Aumenta a mana máxima em 60\n20% de aumento nos danos por magia\n15% de redução no consumo de mana
+VanillaItemTooltip.NebulaBreastplate=18% de aumento nos danos por magia
+VanillaItemTooltip.ApprenticeAltPants=Aumenta os danos causados por lacaios em 20%\n25% de aumento nos danos por magia
+VanillaItemTooltip.BeetleScaleMail=10% de aumentos nos danos por ataque físico\n25% de aumento nos danos por arremesso\n43% de aumento na chance de acerto crítico físico\n26% de aumento na velocidade do ataque físico
+VanillaItemTooltip.MonkBrows=Aumenta o número máximo de sentinelas\n35% de aumento na velocidade do ataque físico
+VanillaItemTooltip.MonkShirt=Aumenta os danos causados por lacaios em 20%\n20% de aumento nos danos por ataque físico\n25% de aumento nos danos por arremesso\n15% de aumento na chance de acerto crítico físico
+VanillaItemTooltip.MonkPants=Aumenta os danos causados por lacaios em 10%\n20% de aumento na chance de acerto crítico físico\n20% de aumento na velocidade dos movimentos
+VanillaItemTooltip.MonkAltHead=Aumenta o número máximo de sentinelas\n20% de aumento nos de ataque físico, por lacaio e por arremesso
+VanillaItemTooltip.MonkAltShirt=Aumenta os danos causados por lacaios em 20%\n30% de aumento na velocidade do ataque físico
+VanillaItemTooltip.MonkAltPants=Aumenta os danos causados por lacaios em 20%\n40% de aumento na chance de acerto crítico físico\n35% de aumento na velocidade dos movimentos
+VanillaItemTooltip.CobaltHelmet=6% de aumento na velocidade do ataque físico\n4% de aumento na velocidade dos movimentos
+VanillaItemTooltip.PalladiumMask=5% de aumento nos danos por ataque físico\n6% de aumento na velocidade do ataque físico
+VanillaItemTooltip.MythrilHelmet=7% de aumento nos danos por ataque físico\n3% de aumento na chance de acerto crítico físico
+VanillaItemTooltip.OrichalcumMask=5% de aumento nos danos por ataque físico\n4% de aumento na velocidade do ataque físico e dos movimentos
+VanillaItemTooltip.AdamantiteHelmet=10% de aumento nos danos por ataque físico\n4% de aumento na chance de acerto crítico físico
+VanillaItemTooltip.TitaniumMask=6% de aumento nos danos por ataque físico e na chance de acerto crítico físico
+VanillaItemTooltip.SquireGreaves=Aumenta o dano causado por lacaios em 15%\n10% de aumento na chance de acerto crítico físico\n12% de aumento na velocidade dos movimentos
+VanillaItemTooltip.HallowedMask=8% de aumento nos danos por ataque físico\n7% de aumento na velocidade do ataque físico\n6% de aumento na chance de acerto crítico físico
+VanillaItemTooltip.ChlorophyteMask=12% de aumento nos danos por ataque físico\n4% de aumento na chance de acerto crítico físico
+VanillaItemTooltip.TurtleHelmet=4% de aumento nos danos por ataque físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.TurtleScaleMail=5% de aumento nos danos por ataque físico e na chance de acerto crítico físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.TurtleLeggings=2% de aumento na chance de acerto crítico físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.BeetleShell=3% de aumento nos danos por ataque físico\n2% de aumento na chance de acerto crítico físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.SquireAltPants=Aumenta o dano causado por lacaios em 20%\n12% de aumento na chance de acerto crítico físico\n15% de aumento na velocidade dos movimentos
+VanillaItemTooltip.SolarFlareHelmet=10% de aumento na chance de acerto crítico físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.SolarFlareBreastplate=12% de aumento nos danos por ataque físico\n{$Mods.ClassOverhaul.CommonName.Taunt}
+VanillaItemTooltip.SolarFlareLeggings=10% de aumento na velocidade do ataque físico\n9% de aumento na velocidade dos movimentos\n{$Mods.ClassOverhaul.CommonName.Taunt}
+
+-ARMOR SET BONUS-
+
+ArmorSetBonus.Gellyfish=Inflinge {0} de dano por lacaios ao ser atacado, o dano também é afetado pela defesa
+ArmorSetBonus.Monk={$Mods.ClassOverhaul.CommonName.MulticlassArmor}\n{$ArmorSetBonus.MonkTier2}\n30% de aumento no dano por arremesso
+ArmorSetBonus.ShinobiInfiltrator={$Mods.ClassOverhaul.CommonName.MulticlassArmor}\n{$ArmorSetBonus.MonkTier3}\n30% de aumento no dano por arremesso
+ArmorSetBonus.BeetleScaleArmor={$ArmorSetBonus.BeetleDamage}\n25% de aumento na velocidade de arremesso
+ArmorSetBonus.CobaltKnight=8% de aumento na velocidade do ataque físico
+ArmorSetBonus.MythrilKnight=3% de aumento na chance de ataque crítico físico
+ArmorSetBonus.AdamantiteKnight=9% de aumento na velocidade do ataque físico e dos movimentos
+ArmorSetBonus.HallowedKnight=11% de aumento na velocidade do ataque físico\n9% de aumento na velocidade dos movimentos
+ArmorSetBonus.CobaltRogue=23% de aumento na velocidade do ataque físico\n10% de aumento na velocidade de arremesso
+ArmorSetBonus.PalladiumRogue={$ArmorSetBonus.Palladium}\n10% de aumento na velocidade de arremesso
+ArmorSetBonus.MythrilRogue=6% de aumento na chance de acerto crítico físico\n12% de aumento na velocidade de arremesso
+ArmorSetBonus.OrichalcumRogue={$ArmorSetBonus.Orichalcum}\n13% de aumento na velocidade de arremesso
+ArmorSetBonus.AdamantiteRogue=40% de aumento na velocidade do ataque físico\n20% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
+ArmorSetBonus.TitaniumRogue={$ArmorSetBonus.Titanium}\n18% de aumento na velocidade de arremesso
+ArmorSetBonus.HallowedRogue=25% de aumento na velocidade do ataque físico\n25% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
+ArmorSetBonus.ChlorophyteRogue={$ArmorSetBonus.Chlorophyte}\n19% de aumento na velocidade de arremesso

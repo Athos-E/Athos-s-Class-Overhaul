@@ -4,6 +4,7 @@ using Terraria.UI;
 using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using ClassOverhaul.Jobs;
+using Terraria.Localization;
 
 namespace ClassOverhaul.UI
 {
@@ -16,9 +17,10 @@ namespace ClassOverhaul.UI
         private UIText buttonRanger;
         private UIText buttonMage;
         private UIText buttonSummoner;
-        private UIText buttonChemist;
+        private UIText buttonAlchemist;
         private UIText dialogue;
         private float oldScale;
+        string Root = "Mods.ClassOverhaul";
         public override void OnInitialize()
         {
             visible = false;
@@ -28,7 +30,7 @@ namespace ClassOverhaul.UI
             panel.Top.Set(Main.screenHeight / 3, 0);
             panel.Width.Set(500, 0);
             panel.Height.Set(150, 0);
-            buttonKnight = new UIText("Knight", 0.8f);
+            buttonKnight = new UIText(Language.GetTextValue($"{Root}.CommonName.Knight"), 0.8f);
             buttonKnight.Left.Set(15, 0);
             buttonKnight.Top.Set(110, 0);
             buttonKnight.TextColor = Color.Gold;
@@ -36,7 +38,7 @@ namespace ClassOverhaul.UI
             buttonKnight.OnMouseOver += new MouseEvent(OnHoverKnight);
             buttonKnight.OnMouseOut += new MouseEvent(OnOutKnight);
             panel.Append(buttonKnight);
-            buttonRogue = new UIText("Rogue", 0.8f);
+            buttonRogue = new UIText(Language.GetTextValue($"{Root}.CommonName.Rogue"), 0.8f);
             buttonRogue.Left.Set(85, 0);
             buttonRogue.Top.Set(110, 0);
             buttonRogue.TextColor = Color.Gold;
@@ -44,7 +46,7 @@ namespace ClassOverhaul.UI
             buttonRogue.OnMouseOver += new MouseEvent(OnHoverRogue);
             buttonRogue.OnMouseOut += new MouseEvent(OnOutRogue);
             panel.Append(buttonRogue);
-            buttonRanger = new UIText("Ranger", 0.8f);
+            buttonRanger = new UIText(Language.GetTextValue($"{Root}.CommonName.Ranger"), 0.8f);
             buttonRanger.Left.Set(160, 0);
             buttonRanger.Top.Set(110, 0);
             buttonRanger.TextColor = Color.Gold;
@@ -52,7 +54,7 @@ namespace ClassOverhaul.UI
             buttonRanger.OnMouseOver += new MouseEvent(OnHoverRanger);
             buttonRanger.OnMouseOut += new MouseEvent(OnOutRanger);
             panel.Append(buttonRanger);
-            buttonMage = new UIText("Mage", 0.8f);
+            buttonMage = new UIText(Language.GetTextValue($"{Root}.CommonName.Mage"), 0.8f);
             buttonMage.Left.Set(245, 0);
             buttonMage.Top.Set(110, 0);
             buttonMage.TextColor = Color.Gold;
@@ -60,7 +62,7 @@ namespace ClassOverhaul.UI
             buttonMage.OnMouseOver += new MouseEvent(OnHoverMage);
             buttonMage.OnMouseOut += new MouseEvent(OnOutMage);
             panel.Append(buttonMage);
-            buttonSummoner = new UIText("Summoner", 0.8f);
+            buttonSummoner = new UIText(Language.GetTextValue($"{Root}.CommonName.Summoner"), 0.8f);
             buttonSummoner.Left.Set(320, 0);
             buttonSummoner.Top.Set(110, 0);
             buttonSummoner.TextColor = Color.Gold;
@@ -68,15 +70,15 @@ namespace ClassOverhaul.UI
             buttonSummoner.OnMouseOver += new MouseEvent(OnHoverSummoner);
             buttonSummoner.OnMouseOut += new MouseEvent(OnOutSummoner);
             panel.Append(buttonSummoner);
-            buttonChemist = new UIText("Chemist", 0.8f);
-            buttonChemist.Left.Set(420, 0);
-            buttonChemist.Top.Set(110, 0);
-            buttonChemist.TextColor = Color.Gold;
-            buttonChemist.OnClick += new MouseEvent(OnClickChemist);
-            buttonChemist.OnMouseOver += new MouseEvent(OnHoverChemist);
-            buttonChemist.OnMouseOut += new MouseEvent(OnOutChemist);
-            //panel.Append(buttonChemist);
-            dialogue = new UIText("Choose your preferred job, you won't be able to change this.\n(You won't be able to use hardmode items of other jobs.)", 0.8f);
+            buttonAlchemist = new UIText(Language.GetTextValue($"{Root}.CommonName.Alchemist"), 0.8f);
+            buttonAlchemist.Left.Set(420, 0);
+            buttonAlchemist.Top.Set(110, 0);
+            buttonAlchemist.TextColor = Color.Gold;
+            buttonAlchemist.OnClick += new MouseEvent(OnClickAlchemist);
+            buttonAlchemist.OnMouseOver += new MouseEvent(OnHoverAlchemist);
+            buttonAlchemist.OnMouseOut += new MouseEvent(OnOutAlchemist);
+            //panel.Append(buttonAlchemist);
+            dialogue = new UIText(Language.GetTextValue($"{Root}.UIText.JobSelection"), 0.8f);
             dialogue.Left.Set(25, 0);
             dialogue.Top.Set(25, 0);
             panel.Append(dialogue);
@@ -108,12 +110,12 @@ namespace ClassOverhaul.UI
         }
         private void OnHoverKnight(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonKnight.SetText("Knight", 1.0f, false);
+            buttonKnight.SetText(buttonKnight.Text, 1.0f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
         private void OnOutKnight(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonKnight.SetText("Knight", 0.8f, false);
+            buttonKnight.SetText(buttonKnight.Text, 0.8f, false);
         }
         private void OnClickRogue(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -126,12 +128,12 @@ namespace ClassOverhaul.UI
         }
         private void OnHoverRogue(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonRogue.SetText("Rogue", 1f, false);
+            buttonRogue.SetText(buttonRogue.Text, 1f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
         private void OnOutRogue(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonRogue.SetText("Rogue", 0.8f, false);
+            buttonRogue.SetText(buttonRogue.Text, 0.8f, false);
         }
         private void OnClickRanger(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -144,12 +146,12 @@ namespace ClassOverhaul.UI
         }
         private void OnHoverRanger(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonRanger.SetText("Ranger", 1f, false);
+            buttonRanger.SetText(buttonRanger.Text, 1f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
         private void OnOutRanger(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonRanger.SetText("Ranger", 0.8f, false);
+            buttonRanger.SetText(buttonRanger.Text, 0.8f, false);
         }
         private void OnClickMage(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -162,12 +164,12 @@ namespace ClassOverhaul.UI
         }
         private void OnHoverMage(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonMage.SetText("Mage", 1f, false);
+            buttonMage.SetText(buttonMage.Text, 1f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
         private void OnOutMage(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonMage.SetText("Mage", 0.8f, false);
+            buttonMage.SetText(buttonMage.Text, 0.8f, false);
         }
         private void OnClickSummoner(UIMouseEvent evt, UIElement listeningElement)
         {
@@ -180,30 +182,30 @@ namespace ClassOverhaul.UI
         }
         private void OnHoverSummoner(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonSummoner.SetText("Summoner", 1f, false);
+            buttonSummoner.SetText(buttonSummoner.Text, 1f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
         private void OnOutSummoner(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonSummoner.SetText("Summoner", 0.8f, false);
+            buttonSummoner.SetText(buttonSummoner.Text, 0.8f, false);
         }
-        private void OnClickChemist(UIMouseEvent evt, UIElement listeningElement)
+        private void OnClickAlchemist(UIMouseEvent evt, UIElement listeningElement)
         {
             PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
-            modPlayer.job = JobID.chemist;
+            modPlayer.job = JobID.alchemist;
             modPlayer.choseJob = true;
             modPlayer.immune = false;
             Main.PlaySound(SoundID.MenuClose);
             visible = false;
         }
-        private void OnHoverChemist(UIMouseEvent evt, UIElement listeningElement)
+        private void OnHoverAlchemist(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonChemist.SetText("Chemist", 1f, false);
+            buttonAlchemist.SetText(buttonAlchemist.Text, 1f, false);
             Main.PlaySound(SoundID.MenuTick);
         }
-        private void OnOutChemist(UIMouseEvent evt, UIElement listeningElement)
+        private void OnOutAlchemist(UIMouseEvent evt, UIElement listeningElement)
         {
-            buttonChemist.SetText("Chemist", 0.8f, false);
+            buttonAlchemist.SetText(buttonAlchemist.Text, 0.8f, false);
         }
     }
     internal class JobSelectionPanel : UIPanel

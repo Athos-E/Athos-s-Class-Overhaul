@@ -8,8 +8,6 @@ namespace ClassOverhaul.Items.Weapons
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Staff of Fireball");
-            Tooltip.SetDefault("Launches a rapid fireball that explodes on hit, burning its target");
             Item.staff[item.type] = true;
         }
         public override void SetDefaults()

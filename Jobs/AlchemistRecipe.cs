@@ -8,11 +8,11 @@ using Terraria.ModLoader;
 
 namespace ClassOverhaul.Jobs
 {
-    public class ChemistRecipe : ModRecipe
+    public class AlchemistRecipe : ModRecipe
     {
         public PlayerEdits modPlayer;
 
-        public ChemistRecipe(Mod mod) : base(mod)
+        public AlchemistRecipe(Mod mod) : base(mod)
         {
             if (Main.LocalPlayer.whoAmI > 0)
             {
@@ -22,7 +22,7 @@ namespace ClassOverhaul.Jobs
 
         public override bool RecipeAvailable()
         {
-            if (modPlayer != null && modPlayer.job == JobID.chemist)
+            if (modPlayer != null && modPlayer.job == JobID.alchemist)
             {
                 return base.RecipeAvailable();
             }

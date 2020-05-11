@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Buffs.Debuffs
 {
@@ -8,8 +9,6 @@ namespace ClassOverhaul.Buffs.Debuffs
         float percent = 0f;
         public override void SetDefaults()
         {
-            DisplayName.SetDefault("Mana Sickness (Ranged)");
-            Description.SetDefault("Ranged damage reduced by " + 0f + "%");
             Main.buffNoSave[Type] = true;
             Main.debuff[Type] = true;
         }
@@ -25,7 +24,7 @@ namespace ClassOverhaul.Buffs.Debuffs
 
         public override void ModifyBuffTip(ref string tip, ref int rare)
         {
-            tip = "Ranged damage reduced by " + (int)(percent * 100) + "%";
+            tip = string.Format(Language.GetTextValue("Mods.ClassOverhaul.BuffDescription.RangedManaSickness"), (int)(percent * 100));
         }
     }
 }

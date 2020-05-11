@@ -35,41 +35,6 @@ namespace ClassOverhaul.Prefixes
             return false;
         }
 
-        public override void SetDefaults()
-        {
-            switch (id)
-            {
-                case 1:
-                    DisplayName.SetDefault("Keen");
-                    break;
-                case 2:
-                    DisplayName.SetDefault("Superior");
-                    break;
-                case 3:
-                    DisplayName.SetDefault("Godly");
-                    break;
-                case 4:
-                    DisplayName.SetDefault("Demonic");
-                    break;
-                case 5:
-                    DisplayName.SetDefault("Zealous");
-                    break;
-                case 6:
-                    DisplayName.SetDefault("Agile");
-                    break;
-                case 7:
-                    DisplayName.SetDefault("Murderous");
-                    break;
-                case 8:
-                    DisplayName.SetDefault("Nasty");
-                    break;
-                case 9:
-                    DisplayName.SetDefault("Mythical");
-                    break;
-            }
-            base.SetDefaults();
-        }
-
         public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus)
         {
             switch (id)

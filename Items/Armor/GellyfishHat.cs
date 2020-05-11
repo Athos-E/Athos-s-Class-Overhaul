@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class GellyfishHat : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Gellyfish Hat");
-            Tooltip.SetDefault("5% increased minion damage.");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -26,7 +21,8 @@ namespace ClassOverhaul.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.minionDamage += 0.05f;
+            player.minionDamage += 0.04f;
+            player.maxMinions++;
         }
 
         public override void AddRecipes()
@@ -53,7 +49,7 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.GetModPlayer<PlayerEdits>().gellyfishArmor = true;
-            player.setBonus = "Deals " + ((int)((1 + (player.statDefense / 2)) * player.minionDamage)).ToString() + " minion damage upon getting hit, the damage is also upgraded by defense.";
+            player.setBonus = string.Format(Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.Gellyfish"), ((int)((1 + (player.statDefense / 2)) * player.minionDamage)).ToString());
         }
     }
 }

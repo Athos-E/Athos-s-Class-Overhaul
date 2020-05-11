@@ -10,6 +10,13 @@
 
 
                           Changelogs
+
+0.6.3
+-Bugfix regarding prefixes and item spawning.
+-Adjusted Gellyfish armor.
+-Adjustments to tooltips
+-PT-BR translation
+
 0.6.2
 -Hotfix regarding an error when equiping items with magic defense on vanity slot.
 

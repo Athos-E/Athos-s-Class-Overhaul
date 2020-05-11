@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class TitaniumHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Titanium Hood");
-            Tooltip.SetDefault("9% increased melee damage\n19% increased thrown damage\n17% increased melee speed\n33% increased melee critical strike chance\n6% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -48,7 +43,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.shadowDodge = true;
             player.thrownVelocity += 0.18f;
-            player.setBonus = "Become immune after striking an enemy\n18% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.TitaniumRogue");
         }
     }
 }

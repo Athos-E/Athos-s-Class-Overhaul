@@ -1,18 +1,13 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
     [AutoloadEquip(EquipType.Head)]
     public class ChlorophyteHood : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            base.SetStaticDefaults();
-            DisplayName.SetDefault("Chlorophyte Hood");
-            Tooltip.SetDefault("17% increased melee damage\n23% increased thrown damage\n10% increased melee speed\n32% increased melee critical strike chance\n10% increased move speed");
-        }
         public override void SetDefaults()
         {
             ItemEdits globalItem = item.GetGlobalItem<ItemEdits>();
@@ -48,7 +43,7 @@ namespace ClassOverhaul.Items.Armor
         {
             player.AddBuff(BuffID.LeafCrystal, 1, true);
             player.thrownVelocity += 0.19f;
-            player.setBonus = "Summons a powerful leaf crystal to shoot at nearby enemies\n19% increased thrown velocity";
+            player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.ChlorophyteRogue");
         }
     }
 }

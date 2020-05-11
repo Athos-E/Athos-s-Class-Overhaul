@@ -104,12 +104,6 @@ namespace ClassOverhaul.Items.Consumables
             return false;
         }
 
-        public override void SetStaticDefaults()
-        {
-            DisplayName.SetDefault("Treasure Bag");
-            Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-        }
-
         public override void SetDefaults()
         {
             item.maxStack = 999;

@@ -9,14 +9,14 @@ namespace ClassOverhaul.Prefixes
 {
     public class PrefixList
     {
-        public static List<byte> UniversalPrefixes;
-        public static List<byte> CommonPrefixes;
-        public static List<byte> MeleePrefixes;
-        public static List<byte> RangedPrefixes;
-        public static List<byte> MagicPrefixes;
-        public static List<byte> ManaGunPrefixes;
-        public static List<byte> MagicVanillaPrefixes;
-        public static List<byte> AccessoryPrefixes;
+        public List<byte> UniversalPrefixes;
+        public List<byte> CommonPrefixes;
+        public List<byte> MeleePrefixes;
+        public List<byte> RangedPrefixes;
+        public List<byte> MagicPrefixes;
+        public List<byte> ManaGunPrefixes;
+        public List<byte> MagicVanillaPrefixes;
+        public List<byte> AccessoryPrefixes;
         private static Mod mod = ClassOverhaul.instance;
 
         public PrefixList() {
@@ -181,30 +181,30 @@ namespace ClassOverhaul.Prefixes
 
         private static List<byte> AccessoryModifiers()
         {
-            List<byte> prefixes = new List<byte>();
-            prefixes.Add(PrefixID.Hard);
-            prefixes.Add(PrefixID.Guarding);
-            prefixes.Add(PrefixID.Armored);
-            prefixes.Add(PrefixID.Precise);
-            prefixes.Add(PrefixID.Lucky);
-            prefixes.Add(PrefixID.Jagged);
-            prefixes.Add(PrefixID.Spiked);
-            prefixes.Add(PrefixID.Angry);
-            prefixes.Add(PrefixID.Menacing);
-            prefixes.Add(PrefixID.Brisk);
-            prefixes.Add(PrefixID.Fleeting);
-            prefixes.Add(PrefixID.Hasty2);
-            prefixes.Add(PrefixID.Quick2);
-            prefixes.Add(PrefixID.Wild);
-            prefixes.Add(PrefixID.Rash);
-            prefixes.Add(PrefixID.Intrepid);
-            prefixes.Add(PrefixID.Violent);
-            prefixes.Add(PrefixID.Arcane);
+            List<byte> result = new List<byte>();
+            result.Add(PrefixID.Hard);
+            result.Add(PrefixID.Guarding);
+            result.Add(PrefixID.Armored);
+            result.Add(PrefixID.Precise);
+            result.Add(PrefixID.Lucky);
+            result.Add(PrefixID.Jagged);
+            result.Add(PrefixID.Spiked);
+            result.Add(PrefixID.Angry);
+            result.Add(PrefixID.Menacing);
+            result.Add(PrefixID.Brisk);
+            result.Add(PrefixID.Fleeting);
+            result.Add(PrefixID.Hasty2);
+            result.Add(PrefixID.Quick2);
+            result.Add(PrefixID.Wild);
+            result.Add(PrefixID.Rash);
+            result.Add(PrefixID.Intrepid);
+            result.Add(PrefixID.Violent);
+            result.Add(PrefixID.Arcane);
             for(int i = 0; i < ModPrefix.GetPrefixesInCategory(PrefixCategory.Accessory).Count; i++)
             {
-                prefixes.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Accessory)[i].Type);
+                result.Add(ModPrefix.GetPrefixesInCategory(PrefixCategory.Accessory)[i].Type);
             }
-            return prefixes;
+            return result;
         }
     }
 }

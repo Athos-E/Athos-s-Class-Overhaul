@@ -17,14 +17,14 @@ namespace ClassOverhaul.Jobs
                 modItem.rangerItem = false;
                 modItem.mageItem = false;
                 modItem.summonerItem = false;
-                modItem.chemistItem = false;
+                modItem.alchemistItem = false;
             }
             if (item.melee) { modItem.knightItem = true; modItem.rogueItem = true; }
-            if (item.thrown) { modItem.rogueItem = true; modItem.chemistItem = true; }
+            if (item.thrown) { modItem.rogueItem = true; modItem.alchemistItem = true; }
             if (item.ranged) modItem.rangerItem = true;
             if (item.magic) { modItem.mageItem = true; }
             if (item.summon) { modItem.summonerItem = true; modItem.mageItem = true; }
-            if (modItem.chemical) modItem.chemistItem = true;
+            if (modItem.chemical) modItem.alchemistItem = true;
         }
 
         public static bool CanEquip(Item item, Player player)
@@ -35,7 +35,7 @@ namespace ClassOverhaul.Jobs
             if (modItem.isBasic == true) return true;
             if (modPlayer.choseJob == true)
             {
-                if (modItem.knightItem || modItem.rogueItem || modItem.rangerItem || modItem.mageItem || modItem.summonerItem || modItem.chemistItem)
+                if (modItem.knightItem || modItem.rogueItem || modItem.rangerItem || modItem.mageItem || modItem.summonerItem || modItem.alchemistItem)
                 {
                     switch (modPlayer.job)
                     {
@@ -106,20 +106,20 @@ namespace ClassOverhaul.Jobs
                                 case JobID.mage:
                                     if (modItem.summonerItem || modItem.mageItem) return true;
                                     break;
-                                case JobID.chemist:
-                                    if (modItem.summonerItem || modItem.chemistItem) return true;
+                                case JobID.alchemist:
+                                    if (modItem.summonerItem || modItem.alchemistItem) return true;
                                     break;
                             }
-                            if (modItem.chemistItem) return true;
+                            if (modItem.alchemistItem) return true;
                             break;
-                        case JobID.chemist:
+                        case JobID.alchemist:
                             if (modPlayer.armorJob == JobID.summoner)
                             {
-                                if (modItem.chemistItem || modItem.summonerItem) return true;
+                                if (modItem.alchemistItem || modItem.summonerItem) return true;
                             }
                             else
                             {
-                                if (modItem.chemistItem) return true;
+                                if (modItem.alchemistItem) return true;
                             }
                             break;
                     }
@@ -197,13 +197,13 @@ namespace ClassOverhaul.Jobs
                                 case JobID.mage:
                                     if (item.summon || item.magic) return true;
                                     break;
-                                case JobID.chemist:
+                                case JobID.alchemist:
                                     if (item.summon || modItem.chemical) return true;
                                     break;
                             }
                             if (item.summon) return true;
                             break;
-                        case JobID.chemist:
+                        case JobID.alchemist:
                             if (modPlayer.armorJob == JobID.summoner)
                             {
                                 if (item.thrown || modItem.chemical || item.summon) return true;
