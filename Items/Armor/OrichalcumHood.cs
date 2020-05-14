@@ -21,11 +21,11 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.08f;
+            player.meleeDamage += 0.07f;
             player.thrownDamage += 0.20f;
-            player.meleeSpeed += 0.18f;
-            player.meleeCrit += 60;
-            player.moveSpeed += 0.11f;
+            player.meleeSpeed += 0.14f;
+            player.meleeCrit += 28;
+            player.moveSpeed += 0.13f;
         }
         public override void AddRecipes()
         {
@@ -42,7 +42,6 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.onHitPetal = true;
-            player.thrownVelocity += 0.13f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.OrichalcumRogue");
         }
     }

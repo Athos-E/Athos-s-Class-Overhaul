@@ -704,19 +704,7 @@ namespace ClassOverhaul
                         tooltips.Insert(tooltips.FindIndex(x => x.Name == "ItemName" && x.mod == "Terraria") + 1, line);
                 }
             }
-            if(item.prefix == mod.PrefixType("Blessed") || item.prefix == mod.PrefixType("Runic")
-                || item.prefix == mod.PrefixType("Witchs") || item.prefix == mod.PrefixType("Magic"))
-            {
-                TooltipLine line = new TooltipLine(mod, "PrefixAccMagicDefense", "");
-                line.isModifier = true;
-                tooltips.Add(line);
-                line = tooltips.FirstOrDefault(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
-                if(item.prefix == mod.PrefixType("Magic")) line.text = "+1 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
-                if(item.prefix == mod.PrefixType("Blessed")) line.text = "+2 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
-                if(item.prefix == mod.PrefixType("Runic")) line.text = "+3 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
-                if(item.prefix == mod.PrefixType("Witchs")) line.text = "+4 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
-            }
-            else tooltips.RemoveAll(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
+
             PlayerEdits modPlayer = Main.player[Main.myPlayer].GetModPlayer<PlayerEdits>();
             if(item.melee == true && (modPlayer.job == JobID.rogue || modPlayer.armorJob == JobID.rogue) && item.type != ItemID.SolarEruption)
             {
@@ -736,6 +724,24 @@ namespace ClassOverhaul
                     line.text = Language.GetTextValue($"{Root}.VanillaItemTooltip." + ItemID.Search.GetName(item.type));
                 }
             }
+            if(item.prefix == mod.PrefixType("Blessed") || item.prefix == mod.PrefixType("Runic")
+                || item.prefix == mod.PrefixType("Witchs") || item.prefix == mod.PrefixType("Magic"))
+            {
+                TooltipLine line = new TooltipLine(mod, "PrefixAccMagicDefense", "");
+                line.isModifier = true;
+                tooltips.Add(line);
+                line = tooltips.FirstOrDefault(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
+                if(item.prefix == mod.PrefixType("Magic"))
+                    line.text = "+1 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Blessed"))
+                    line.text = "+2 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Runic"))
+                    line.text = "+3 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+                if(item.prefix == mod.PrefixType("Witchs"))
+                    line.text = "+4 " + Language.GetTextValue($"{Root}.CommonName.MagicDefense");
+            }
+            else
+                tooltips.RemoveAll(x => x.Name == "PrefixAccMagicDefense" && x.mod == mod.Name);
             if(item.type == ItemID.AnkhCharm)
             {
                 tooltips.RemoveAll(x => x.Name == "Tooltip0" && x.mod == "Terraria");

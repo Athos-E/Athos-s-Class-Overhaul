@@ -99,6 +99,18 @@ namespace ClassOverhaul
         public override void NPCLoot(NPC npc)
         {
             base.NPCLoot(npc);
+            if(npc.type == NPCID.Hellhound && Main.rand.Next(2) == 0)
+            {
+                Item.NewItem(npc.position, mod.ItemType("EvilScales"), Main.rand.Next(2, 7));
+            }
+            if (npc.type == NPCID.HeadlessHorseman && Main.rand.Next(2) == 0)
+            {
+                Item.NewItem(npc.position, mod.ItemType("EvilScales"), Main.rand.Next(4, 9));
+            }
+            if (npc.type == NPCID.Pumpking)
+            {
+                Item.NewItem(npc.position, mod.ItemType("EvilScales"), Main.rand.Next(8,17));
+            }
             if (Main.expertMode == false && npc.boss)
             {
                 for (int p = 0; p < Main.player.Length; p++)

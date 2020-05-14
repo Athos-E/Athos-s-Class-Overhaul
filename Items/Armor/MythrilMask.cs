@@ -21,11 +21,11 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.11f;
-            player.thrownDamage += 0.18f;
-            player.meleeSpeed += 0.13f;
-            player.meleeCrit += 32;
-            player.moveSpeed += 0.8f;
+            player.meleeDamage += 0.10f;
+            player.thrownDamage += 0.20f;
+            player.meleeSpeed += 0.15f;
+            player.meleeCrit += 18;
+            player.moveSpeed += 0.10f;
         }
         public override void AddRecipes()
         {
@@ -41,8 +41,8 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
+            player.thrownDamage += 0.05f;
             player.meleeCrit += 6;
-            player.thrownVelocity += 0.12f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.MythrilRogue");
         }
     }

@@ -21,11 +21,11 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.14f;
+            player.meleeDamage += 0.15f;
             player.thrownDamage += 0.23f;
-            player.meleeSpeed += 0.20f;
-            player.meleeCrit += 37;
-            player.moveSpeed += 0.06f;
+            player.meleeSpeed += 0.17f;
+            player.meleeCrit += 25;
+            player.moveSpeed += 0.12f;
         }
         public override void AddRecipes()
         {
@@ -41,9 +41,9 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.meleeSpeed += 0.40f;
-            player.moveSpeed += 0.23f;
-            player.thrownVelocity += 0.20f;
+            player.thrownDamage += 0.08f;
+            player.meleeSpeed += 0.10f;
+            player.moveSpeed += 0.10f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.AdamantiteRogue");
         }
     }

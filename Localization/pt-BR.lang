@@ -10,6 +10,7 @@ CommonName.MagicDefense=defesa mágica
 CommonName.ArmorPenetration=de penetração de armadura
 CommonName.ChemicalDamage=de dano químico
 CommonName.MulticlassArmor=Permite o uso de itens de outra classe
+CommonName.Gellyfish=Água-Giva
 UIText.JobSelection=Escolha sua profissão, você não vai poder mudar isso.\n(Você não poderá usar itens do hardmode de outras classes.)
 UIText.MagicDefense=Defesa Mágica
 
@@ -49,6 +50,10 @@ ItemName.MythrilMask=Máscara de Mithril
 ItemName.OrichalcumHood=Capuz de Oricalco
 ItemName.PalladiumHood=Capuz de Paládio
 ItemName.TitaniumHood=Capuz de Titânio
+ItemName.EvilScales=Escamas Malignas
+ItemName.NightMask=Máscara Noturna
+ItemName.NightScaleMail=Armadura de Malha Noturna
+ItemName.NightLeggings=Calças Noturnas
 
 -ITEM TOOLTIPS-
 
@@ -65,6 +70,9 @@ ItemTooltip.AdamantiteHood=14% de aumento nos danos por ataque físico\n23% de a
 ItemTooltip.TitaniumHood=9% de aumento nos danos por ataque físico\n19% de aumento nos danos por arremesso\n17% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
 ItemTooltip.HallowedHood=12% de aumento nos danos por ataque físico\n25% de aumento nos danos por arremesso\n25% de aumento na velocidade do ataque físico\n30% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
 ItemTooltip.ChlorophyteHood=17% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n10% de aumento na velocidade do ataque físico\n32% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade dos movimentos
+ItemTooltip.NightMask=30% de aumento nos danos por arremesso\n7% de aumento nos danos por ataque físico
+ItemTooltip.NightScaleMail=8% de aumento nos danos por ataque físico\n10% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico
+ItemTooltip.NightLeggings=11% de aumento na velocidade do ataque físico\n15% de aumento na velocidade dos movimentos
 
 VanillaItemTooltip.BeesKnees=Atira abelhas invocadas como se fossem flechas
 VanillaItemTooltip.HellwingBow=Atira morcegos do inferno invocados como se fossem flechas
@@ -124,10 +132,7 @@ ArmorSetBonus.MythrilKnight=3% de aumento na chance de ataque crítico físico
 ArmorSetBonus.AdamantiteKnight=9% de aumento na velocidade do ataque físico e dos movimentos
 ArmorSetBonus.HallowedKnight=11% de aumento na velocidade do ataque físico\n9% de aumento na velocidade dos movimentos
 ArmorSetBonus.CobaltRogue=23% de aumento na velocidade do ataque físico\n10% de aumento na velocidade de arremesso
-ArmorSetBonus.PalladiumRogue={$ArmorSetBonus.Palladium}\n10% de aumento na velocidade de arremesso
 ArmorSetBonus.MythrilRogue=6% de aumento na chance de acerto crítico físico\n12% de aumento na velocidade de arremesso
-ArmorSetBonus.OrichalcumRogue={$ArmorSetBonus.Orichalcum}\n13% de aumento na velocidade de arremesso
 ArmorSetBonus.AdamantiteRogue=40% de aumento na velocidade do ataque físico\n20% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
-ArmorSetBonus.TitaniumRogue={$ArmorSetBonus.Titanium}\n18% de aumento na velocidade de arremesso
 ArmorSetBonus.HallowedRogue=25% de aumento na velocidade do ataque físico\n25% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
-ArmorSetBonus.ChlorophyteRogue={$ArmorSetBonus.Chlorophyte}\n19% de aumento na velocidade de arremesso
+ArmorSetBonus.Night=a

@@ -21,9 +21,9 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.12f;
+            player.meleeDamage += 0.18f;
             player.thrownDamage += 0.25f;
-            player.meleeSpeed += 0.25f;
+            player.meleeSpeed += 0.23f;
             player.meleeCrit += 28;
             player.moveSpeed += 0.8f;
         }
@@ -41,9 +41,9 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.meleeSpeed += 0.25f;
-            player.moveSpeed += 0.23f;
-            player.thrownVelocity += 0.25f;
+            player.thrownDamage += 0.1f;
+            player.meleeSpeed += 0.18f;
+            player.moveSpeed += 0.10f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.HallowedRogue");
         }
     }

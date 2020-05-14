@@ -7,9 +7,14 @@
 -Normal mode Treasure Bags!
 -Support for Consolaria and Calamity!
 -Simple and pretty.
+-Now in PT-BR too!
 
 
                           Changelogs
+
+0.6.4
+-Gellyfish set bonus now works in PVP.
+-Fixed stuff related to job selection window.
 
 0.6.3
 -Bugfix regarding prefixes and item spawning.

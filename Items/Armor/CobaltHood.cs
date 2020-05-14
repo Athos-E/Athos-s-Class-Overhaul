@@ -21,10 +21,10 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeCrit += 20;
-            player.meleeSpeed += 0.20f;
-            player.moveSpeed += 0.10f;
-            player.thrownVelocity += 0.10f;
+            player.meleeCrit += 12;
+            player.meleeSpeed += 0.14f;
+            player.moveSpeed += 0.09f;
+            player.thrownVelocity += 0.11f;
 
         }
         public override void AddRecipes()
@@ -41,8 +41,8 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateArmorSet(Player player)
         {
-            player.meleeSpeed += 0.23f;
-            player.thrownVelocity += 0.10f;
+            player.meleeSpeed += 0.17f;
+            player.moveSpeed += 0.05f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.CobaltRogue");
         }
     }

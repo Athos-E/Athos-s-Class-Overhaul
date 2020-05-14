@@ -5,6 +5,7 @@ using Terraria.GameContent.UI.Elements;
 using Microsoft.Xna.Framework;
 using ClassOverhaul.Jobs;
 using Terraria.Localization;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ClassOverhaul.UI
 {
@@ -30,7 +31,7 @@ namespace ClassOverhaul.UI
             panel.Top.Set(Main.screenHeight / 3, 0);
             panel.Width.Set(500, 0);
             panel.Height.Set(150, 0);
-            buttonKnight = new UIText(Language.GetTextValue($"{Root}.CommonName.Knight"), 0.8f);
+            buttonKnight = new UIText("", 0.8f);
             buttonKnight.Left.Set(15, 0);
             buttonKnight.Top.Set(110, 0);
             buttonKnight.TextColor = Color.Gold;
@@ -38,7 +39,7 @@ namespace ClassOverhaul.UI
             buttonKnight.OnMouseOver += new MouseEvent(OnHoverKnight);
             buttonKnight.OnMouseOut += new MouseEvent(OnOutKnight);
             panel.Append(buttonKnight);
-            buttonRogue = new UIText(Language.GetTextValue($"{Root}.CommonName.Rogue"), 0.8f);
+            buttonRogue = new UIText("", 0.8f);
             buttonRogue.Left.Set(85, 0);
             buttonRogue.Top.Set(110, 0);
             buttonRogue.TextColor = Color.Gold;
@@ -46,7 +47,7 @@ namespace ClassOverhaul.UI
             buttonRogue.OnMouseOver += new MouseEvent(OnHoverRogue);
             buttonRogue.OnMouseOut += new MouseEvent(OnOutRogue);
             panel.Append(buttonRogue);
-            buttonRanger = new UIText(Language.GetTextValue($"{Root}.CommonName.Ranger"), 0.8f);
+            buttonRanger = new UIText("", 0.8f);
             buttonRanger.Left.Set(160, 0);
             buttonRanger.Top.Set(110, 0);
             buttonRanger.TextColor = Color.Gold;
@@ -54,7 +55,7 @@ namespace ClassOverhaul.UI
             buttonRanger.OnMouseOver += new MouseEvent(OnHoverRanger);
             buttonRanger.OnMouseOut += new MouseEvent(OnOutRanger);
             panel.Append(buttonRanger);
-            buttonMage = new UIText(Language.GetTextValue($"{Root}.CommonName.Mage"), 0.8f);
+            buttonMage = new UIText("", 0.8f);
             buttonMage.Left.Set(245, 0);
             buttonMage.Top.Set(110, 0);
             buttonMage.TextColor = Color.Gold;
@@ -62,7 +63,7 @@ namespace ClassOverhaul.UI
             buttonMage.OnMouseOver += new MouseEvent(OnHoverMage);
             buttonMage.OnMouseOut += new MouseEvent(OnOutMage);
             panel.Append(buttonMage);
-            buttonSummoner = new UIText(Language.GetTextValue($"{Root}.CommonName.Summoner"), 0.8f);
+            buttonSummoner = new UIText("", 0.8f);
             buttonSummoner.Left.Set(320, 0);
             buttonSummoner.Top.Set(110, 0);
             buttonSummoner.TextColor = Color.Gold;
@@ -70,7 +71,7 @@ namespace ClassOverhaul.UI
             buttonSummoner.OnMouseOver += new MouseEvent(OnHoverSummoner);
             buttonSummoner.OnMouseOut += new MouseEvent(OnOutSummoner);
             panel.Append(buttonSummoner);
-            buttonAlchemist = new UIText(Language.GetTextValue($"{Root}.CommonName.Alchemist"), 0.8f);
+            buttonAlchemist = new UIText("", 0.8f);
             buttonAlchemist.Left.Set(420, 0);
             buttonAlchemist.Top.Set(110, 0);
             buttonAlchemist.TextColor = Color.Gold;
@@ -78,7 +79,7 @@ namespace ClassOverhaul.UI
             buttonAlchemist.OnMouseOver += new MouseEvent(OnHoverAlchemist);
             buttonAlchemist.OnMouseOut += new MouseEvent(OnOutAlchemist);
             //panel.Append(buttonAlchemist);
-            dialogue = new UIText(Language.GetTextValue($"{Root}.UIText.JobSelection"), 0.8f);
+            dialogue = new UIText("", 0.8f);
             dialogue.Left.Set(25, 0);
             dialogue.Top.Set(25, 0);
             panel.Append(dialogue);
@@ -88,17 +89,26 @@ namespace ClassOverhaul.UI
         {
             base.Update(gameTime);
             PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();
-            if (modPlayer.defeatedWoF == true && modPlayer.choseJob == false)
+            if(modPlayer.defeatedWoF == true && modPlayer.choseJob == false)
             {
                 visible = true;
             }
+            else
+                visible = false;
             if (oldScale != Main.inventoryScale)
             {
                 oldScale = Main.inventoryScale;
                 Recalculate();
             }
-            
+            buttonKnight.SetText(Language.GetTextValue($"{Root}.CommonName.Knight"));
+            buttonRogue.SetText(Language.GetTextValue($"{Root}.CommonName.Rogue"));
+            buttonRanger.SetText(Language.GetTextValue($"{Root}.CommonName.Rogue"));
+            buttonMage.SetText(Language.GetTextValue($"{Root}.CommonName.Mage"));
+            buttonSummoner.SetText(Language.GetTextValue($"{Root}.CommonName.Summoner"));
+            buttonAlchemist.SetText(Language.GetTextValue($"{Root}.CommonName.Alchemist"));
+            dialogue.SetText(Language.GetTextValue($"{Root}.UIText.JobSelection"));
         }
+
         private void OnClickKnight(UIMouseEvent evt, UIElement listeningElement)
         {
             PlayerEdits modPlayer = Main.LocalPlayer.GetModPlayer<PlayerEdits>();

@@ -21,10 +21,10 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.09f;
+            player.meleeDamage += 0.08f;
             player.thrownDamage += 0.19f;
-            player.meleeSpeed += 0.17f;
-            player.meleeCrit += 33;
+            player.meleeSpeed += 0.16f;
+            player.meleeCrit += 22;
             player.moveSpeed += 0.6f;
         }
         public override void AddRecipes()
@@ -42,7 +42,6 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.shadowDodge = true;
-            player.thrownVelocity += 0.18f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.TitaniumRogue");
         }
     }

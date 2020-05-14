@@ -21,10 +21,10 @@ namespace ClassOverhaul.Items.Armor
         }
         public override void UpdateEquip(Player player)
         {
-            player.meleeDamage += 0.17f;
-            player.thrownDamage += 0.23f;
-            player.meleeSpeed += 0.15f;
-            player.meleeCrit += 32;
+            player.meleeDamage += 0.16f;
+            player.thrownDamage += 0.28f;
+            player.meleeSpeed += 0.18f;
+            player.meleeCrit += 30;
             player.moveSpeed += 0.10f;
         }
         public override void AddRecipes()
@@ -42,7 +42,6 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.AddBuff(BuffID.LeafCrystal, 1, true);
-            player.thrownVelocity += 0.19f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.ChlorophyteRogue");
         }
     }

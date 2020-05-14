@@ -21,6 +21,16 @@ namespace ClassOverhaul
         public override void PostSetupContent()
         {
             base.PostSetupContent();
+            /*
+            RecipeFinder recipeFinder = new RecipeFinder();
+            recipeFinder.SetResult(ItemID.BeetleScaleMail);
+            recipeFinder.AddIngredient(ItemID.TurtleScaleMail);
+            foreach(Recipe recip in recipeFinder.SearchRecipes())
+            {
+                RecipeEditor recipeEditor = new RecipeEditor(recip);
+                recipeEditor.DeleteRecipe();
+            }
+            */
             ModRecipe recipe = new ModRecipe(this);
             recipe.AddIngredient(ItemID.Gel, 10);
             recipe.AddIngredient(ItemID.Wood, 10);
@@ -28,6 +38,26 @@ namespace ClassOverhaul
             recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(ItemID.SlimeStaff);
             recipe.AddRecipe();
+            /***
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 14);
+            recipe.AddIngredient(ItemID.BeetleHusk, 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ItemID.BeetleHelmet);
+            recipe.AddRecipe();
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 27);
+            recipe.AddIngredient(ItemID.BeetleHusk, 10);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ItemID.BeetleScaleMail);
+            recipe.AddRecipe();
+            recipe = new ModRecipe(this);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 21);
+            recipe.AddIngredient(ItemID.BeetleHusk, 8);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.SetResult(ItemID.BeetleLeggings);
+            recipe.AddRecipe();
+            */
             AlchemistRecipe crecipe = new AlchemistRecipe(this);
             crecipe.AddIngredient(ItemID.Bottle, 15);
             crecipe.AddIngredient(ItemID.Deathweed, 1);

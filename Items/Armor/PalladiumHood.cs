@@ -22,10 +22,11 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.meleeDamage += 0.08f;
-            player.meleeSpeed += 0.23f;
-            player.meleeCrit += 26;
-            player.thrownDamage += 0.10f;
-            player.moveSpeed += 0.05f;
+            player.meleeSpeed += 0.14f;
+            player.meleeCrit += 14;
+            player.thrownDamage += 0.15f;
+            player.thrownVelocity += 0.10f;
+            player.moveSpeed += 0.07f;
 
         }
         public override void AddRecipes()
@@ -43,7 +44,6 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateArmorSet(Player player)
         {
             player.palladiumRegen = true;
-            player.thrownVelocity += 0.10f;
             player.setBonus = Language.GetTextValue("Mods.ClassOverhaul.ArmorSetBonus.PalladiumRogue");
         }
     }
