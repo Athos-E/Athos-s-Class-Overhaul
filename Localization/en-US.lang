@@ -111,11 +111,13 @@ Prefix.Otherworldly=Otherwordly
 
 BuffName.RangedManaSickness={$BuffName.ManaSickness} (Ranged)
 BuffName.Stun=Stun
+BuffName.MeldInDarkness=Meld In Darkness
 
 -BUFF TOOLTIPS-
 
 BuffDescription.RangedManaSickness=Ranged damage reduced by {0}%
-Buffdescription.Stun=Unable to move or attack!
+BuffDescription.Stun=Unable to move or attack!
+BuffDescription.MeldInDarkness=Grants enhanced invibility and night vision
 
 -ITEM NAMES-
 
@@ -144,17 +146,17 @@ ItemTooltip.StaffOfFireball=Launches a rapid fireball that explodes on hit, burn
 ItemTooltip.GellyfishHat=4% increased minion damage\nIncreases the maximum number of minions
 ItemTooltip.GellyfishShirt=7% increased minion damage
 ItemTooltip.GellyfishLeggings=4% increased minion damage
-ItemTooltip.CobaltHood=20% increased melee speed\n10% increased thrown velocityn\n20% increased melee critical strike chance\n10% increased movespeed
-ItemTooltip.PalladiumHood=8% increased melee damage\n10% increased thrown damage\n23% increased melee speed\n26% increased melee critical strike chance\n5% increased move speed
-ItemTooltip.MythrilMask=11% increased melee damage\n18% increased thrown damage\n13% increased melee speed\n32% increased melee critical strike chance\n8% increased move speed
-ItemTooltip.OrichalcumHood=8% increased melee damage\n20% increased thrown damage\n18% increased melee speed\n60% increased melee critical strike chance\n11% increased move speed
-ItemTooltip.AdamantiteHood=14% increased melee damage\n23% increased thrown damage\n20% increased melee speed\n37% increased melee critical strike chance\n6% increased move speed
-ItemTooltip.TitaniumHood=9% increased melee damage\n19% increased thrown damage\n17% increased melee speed\n33% increased melee critical strike chance\n6% increased move speed
-ItemTooltip.HallowedHood=12% increased melee damage\n25% increased thrown damage\n25% increased melee speed\n30% increased melee critical strike chance\n8% increased move speed
-ItemTooltip.ChlorophyteHood=17% increased melee damage\n23% increased thrown damage\n10% increased melee speed\n32% increased melee critical strike chance\n10% increased move speed
+ItemTooltip.CobaltHood=14% increased melee speed\n11% increased thrown velocity\n12% increased melee critical strike chance\n9% increased movespeed
+ItemTooltip.PalladiumHood=8% increased melee damage\n15% increased thrown damage\n14% increased melee speed and melee critical strike chance\n7% increased move speed
+ItemTooltip.MythrilMask=10% increased melee damage\n20% increased thrown damage\n17% increased melee speed\n18% increased melee critical strike chance\n10% increased move speed
+ItemTooltip.OrichalcumHood=7% increased melee damage\n20% increased thrown damage\n16% increased melee speed\n35% increased melee critical strike chance\n13% increased move speed
+ItemTooltip.AdamantiteHood=15% increased melee damage\n23% increased thrown damage\n18% increased melee speed\n25% increased melee critical strike chance\n12% increased move speed
+ItemTooltip.TitaniumHood=8% increased melee damage\n19% increased thrown damage\n16% increased melee speed\n22% increased melee critical strike chance\n6% increased move speed
+ItemTooltip.HallowedHood=18% increased melee damage\n25% increased thrown damage\n23% increased melee speed\n28% increased melee critical strike chance\n8% increased move speed
+ItemTooltip.ChlorophyteHood=16% increased melee damage\n28% increased thrown damage\n24% increased melee speed\n30% increased melee critical strike chance\n10% increased move speed
 ItemTooltip.NightMask=30% increased thrown damage\n7% increased melee damage
-ItemTooltip.NightScaleMail=8% increased melee damage\n10% increased melee speed\n33% increased melee crit
-ItemTooltip.NightLeggings=11% increased melee speed\n15% increased move speed
+ItemTooltip.NightScaleMail=8% increased melee damage\n15% increased melee speed\n33% increased melee crit
+ItemTooltip.NightLeggings=13% increased melee speed\n15% increased move speed
 
 VanillaItemTooltip.BeesKnees=Shoots summoned bees like arrows
 VanillaItemTooltip.HellwingBow=Shoots summoned Hell Bats like arrows
@@ -213,8 +215,8 @@ ArmorSetBonus.CobaltKnight=8% increased melee speed
 ArmorSetBonus.MythrilKnight=3% increased melee critical strike chance
 ArmorSetBonus.AdamantiteKnight=9% increased melee and movement speed
 ArmorSetBonus.HallowedKnight=11% increased melee speed\n9% increased move speed
-ArmorSetBonus.CobaltRogue=23% increased melee speed\n10% increased thrown velocity
-ArmorSetBonus.MythrilRogue=12% increased thrown velocity\n6% increased melee critical strike chance
-ArmorSetBonus.AdamantiteRogue=40% increased melee speed\n20% increased thrown velocity\n23% increased move speed
-ArmorSetBonus.HallowedRogue=25% increased melee speed\n25% increased thrown velocity\n23% increased move speed
-ArmorSetBonus.Night=Grants enhanced invibility each 3 seconds out of combat.
+ArmorSetBonus.CobaltRogue=17% increased melee speed\n5% increased move speed
+ArmorSetBonus.MythrilRogue=5% increased thrown damage\n6% increased melee critical strike chance
+ArmorSetBonus.AdamantiteRogue=8% increased thrown damage\n10% increased melee speed and move speed
+ArmorSetBonus.HallowedRogue=10% increased thrown damage\n18% increased melee speed\n10% increased move speed
+ArmorSetBonus.Night=Grants enhanced invisibility and night vision when out of combat for 3 seconds

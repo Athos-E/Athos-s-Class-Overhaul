@@ -29,11 +29,13 @@ Prefix.Otherworldly=(Extraterrestre)
 
 BuffName.RangedManaSickness={$BuffName.ManaSickness} (Dano à distância)
 BuffName.Stun=Atordoado
+BuffName.MeldInDarkness=Fundido à Escuridão
 
 -BUFF TOOLTIPS-
 
 BuffDescription.RangedManaSickness=Danos a distância reduzidos em {0}%
 BuffDescription.Stun=Impossível se mover ou atacar!
+BuffDescription.MeldInDarkness=Concede visão noturna e invibilidade melhorada
 
 -ITEM NAMES-
 
@@ -62,17 +64,17 @@ ItemTooltip.StaffOfFireball=Atira uma rápida bola de fogo que explode ao colidi
 ItemTooltip.GellyfishHat=Aumenta o dano causado por lacaios em 4%\nAumenta o número máximo de lacaios que você pode ter
 ItemTooltip.GellyfishShirt=Aumenta o dano causado por lacaios em 7%
 ItemTooltip.GellyfishLeggings=Aumenta o dano causado por lacaios em 4%
-ItemTooltip.CobaltHood=20% de aumento na velocidade do ataque físico\n20% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade de arremesso\n10% de aumento na velocidade dos movimentos
-ItemTooltip.PalladiumHood=8% de aumento nos danos por ataque físico\n10% de aumento nos danos por arremesso\n23% de aumento na velocidade do ataque físico\n26% de aumento na chance de acerto crítico físico\n5% de aumento na velocidade dos movimentos
-ItemTooltip.MythrilMask=11% de aumento nos danos por ataque físico\n18% de aumento nos danos por arremesso\n13% de aumento na velocidade do ataque físico\n32% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
-ItemTooltip.OrichalcumHood=8% de aumento nos danos por ataque físico\n20% de aumento nos danos por arremesso\n18% de aumento na velocidade do ataque físico\n60% de aumento na chance de acerto crítico físico\n11% de aumento na velocidade dos movimentos
-ItemTooltip.AdamantiteHood=14% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n20% de aumento na velocidade do ataque físico\n37% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
-ItemTooltip.TitaniumHood=9% de aumento nos danos por ataque físico\n19% de aumento nos danos por arremesso\n17% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
-ItemTooltip.HallowedHood=12% de aumento nos danos por ataque físico\n25% de aumento nos danos por arremesso\n25% de aumento na velocidade do ataque físico\n30% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
-ItemTooltip.ChlorophyteHood=17% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n10% de aumento na velocidade do ataque físico\n32% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade dos movimentos
+ItemTooltip.CobaltHood=14% de aumento na velocidade do ataque físico\n11% de aumento na velocidade de arremesso\n12% de aumento na chance de acerto crítico físico\n9% de aumento na velocidade dos movimentos
+ItemTooltip.PalladiumHood=8% de aumento nos danos por ataque físico\n15% de aumento nos danos por arremesso\n14% de aumento na velocidade do ataque físico e na chance de acerto crítico físico\n7% de aumento na velocidade dos movimentos
+ItemTooltip.MythrilMask=10% de aumento nos danos por ataque físico\n20% de aumento nos danos por arremesso\n17% de aumento na velocidade do ataque físico\n18% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade dos movimentos
+ItemTooltip.OrichalcumHood=8% de aumento nos danos por ataque físico\n20% de aumento nos danos por arremesso\n16% de aumento na velocidade do ataque físico\n35% de aumento na chance de acerto crítico físico\n13% de aumento na velocidade dos movimentos
+ItemTooltip.AdamantiteHood=15% de aumento nos danos por ataque físico\n23% de aumento nos danos por arremesso\n18% de aumento na velocidade do ataque físico\n25% de aumento na chance de acerto crítico físico\n12% de aumento na velocidade dos movimentos
+ItemTooltip.TitaniumHood=8% de aumento nos danos por ataque físico\n19% de aumento nos danos por arremesso\n16% de aumento na velocidade do ataque físico\n22% de aumento na chance de acerto crítico físico\n6% de aumento na velocidade dos movimentos
+ItemTooltip.HallowedHood=18% de aumento nos danos por ataque físico\n25% de aumento nos danos por arremesso\n23% de aumento na velocidade do ataque físico\n28% de aumento na chance de acerto crítico físico\n8% de aumento na velocidade dos movimentos
+ItemTooltip.ChlorophyteHood=16% de aumento nos danos por ataque físico\n28% de aumento nos danos por arremesso\n24% de aumento na velocidade do ataque físico\n30% de aumento na chance de acerto crítico físico\n10% de aumento na velocidade dos movimentos
 ItemTooltip.NightMask=30% de aumento nos danos por arremesso\n7% de aumento nos danos por ataque físico
-ItemTooltip.NightScaleMail=8% de aumento nos danos por ataque físico\n10% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico
-ItemTooltip.NightLeggings=11% de aumento na velocidade do ataque físico\n15% de aumento na velocidade dos movimentos
+ItemTooltip.NightScaleMail=8% de aumento nos danos por ataque físico\n15% de aumento na velocidade do ataque físico\n33% de aumento na chance de acerto crítico físico
+ItemTooltip.NightLeggings=13% de aumento na velocidade do ataque físico\n15% de aumento na velocidade dos movimentos
 
 VanillaItemTooltip.BeesKnees=Atira abelhas invocadas como se fossem flechas
 VanillaItemTooltip.HellwingBow=Atira morcegos do inferno invocados como se fossem flechas
@@ -131,8 +133,8 @@ ArmorSetBonus.CobaltKnight=8% de aumento na velocidade do ataque físico
 ArmorSetBonus.MythrilKnight=3% de aumento na chance de ataque crítico físico
 ArmorSetBonus.AdamantiteKnight=9% de aumento na velocidade do ataque físico e dos movimentos
 ArmorSetBonus.HallowedKnight=11% de aumento na velocidade do ataque físico\n9% de aumento na velocidade dos movimentos
-ArmorSetBonus.CobaltRogue=23% de aumento na velocidade do ataque físico\n10% de aumento na velocidade de arremesso
-ArmorSetBonus.MythrilRogue=6% de aumento na chance de acerto crítico físico\n12% de aumento na velocidade de arremesso
-ArmorSetBonus.AdamantiteRogue=40% de aumento na velocidade do ataque físico\n20% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
-ArmorSetBonus.HallowedRogue=25% de aumento na velocidade do ataque físico\n25% de aumento na velocidade de arremesso\n23% de aumento na velocidade dos movimentos
-ArmorSetBonus.Night=a
+ArmorSetBonus.CobaltRogue=17% de aumento na velocidade do ataque físico\n5% de aumento na velocidade dos movimentos
+ArmorSetBonus.MythrilRogue=5% de aumento nos danos por arremesso\n6% de aumento na chance de acerto crítico físico
+ArmorSetBonus.AdamantiteRogue=8% de aumento nos danos por arremesso\n10% de aumento na velocidade do ataque físico e dos movimentos
+ArmorSetBonus.HallowedRogue=10% increased thrown damage\n18% de aumento na velocidade do ataque físico\n10% de aumento na velocidade dos movimentos
+ArmorSetBonus.Night=Concede visão noturna e invisibilidade melhorada quando fora de combate por 3 segundos

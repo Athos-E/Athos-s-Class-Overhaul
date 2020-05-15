@@ -8,7 +8,6 @@ namespace ClassOverhaul.Items.Armor
     [AutoloadEquip(EquipType.Head)]
     public class NightMask : ModItem
     {
-        public override bool Autoload(ref string name) => false;
         public override void SetDefaults()
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();

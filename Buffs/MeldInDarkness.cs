@@ -3,9 +3,8 @@ using Terraria.ModLoader;
 
 namespace ClassOverhaul.Buffs
 {
-    public class EnhancedInvisibility : ModBuff
+    public class MeldInDarkness : ModBuff
     {
-        public override bool Autoload(ref string name, ref string texture) => false;
         public override void SetDefaults()
         {
             Main.buffNoSave[Type] = true;
@@ -15,6 +14,7 @@ namespace ClassOverhaul.Buffs
         public override void Update(Player player, ref int buffIndex)
         {
             PlayerEdits modPlayer = player.GetModPlayer<PlayerEdits>();
+            player.nightVision = true;
             player.invis = true;
             modPlayer.enInvis = true;
         }

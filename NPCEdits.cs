@@ -49,12 +49,6 @@ namespace ClassOverhaul
             {
                 npc.catchItem = ItemID.GreenJellyfish;
             }
-            if (npc.type == NPCID.Zombie)
-            {
-                npc.defense = 500;
-                npc.lifeMax = 500000;
-                npc.life = npc.lifeMax;
-            }
         }
 
         public override bool PreAI(NPC npc)

@@ -25,7 +25,6 @@ namespace ClassOverhaul.Items.Armor
             player.meleeSpeed += 0.14f;
             player.meleeCrit += 14;
             player.thrownDamage += 0.15f;
-            player.thrownVelocity += 0.10f;
             player.moveSpeed += 0.07f;
 
         }

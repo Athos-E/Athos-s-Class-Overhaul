@@ -10,7 +10,15 @@
 -Now in PT-BR too!
 
 
-                          Changelogs
+                          Changelog
+
+0.6.5
+-Alternate crafting recipes for Scale Helmet and Leggings.
+-Replacement for Scale Mail crafting recipe.
+-New Rogue Armor.
+-Rebalance of rogue armors.
+-Fixed an issue with certain zombies being overpowered.
+-Fixed bug related to player taking damage.
 
 0.6.4
 -Gellyfish set bonus now works in PVP.

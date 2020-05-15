@@ -5,16 +5,15 @@ using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
-    [AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Body)]
     public class NightScaleMail : ModItem
     {
-        public override bool Autoload(ref string name) => false;
         public override void SetDefaults()
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             modItem.rogueItem = true;
-            item.defense = 20;
-            modItem.magicDefense = 23;
+            item.defense = 25;
+            modItem.magicDefense = 29;
             item.rare = 8;
             item.value = Item.sellPrice(gold: 7);
             item.width = 18;
@@ -24,7 +23,7 @@ namespace ClassOverhaul.Items.Armor
         public override void UpdateEquip(Player player)
         {
             player.meleeDamage += 0.08f;
-            player.meleeSpeed += 0.10f;
+            player.meleeSpeed += 0.15f;
             player.meleeCrit += 33;
         }
 

@@ -102,7 +102,7 @@ namespace ClassOverhaul.UI
             }
             buttonKnight.SetText(Language.GetTextValue($"{Root}.CommonName.Knight"));
             buttonRogue.SetText(Language.GetTextValue($"{Root}.CommonName.Rogue"));
-            buttonRanger.SetText(Language.GetTextValue($"{Root}.CommonName.Rogue"));
+            buttonRanger.SetText(Language.GetTextValue($"{Root}.CommonName.Ranger"));
             buttonMage.SetText(Language.GetTextValue($"{Root}.CommonName.Mage"));
             buttonSummoner.SetText(Language.GetTextValue($"{Root}.CommonName.Summoner"));
             buttonAlchemist.SetText(Language.GetTextValue($"{Root}.CommonName.Alchemist"));

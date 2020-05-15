@@ -23,8 +23,8 @@ namespace ClassOverhaul.Items.Armor
         {
             player.meleeDamage += 0.07f;
             player.thrownDamage += 0.20f;
-            player.meleeSpeed += 0.14f;
-            player.meleeCrit += 28;
+            player.meleeSpeed += 0.16f;
+            player.meleeCrit += 35;
             player.moveSpeed += 0.13f;
         }
         public override void AddRecipes()

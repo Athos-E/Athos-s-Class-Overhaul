@@ -5,16 +5,15 @@ using Terraria.Localization;
 
 namespace ClassOverhaul.Items.Armor
 {
-    [AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Legs)]
     public class NightLeggings : ModItem
     {
-        public override bool Autoload(ref string name) => false;
         public override void SetDefaults()
         {
             ItemEdits modItem = item.GetGlobalItem<ItemEdits>();
             modItem.rogueItem = true;
-            item.defense = 20;
-            modItem.magicDefense = 23;
+            item.defense = 19;
+            modItem.magicDefense = 21;
             item.rare = 8;
             item.value = Item.sellPrice(gold: 7);
             item.width = 18;
@@ -23,7 +22,7 @@ namespace ClassOverhaul.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.meleeSpeed += 0.11f;
+            player.meleeSpeed += 0.13f;
             player.moveSpeed += 0.15f;
         }    
 
