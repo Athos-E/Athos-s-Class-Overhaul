@@ -12,6 +12,9 @@
 
                           Changelog
 
+0.6.6
+-Hotfix on character creation and loading.
+
 0.6.5
 -Alternate crafting recipes for Scale Helmet and Leggings.
 -Replacement for Scale Mail crafting recipe.

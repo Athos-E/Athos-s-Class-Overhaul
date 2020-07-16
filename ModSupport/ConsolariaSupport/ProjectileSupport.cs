@@ -42,7 +42,7 @@ namespace ClassOverhaul.ModSupport.ConsolariaSupport
                     Main.rand.NextBool(3)
                         ? Item.NewItem(projectile.getRect(), consolaria.ItemType("SpectralArrow"))
                         : 0;
-                    if (Main.netMode == 1 && item >= 0)
+                    if (Main.netMode == NetmodeID.MultiplayerClient && item >= 0)
                     {
                         NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
                     }

@@ -14,7 +14,7 @@ namespace ClassOverhaul.Items.Armor
             modItem.rogueItem = true;
             item.defense = 25;
             modItem.magicDefense = 29;
-            item.rare = 8;
+            item.rare = ItemRarityID.Yellow;
             item.value = Item.sellPrice(gold: 7);
             item.width = 18;
             item.height = 18;

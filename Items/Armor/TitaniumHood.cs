@@ -14,7 +14,7 @@ namespace ClassOverhaul.Items.Armor
             globalItem.rogueItem = true;
             item.defense = 18;
             globalItem.magicDefense = 21;
-            item.rare = 4;
+            item.rare = ItemRarityID.LightRed;
             item.value = 30000;
             item.width = 18;
             item.height = 18;

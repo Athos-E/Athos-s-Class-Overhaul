@@ -110,43 +110,43 @@ namespace ClassOverhaul.Items.Consumables
             item.consumable = true;
             item.width = 24;
             item.height = 24;
-            item.rare = 0;
+            item.rare = ItemRarityID.White;
             switch (BossBagNPC)
             {
                 case NPCID.KingSlime:
                 case NPCID.EyeofCthulhu:
-                    item.rare = 1;
+                    item.rare = ItemRarityID.Blue;
                     break;
                 case NPCID.EaterofWorldsHead:
                 case NPCID.BrainofCthulhu:
                 case NPCID.QueenBee:
-                    item.rare = 2;
+                    item.rare = ItemRarityID.Green;
                     break;
                 case NPCID.SkeletronHead:
-                    item.rare = 3;
+                    item.rare = ItemRarityID.Orange;
                     break;
                 case NPCID.WallofFlesh:
-                    item.rare = 4;
+                    item.rare = ItemRarityID.LightRed;
                     break;
                 case NPCID.Spazmatism:
                 case NPCID.Retinazer:
                 case NPCID.TheDestroyer:
                 case NPCID.SkeletronPrime:
-                    item.rare = 5;
+                    item.rare = ItemRarityID.Pink;
                     break;
                 case NPCID.Plantera:
                 case NPCID.Golem:
                 case NPCID.DukeFishron:
-                    item.rare = 7;
+                    item.rare = ItemRarityID.Lime;
                     break;
                 //case NPCID.CultistBoss:
                 case NPCID.MoonLordCore:
-                    item.rare = 10;
+                    item.rare = ItemRarityID.Red;
                     break;
                 //case NPCID.DD2DarkMageT3:
                 //case NPCID.DD2OgreT3:
                 case NPCID.DD2Betsy:
-                    item.rare = 8;
+                    item.rare = ItemRarityID.Yellow;
                     break;
                 //case NPCID.PirateShip:
                 //case NPCID.MourningWood:

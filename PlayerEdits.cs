@@ -7,16 +7,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace ClassOverhaul
 {
     public class PlayerEdits : ModPlayer
     {
-        public PlayerEdits modPlayer;
         public float chemicalDamage = 1f;
         public float chemicalDamageMult = 1f;
         public float usedMinionSlots = 0f;
@@ -40,16 +35,16 @@ namespace ClassOverhaul
         public override void ResetEffects()
         {
             base.ResetEffects();
-            modPlayer.chemicalDamage = 1f;
-            modPlayer.chemicalDamageMult = 1f;
+            chemicalDamage = 1f;
+            chemicalDamageMult = 1f;
             player.armorPenetration = 0;
-            modPlayer.magicDefense = 0;
-            modPlayer.armorJob = 0;
-            modPlayer.rogueBonus = false;
-            modPlayer.gellyfishArmor = false;
-            modPlayer.stunned = false;
-            modPlayer.nightSet = false;
-            modPlayer.enInvis = false;
+            magicDefense = 0;
+            armorJob = 0;
+            rogueBonus = false;
+            gellyfishArmor = false;
+            stunned = false;
+            nightSet = false;
+            enInvis = false;
             PlayerMethods.ResetEffects(player);
         }
 
@@ -57,30 +52,29 @@ namespace ClassOverhaul
         {
             return new TagCompound
             {
-                {"choseJob", modPlayer.choseJob },
-                {"job", modPlayer.job },
-                {"armorJob", modPlayer.armorJob },
-                {"defeatedWoF", modPlayer.defeatedWoF},
-                {"immune", modPlayer.immune},
-                {"rogueBonus", modPlayer.rogueBonus }
+                {"choseJob", choseJob },
+                {"job", job },
+                {"armorJob", armorJob },
+                {"defeatedWoF", defeatedWoF},
+                {"immune", immune},
+                {"rogueBonus", rogueBonus }
             };
         }
 
         public override void Load(TagCompound tag)
         {
             base.Load(tag);
-            modPlayer = player.GetModPlayer<PlayerEdits>();
-            modPlayer.choseJob = tag.GetBool("choseJob");
-            modPlayer.job = tag.GetInt("job");
-            modPlayer.armorJob = tag.GetInt("armorJob");
-            modPlayer.defeatedWoF = tag.GetBool("defeatedWoF");
-            modPlayer.rogueBonus = tag.GetBool("rogueBonus");
+            choseJob = tag.GetBool("choseJob");
+            job = tag.GetInt("job");
+            armorJob = tag.GetInt("armorJob");
+            defeatedWoF = tag.GetBool("defeatedWoF");
+            rogueBonus = tag.GetBool("rogueBonus");
         }
 
         public override void PreUpdate()
         {
             base.PreUpdate();
-            if(modPlayer.job == JobID.rogue || modPlayer.armorJob == JobID.rogue)
+            if(job == JobID.rogue || armorJob == JobID.rogue)
                 player.dash = 1;
             if(player.longInvince && player.immuneTime > 30)
                 player.immuneTime = 30;
@@ -118,7 +112,7 @@ namespace ClassOverhaul
         public override void PostUpdateBuffs()
         {
             base.PostUpdateBuffs();
-            if(modPlayer.immune == true)
+            if(immune == true)
             {
                 player.controlJump = false;
                 player.controlDown = false;
@@ -130,7 +124,7 @@ namespace ClassOverhaul
                 player.controlThrow = false;
                 player.gravDir = 0f;
             }
-            if(modPlayer.stunned == true)
+            if(stunned == true)
             {
                 player.controlJump = false;
                 player.controlDown = false;
@@ -149,17 +143,17 @@ namespace ClassOverhaul
             base.PostUpdate();
             if(player.whoAmI == Main.myPlayer)
             {
-                if(modPlayer.defeatedWoF && !modPlayer.choseJob)
+                if(defeatedWoF && !choseJob)
                 {
-                    modPlayer.immune = true;
+                    immune = true;
                     JobSelectionUI.visible = true;
                 }
             }
-            if(modPlayer.nightSet && modPlayer.nightSetCool > 0)
-                modPlayer.nightSetCool--;
-            if(modPlayer.nightSet && player.itemAnimation > 0)
-                modPlayer.nightSetCool = 90;
-            if(modPlayer.nightSet && modPlayer.nightSetCool <= 0)
+            if(nightSet && nightSetCool > 0)
+                nightSetCool--;
+            if(nightSet && player.itemAnimation > 0)
+                nightSetCool = 90;
+            if(nightSet && nightSetCool <= 0)
             {
                 if(player.HasBuff(mod.BuffType("MeldInDarkness")))
                 {
@@ -169,19 +163,19 @@ namespace ClassOverhaul
                 else
                     player.AddBuff(mod.BuffType("MeldInDarkness"), 1);
             }
-            if(modPlayer.stunTimer > 0 && modPlayer.stunned == false)
-                modPlayer.stunTimer--;
-            if(modPlayer.knockbackTimer > 0)
-            { modPlayer.knockbackTimer--; player.noKnockback = true; }
+            if(stunTimer > 0 && stunned == false)
+                stunTimer--;
+            if(knockbackTimer > 0)
+            { knockbackTimer--; player.noKnockback = true; }
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if(modPlayer.immune)
+            if(immune)
                 return false;
             if(damageSource.SourceNPCIndex >= 0 && damageSource.SourceNPCIndex < Main.maxNPCs && Main.npc[damageSource.SourceNPCIndex] != null)
             {
-                if(player.aggro < -250 && modPlayer.enInvis)
+                if(player.aggro < -250 && enInvis)
                     return false;
                 NPCEdits modNPC = Main.npc[damageSource.SourceNPCIndex].GetGlobalNPC<NPCEdits>();
                 if(modNPC.atkCooldown > 0)
@@ -202,17 +196,17 @@ namespace ClassOverhaul
                             if(Main.player[projectile.owner].armorPenetration > 0)
                                 damage -= Main.player[projectile.owner].armorPenetration;
                         if(projectile.magic)
-                            damage -= modPlayer.modPlayer.magicDefense * 3 / 4;
+                            damage -= magicDefense * 3 / 4;
                         if(modProjectile.chemical)
-                            damage -= modPlayer.modPlayer.magicDefense * 3 / 8 - player.statDefense * 3 / 8;
+                            damage -= magicDefense * 3 / 8 - player.statDefense * 3 / 8;
                     }
                     else
                     {
                         damage += player.statDefense / 2;
                         if(projectile.magic)
-                            damage -= modPlayer.modPlayer.magicDefense / 2;
+                            damage -= magicDefense / 2;
                         if(modProjectile.chemical)
-                            damage -= modPlayer.modPlayer.magicDefense / 4 - player.statDefense / 4;
+                            damage -= magicDefense / 4 - player.statDefense / 4;
                     }
                 }
             }
@@ -231,24 +225,24 @@ namespace ClassOverhaul
                         {
                             damage += player.statDefense * 3 / 4;
                             if(item.magic)
-                                damage -= modPlayer.modPlayer.magicDefense * 3 / 4;
+                                damage -= magicDefense * 3 / 4;
                             if(modItem.chemical)
-                                damage -= modPlayer.modPlayer.magicDefense * 3 / 8 - player.statDefense * 3 / 8;
+                                damage -= magicDefense * 3 / 8 - player.statDefense * 3 / 8;
                         }
                         else
                         {
                             damage += player.statDefense / 2;
                             if(item.magic)
-                                damage -= modPlayer.modPlayer.magicDefense / 2;
+                                damage -= magicDefense / 2;
                             if(modItem.chemical)
-                                damage -= modPlayer.modPlayer.magicDefense / 4 - player.statDefense / 4;
+                                damage -= magicDefense / 4 - player.statDefense / 4;
                         }
                     }
                 }
             }
             if(crit)
                 damage *= 2;
-            if(modPlayer.gellyfishArmor)
+            if(gellyfishArmor)
             {
                 if(damageSource.SourceNPCIndex >= 0 && damageSource.SourceNPCIndex < Main.maxNPCs && Main.npc[damageSource.SourceNPCIndex] != null)
                 {
@@ -271,12 +265,12 @@ namespace ClassOverhaul
         {
             if(quiet == false)
             {
-                if(modPlayer.stunned == false && modPlayer.stunTimer <= 0)
+                if(stunned == false && stunTimer <= 0)
                     player.AddBuff(mod.BuffType("Stun"), 30, true);
-                if(modPlayer.knockbackTimer <= 0)
-                    modPlayer.knockbackTimer = 90;
-                if(modPlayer.nightSet && modPlayer.nightSetCool < 1)
-                    modPlayer.nightSetCool = 90;
+                if(knockbackTimer <= 0)
+                    knockbackTimer = 90;
+                if(nightSet && nightSetCool < 1)
+                    nightSetCool = 90;
                 if(player.HasBuff(mod.BuffType("MeldInDarkness")))
                 {
                     player.ClearBuff(mod.BuffType("MeldInDarkness"));

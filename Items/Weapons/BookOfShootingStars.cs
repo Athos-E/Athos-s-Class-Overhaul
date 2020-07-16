@@ -16,12 +16,12 @@ namespace ClassOverhaul.Items.Weapons
             item.damage = 35;
             item.mana = 5;
             item.crit = 0;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.width = 20;
             item.height = 28;
             item.useTime = 18;
             item.useAnimation = 18;
-            item.useStyle = 5;
+            item.useStyle = ItemHoldStyleID.HarpHoldingOut;
             item.shoot = ProjectileID.HallowStar;
             item.shootSpeed = 18f;
         }

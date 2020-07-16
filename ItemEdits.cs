@@ -55,7 +55,7 @@ namespace ClassOverhaul
                 item.summon = false;
                 item.crit = 0;
             }
-            if(item.rare < 4 || item.type == ItemID.SlimeStaff || item.type == ItemID.FlaskofPoison
+            if(item.rare < ItemRarityID.LightRed || item.type == ItemID.SlimeStaff || item.type == ItemID.FlaskofPoison
                 || item.type == ItemID.FlaskofParty || item.type == ItemID.FlaskofFire
                 || item.type == ItemID.GoldenBugNet || item.type == ItemID.EoCShield)
             { modItem.preHardmode = true; }
@@ -350,21 +350,21 @@ namespace ClassOverhaul
                 {
                     player.GetItem(Main.myPlayer, player.armor[num5].Clone());
                     player.armor[num5].ResetStats(0);
-                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Main.PlaySound(SoundID.Grab, -1, -1, 1, 1f, 0f);
                     Recipe.FindRecipes();
                 }
                 else if(item.bodySlot != -1)
                 {
                     player.GetItem(Main.myPlayer, player.armor[num5 + 1].Clone());
                     player.armor[num5 + 1].ResetStats(0);
-                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Main.PlaySound(SoundID.Grab, -1, -1, 1, 1f, 0f);
                     Recipe.FindRecipes();
                 }
                 else if(item.legSlot != -1)
                 {
                     player.GetItem(Main.myPlayer, player.armor[num5 + 2].Clone());
                     player.armor[num5 + 2].ResetStats(0);
-                    Main.PlaySound(7, -1, -1, 1, 1f, 0f);
+                    Main.PlaySound(SoundID.Grab, -1, -1, 1, 1f, 0f);
                     Recipe.FindRecipes();
                 }
             }
@@ -899,7 +899,7 @@ namespace ClassOverhaul
             {
                 if(modPlayer.job == JobID.rogue)
                 {
-                    if(item.type != ItemID.PaladinsHammer && item.type != ItemID.SolarEruption) item.shoot = 0;
+                    if(item.type != ItemID.PaladinsHammer && item.type != ItemID.SolarEruption) item.shoot = ProjectileID.None;
                     item.autoReuse = true;
                 }
                 else

@@ -14,7 +14,7 @@ namespace ClassOverhaul.Items.Weapons
         {
             item.mana = 7;
             item.UseSound = SoundID.Item73;
-            item.useStyle = 5;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.damage = 95;
             item.useAnimation = 28;
             item.autoReuse = true;
@@ -28,7 +28,7 @@ namespace ClassOverhaul.Items.Weapons
             item.value = 70000;
             item.magic = true;
             item.noMelee = true;
-            item.rare = 9;
+            item.rare = ItemRarityID.Cyan;
         }
         public override void AddRecipes()
         {
